@@ -3,7 +3,7 @@ import { FaShoppingBag } from 'react-icons/fa';
 import { BsThreeDotsVertical } from 'react-icons/bs';
 import {FaUserCircle} from  'react-icons/fa'
 import {FiSearch} from  'react-icons/fi'
-import Header from '../components/admin/header'
+import Header from '../components/admin/index/header'
 
 import { data } from '../data/data.js';
 

@@ -1,3 +1,52 @@
+import {
+  FaUserGraduate,
+  FaHome,
+  FaUserAlt,
+  FaUsers,
+  FaCog,
+} from 'react-icons/fa';
+import { MdDashboard, MdBookmark } from 'react-icons/md';
+import { BiMoneyWithdraw } from 'react-icons/bi';
+import {
+  BsFillBuildingFill, Bs1Circle, Bs2Circle, Bs3Circle,
+} from 'react-icons/bs';
+
+
+// Sidebar Data
+
+export const SidebarData = [
+
+  {
+    icon: BsFillBuildingFill,
+    heading: 'Departamentos',
+  },
+  {
+    icon: FaUserAlt,
+    heading: 'Perfil',
+  },
+  {
+    icon: FaUserGraduate,
+    heading: 'Pastores',
+  },
+
+  {
+    icon: FaUsers,
+    heading: 'Pedidos',
+  },
+
+  // {
+  //   icon: MdBookmark,
+  //   heading: 'Cursos',
+  // },
+
+  {
+    icon: FaCog,
+    heading: 'Config',
+  },
+
+];
+
+
 export const data = [
   {
     id: 1,
@@ -65,48 +114,6 @@ export const data = [
     method: '9/11/2023',
     date: 'Há 8 horas ',
   },
-  {
-    id: 7,
-    name: {
-      first: 'Michael',
-      last: 'Jones',
-    },
-    total: 89.95,
-    status: 'Completado',
-    method: 'MasterCard',
-    date: 'Há 3 horas',
-  },
-  {
-    id: 8,
-    name: {
-      first: 'Paulo',
-      last: 'Bob',
-    },
-    total: 689.45,
-    status: 'Completado',
-    method: '31/4/223',
-    date: 'Há 7 horas',
-  },
-  {
-    id: 9,
-    name: {
-      first: 'Haley',
-      last: 'Pendente',
-    },
-    total: 14.99,
-    status: 'Completado',
-    method: '10/3/2023',
-    date: 'Há 3 dias',
-  },
-  {
-    id: 10,
-    name: {
-      first: 'Tim',
-      last: 'Thomas',
-    },
-    total: 218.99,
-    status: 'Completado',
-    method: '11/11/2023',
-    date: 'Há 3 dias',
-  },
+ 
+  
 ];

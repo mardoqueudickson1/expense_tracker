@@ -1,7 +1,7 @@
 import React from 'react';
 import { BsPersonFill, BsThreeDotsVertical } from 'react-icons/bs';
 import { data } from '../data/data.js';
-import Header from '../components/admin/header'
+import Header from '../components/admin/index/header'
 
 
 

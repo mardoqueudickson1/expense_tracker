@@ -1,5 +1,5 @@
 import React from 'react';
-import { data } from '../../data/data';
+import { data } from '../../../data/data';
 import { FaShoppingBag, FaUserCircle} from 'react-icons/fa';
 
 const RecentOrders = () => {

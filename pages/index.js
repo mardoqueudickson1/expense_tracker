@@ -1,9 +1,9 @@
 import Head from 'next/head'
 import Image from 'next/image'
-import Header from '@/components/admin/header'
-import TopCards from '@/components/admin/topCards'
-import BarChart from '../components/admin/BarChart';
-import RecentOrders from '../components/admin/RecentOrders';
+import Header from '@/components/admin/index/header'
+import TopCards from '@/components/admin/index/topCards'
+import BarChart from '../components/admin/index/BarChart';
+import RecentOrders from '../components/admin/index/RecentOrders';
 
 
 
