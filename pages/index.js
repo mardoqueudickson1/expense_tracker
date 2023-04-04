@@ -4,6 +4,7 @@ import Header from '@/components/admin/index/header'
 import TopCards from '@/components/admin/index/topCards'
 import BarChart from '../components/admin/index/BarChart';
 import RecentOrders from '../components/admin/index/RecentOrders';
+import Footer from '@/components/admin/index/Footer';
 
 
 
@@ -25,6 +26,7 @@ export default function Home() {
           <BarChart />
           <RecentOrders />
         </div>
+        <Footer />
       </main>
     </>
   )
