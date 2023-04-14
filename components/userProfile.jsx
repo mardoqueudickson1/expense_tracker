@@ -16,7 +16,7 @@ const userProfile = ({ toggle }) => (
     </Link>
 
     <div className={`${!toggle ? 'opacity-0 ' : ''}`}>
-      <h3 className="text-xl text-white">Jolvick Joel</h3>
+      <h3 className="text-xl text-white">Welcome</h3>
       <span className="text-[0.85rem] opacity-60  text-white">Multimedia | Designer </span>
     </div>
   </div>

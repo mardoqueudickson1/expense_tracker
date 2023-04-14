@@ -17,6 +17,7 @@ module.exports = {
     'react',
   ],
   rules: {
+    'max-len': 'off',
     'no-console': 'off',
     'react/button-has-type': 'off',
     'tjsx-a11y/label-has-associated-control': 'off',

@@ -1,33 +1,42 @@
+/* eslint-disable import/no-extraneous-dependencies */
 /* eslint-disable react/no-array-index-key */
 /* eslint-disable no-unused-vars */
 /* eslint-disable import/extensions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import ReactPaginate from 'react-paginate';
+import { MdProductionQuantityLimits } from 'react-icons/md';
+import { BiCategory, BiMoneyWithdraw } from 'react-icons/bi';
 
 import {
-  BsThreeDotsVertical, BsArrowUpCircle, BsArrowDownCircle, BsFillClipboardCheckFill,
+  BsFillClipboardCheckFill,
 } from 'react-icons/bs';
 
-import { BiMoneyWithdraw } from 'react-icons/bi';
 import Modal from '@/components/modal';
+import ModalDel from '@/components/ModalDel';
+import ModalEdit from '@/components/ModalEdit';
 import { data } from '../data/data';
 
 function Estoque() {
+  const [dados, setDatas] = useState(data);
+
+  // Pesquisa em tempo real
+  const [search, setsearch] = useState('');
+
+  const filteredData = data.filter((item) => item.name.last.toLowerCase().includes(search.toLowerCase()));
+
   // Paginação
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 5;
-  const totalItems = data.length;
+  const itemsPerPage = 8;
+  const totalItems = filteredData.length;
   const offset = currentPage * itemsPerPage;
-  const currentPageData = data.slice(offset, offset + itemsPerPage);
+  const currentPageData = filteredData.slice(offset, offset + itemsPerPage);
 
   const handlePageClick = (e) => {
     setCurrentPage(e.selected);
   };
 
-  // Pesquisa em tempo real
-  const [search, setsearch] = useState('');
   return (
     <div>
 
@@ -48,7 +57,7 @@ function Estoque() {
 
         <div className="  bg-white flex justify-between w-full  p-4 rounded-lg">
           <div className="flex flex-col w-full pb-4 gap-7">
-            <p className="text-gray-400">Produtos cadastrados</p>
+            <p className="text-azulScuro">Produtos cadastrados</p>
             <p className="text-3xl font-bold">120</p>
           </div>
           <p className=" flex justify-center items-center p-2 rounded-lg -mt-[4rem]">
@@ -58,21 +67,21 @@ function Estoque() {
 
         <div className="  bg-white flex justify-between w-full  p-4 rounded-lg">
           <div className="flex flex-col w-full pb-4 gap-7">
-            <p className="text-gray-400">Produtos com estoque</p>
+            <p className="text-azulScuro">Produtos com estoque</p>
             <p className="text-3xl font-bold">5.700</p>
           </div>
           <p className=" flex justify-center items-center p-2 rounded-lg -mt-[4rem]">
-            <BsArrowUpCircle size={30} className="text-green-400" />
+            <MdProductionQuantityLimits size={30} className="text-gree" />
           </p>
         </div>
 
         <div className="  bg-white flex justify-between w-full  p-4 rounded-lg">
           <div className="flex flex-col w-full pb-4 gap-7">
-            <p className="text-gray-400">Categoria</p>
+            <p className="text-azulScuro ">Categoria</p>
             <p className="text-3xl  font-bold">300,000</p>
           </div>
           <p className=" flex justify-center items-center p-2 rounded-lg -mt-[4rem]">
-            <BsArrowDownCircle size={30} className=" text-red-600" />
+            <BiCategory size={30} className=" text-azulScuro" />
           </p>
         </div>
 
@@ -206,7 +215,7 @@ r                         ounded-[5px] bg-gray-100"
                     </th>
                     <th
                       scope="col"
-                      className="px-10 py-3 text-xs flex justify-end font-bold text-right text-white uppercase "
+                      className="pr-[5rem] py-3 text-xs flex justify-end font-bold text-right text-white uppercase "
                     >
                       Data
                     </th>
@@ -216,7 +225,7 @@ r                         ounded-[5px] bg-gray-100"
 
                 {/* Corpo da tabela */}
                 <tbody className="">
-                  {data.filter((item) => (search === '' ? item : item.name.first.toLocaleLowerCase().includes(search) || item.name.last.toLocaleLowerCase().includes(search))).map((order, index) => (
+                  {currentPageData.map((order, index) => (
                     <tr
                       key={index}
                       className="bg-white odd:bg-gray-200"
@@ -244,7 +253,67 @@ r                         ounded-[5px] bg-gray-100"
                         <div className="flex text-center justify-end gap-5">
 
                           10 / 04 / 2023
-                          <BsThreeDotsVertical className="cursor-pointer" />
+                          <ModalEdit>
+                            {' '}
+                            <div className="flex justify-center align-center mt-[4rem] p-5">
+
+                              <div className="bg-white w-[25rem] p-5 rounded-[5px]">
+                                <h1 className="text-center font-bold">atualizar dados</h1>
+                                <div className="mt-[2rem]">
+                                  <form action="">
+                                    <input
+                                      type="text"
+                                      className="border w-full h-[2.8rem] p-5 text-sm rounded-[5px] bg-gray-100"
+                                      placeholder="Nome"
+                                    />
+
+                                    <input
+                                      type="text"
+                                      className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
+                       rounded-[5px] bg-gray-100 mt-3"
+                                      placeholder="Sobrenome"
+                                    />
+
+                                    <input
+                                      type="text"
+                                      className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
+                       rounded-[5px] bg-gray-100 mt-3"
+                                      placeholder="Telefone"
+                                    />
+
+                                    <input
+                                      type="text"
+                                      className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
+                       rounded-[5px] bg-gray-100 mt-3"
+                                      placeholder="Morada"
+                                    />
+
+                                    <input
+                                      type="text"
+                                      className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
+                       rounded-[5px] bg-gray-100 mt-3"
+                                      placeholder="Endereço da casa"
+                                    />
+
+                                    <button className="bg-azulScuro w-full
+                  h-[2.8rem] text-white mt-3 rounded-[5px]"
+                                    >
+                                      Atualizar
+
+                                    </button>
+                                  </form>
+                                </div>
+
+                              </div>
+                            </div>
+
+                          </ModalEdit>
+
+                          <ModalDel>
+                            <h1 className="p-5 text-center text-base font-bold">Tem certeza que quer apagar?</h1>
+
+                          </ModalDel>
+
                         </div>
 
                       </td>
@@ -255,17 +324,22 @@ r                         ounded-[5px] bg-gray-100"
                 </tbody>
               </table>
               <ReactPaginate
-                previousLabel="previous"
-                nextLabel="next"
+                previousLabel="anterior"
+                nextLabel="próximo"
                 breakLabel="..."
                 breakClassName="break-me"
                 pageCount={Math.ceil(totalItems / itemsPerPage)}
                 marginPagesDisplayed={2}
                 pageRangeDisplayed={5}
                 onPageChange={handlePageClick}
-                containerClassName="pagination"
-                subContainerClassName="pages pagination"
-                activeClassName="active"
+                containerClassName="flex bg-white border rounded-lg overflow-hidden"
+                pageClassName="cursor-pointer mx-1 px-3 py-2 border bg-white"
+                pageLinkClassName="block"
+                previousClassName="cursor-pointer mx-1 px-3 py-2 border bg-white"
+                previousLinkClassName="block"
+                nextClassName="cursor-pointer mx-1 px-3 py-2 border bg-white"
+                nextLinkClassName="block"
+                activeClassName="bg-gray-400 text-white"
               />
             </div>
           </div>

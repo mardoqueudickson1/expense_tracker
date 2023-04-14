@@ -97,7 +97,7 @@ export const data = [
   },
 
   {
-    id: 5,
+    id: 6,
     name: {
       first: 'Pagamento de divida',
       last: 'Harding',
@@ -111,7 +111,7 @@ export const data = [
   },
 
   {
-    id: 5,
+    id: 7,
     name: {
       first: 'Pagamento de divida',
       last: 'Harding',
@@ -125,7 +125,7 @@ export const data = [
   },
 
   {
-    id: 5,
+    id: 8,
     name: {
       first: 'Pagamento de divida',
       last: 'Harding',
@@ -139,7 +139,174 @@ export const data = [
   },
 
   {
-    id: 5,
+    id: 9,
+    name: {
+      first: 'Pagamento de divida',
+      last: 'Harding',
+    },
+    total: 175.25,
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '50700',
+    pagamento: 'Pagamento de divida',
+
+  },
+
+  {
+    id: 10,
+    name: {
+      first: 'Pagamento de divida',
+      last: 'Harding',
+    },
+    total: 175.25,
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '50700',
+    pagamento: 'Pagamento de divida',
+
+  },
+
+  {
+    id: 11,
+    name: {
+      first: 'Pagamento de divida',
+      last: 'Harding',
+    },
+    total: 175.25,
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '50700',
+    pagamento: 'Pagamento de divida',
+
+  },
+
+  {
+    id: 12,
+    name: {
+      first: 'Pagamento de divida',
+      last: 'Harding',
+    },
+    total: 175.25,
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '50700',
+    pagamento: 'Pagamento de divida',
+
+  },
+
+  {
+    id: 13,
+    name: {
+      first: 'Pagamento de divida',
+      last: 'Harding',
+    },
+    total: 175.25,
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '50700',
+    pagamento: 'Pagamento de divida',
+
+  },
+
+  {
+    id: 14,
+    name: {
+      first: 'Pagamento de divida',
+      last: 'Harding',
+    },
+    total: 175.25,
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '50700',
+    pagamento: 'Pagamento de divida',
+
+  },
+
+  {
+    id: 15,
+    name: {
+      first: 'Pagamento de divida',
+      last: 'Harding',
+    },
+    total: 175.25,
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '50700',
+    pagamento: 'Pagamento de divida',
+
+  },
+
+  {
+    id: 16,
+    name: {
+      first: 'Pagamento de divida',
+      last: 'Harding',
+    },
+    total: 175.25,
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '50700',
+    pagamento: 'Pagamento de divida',
+
+  },
+
+  {
+    id: 17,
+    name: {
+      first: 'Pagamento de divida',
+      last: 'Harding',
+    },
+    total: 175.25,
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '50700',
+    pagamento: 'Pagamento de divida',
+
+  },
+
+  {
+    id: 18,
+    name: {
+      first: 'Pagamento de divida',
+      last: 'Harding',
+    },
+    total: 175.25,
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '50700',
+    pagamento: 'Pagamento de divida',
+
+  },
+
+  {
+    id: 18,
+    name: {
+      first: 'Pagamento de divida',
+      last: 'Harding',
+    },
+    total: 175.25,
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '50700',
+    pagamento: 'Pagamento de divida',
+
+  },
+
+  {
+    id: 20,
+    name: {
+      first: 'Pagamento de divida',
+      last: 'Harding',
+    },
+    total: 175.25,
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '50700',
+    pagamento: 'Pagamento de divida',
+
+  },
+  {
+    id: 21,
     name: {
       first: 'Pagamento de divida',
       last: 'Harding',
