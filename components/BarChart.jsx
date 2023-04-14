@@ -28,13 +28,13 @@ const BarChart = () => {
 
   useEffect(() => {
     setChartData({
-        labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho'],
+        labels: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho'],
         datasets: [
             {
-                label: 'Fiéis',
-                data: [18127, 22201, 19490, 17938, 24182, 17842, 22475],
-                borderColor: 'rgb(53, 162, 235)',
-                backgroundColor: 'rgb(53, 162, 235, 0.4',
+                label: 'Balanço geral',
+                data: [18127, 22201, 19490, 17938, 24182, 17842],
+                borderColor: '#2B2D42',
+                backgroundColor: '#2B2D42',
               }, 
         ]
     })
@@ -55,7 +55,7 @@ const BarChart = () => {
 
   return (
     <>
-      <div className='w-full md:col-span-2 relative lg:h-[66vh] h-[40vh] m-auto p-1 border rounded-lg bg-white'>
+      <div className='w-full cursor-pointer relative lg:h-[62vh] h-[40vh] m-auto p-1 border rounded-lg bg-white'>
         <Bar data={chartData} options={chartOptions} />
       </div>
     </>

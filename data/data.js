@@ -1,43 +1,27 @@
 import {
-  FaUserGraduate,
-  FaHome,
+
   FaUserAlt,
-  FaUsers,
   FaCog,
 } from 'react-icons/fa';
-import { MdDashboard, MdBookmark } from 'react-icons/md';
-import { BiMoneyWithdraw } from 'react-icons/bi';
-import {
-  BsFillBuildingFill, Bs1Circle, Bs2Circle, Bs3Circle,
-} from 'react-icons/bs';
-
+import { MdInsights } from 'react-icons/md';
+import { BsFillClipboardCheckFill } from 'react-icons/bs';
 
 // Sidebar Data
 
 export const SidebarData = [
 
   {
-    icon: BsFillBuildingFill,
-    heading: 'Departamentos',
+    icon: BsFillClipboardCheckFill,
+    heading: 'Estoque',
   },
   {
     icon: FaUserAlt,
     heading: 'Perfil',
   },
   {
-    icon: FaUserGraduate,
-    heading: 'Pastores',
+    icon: MdInsights,
+    heading: 'Visao',
   },
-
-  {
-    icon: FaUsers,
-    heading: 'Pedidos',
-  },
-
-  // {
-  //   icon: MdBookmark,
-  //   heading: 'Cursos',
-  // },
 
   {
     icon: FaCog,
@@ -46,74 +30,126 @@ export const SidebarData = [
 
 ];
 
-
 export const data = [
   {
     id: 1,
     name: {
-      first: 'John',
+      first: 'Salario',
       last: 'Pedro',
     },
     total: 2795.95,
-    status: 'Esperando',
-    method: '10/3/2023',
-    date: 'Há 15 minutos',
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '98.245,44',
+    pagamento: 'Materias',
+
   },
   {
     id: 2,
     name: {
-      first: 'Adão',
+      first: 'Processamento',
       last: 'Marcos',
     },
     total: 1195.95,
-    status: 'Processando',
-    method: '10/3/2023',
-    date: 'Há 23 minutos',
+    status: 'entrada',
+    data: '10/3/2023',
+    valor: '48.5574,00',
+    pagamento: 'Materiais de estoque',
+
   },
   {
     id: 3,
     name: {
-      first: 'Sarah',
+      first: 'pagamento de energia',
       last: 'Pedro',
     },
     total: 495.85,
-    status: 'Completado',
-    method: '31/4/223',
-    date: '1 Horas',
+    status: 'saida',
+    data: '31/11/2023',
+    valor: '1584,00',
+    pagamento: 'conta passivos',
   },
   {
     id: 4,
     name: {
-      first: 'Josepha',
+      first: 'Aluguel de espaço',
       last: 'Paula',
     },
     total: 150.45,
-    status: 'Processando',
-    method: 'MasterCard',
-    date: '1 Horas',
+    status: 'entrada',
+    data: '19/04/2022',
+    valor: '87700,00',
+    pagamento: 'conta ativos',
+
   },
   {
     id: 5,
     name: {
-      first: 'Steve',
+      first: 'Pagamento de divida',
       last: 'Harding',
     },
     total: 175.25,
-    status: 'Esperando',
-    method: '10/3/2023',
-    date: '2 Horas',
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '50700',
+    pagamento: 'Pagamento de divida',
+
   },
+
   {
-    id: 6,
+    id: 5,
     name: {
-      first: 'Laura',
-      last: 'Croft',
+      first: 'Pagamento de divida',
+      last: 'Harding',
     },
-    total: 1295.75,
-    status: 'Completado',
-    method: '9/11/2023',
-    date: 'Há 8 horas ',
+    total: 175.25,
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '50700',
+    pagamento: 'Pagamento de divida',
+
   },
- 
-  
+
+  {
+    id: 5,
+    name: {
+      first: 'Pagamento de divida',
+      last: 'Harding',
+    },
+    total: 175.25,
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '50700',
+    pagamento: 'Pagamento de divida',
+
+  },
+
+  {
+    id: 5,
+    name: {
+      first: 'Pagamento de divida',
+      last: 'Harding',
+    },
+    total: 175.25,
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '50700',
+    pagamento: 'Pagamento de divida',
+
+  },
+
+  {
+    id: 5,
+    name: {
+      first: 'Pagamento de divida',
+      last: 'Harding',
+    },
+    total: 175.25,
+    status: 'saida',
+    data: '10/3/2023',
+    valor: '50700',
+    pagamento: 'Pagamento de divida',
+
+  },
+
 ];
