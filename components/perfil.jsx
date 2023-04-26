@@ -1,21 +1,35 @@
 import React from 'react';
 import { FaUserCircle, FaEdit } from 'react-icons/fa';
 import { BsFillBriefcaseFill, BsGeoAltFill, BsFillTelephoneFill } from 'react-icons/bs';
+import axios from '../../services/axios';
 
-const adminPage = () => (
+
+function adminPage () {
+
+  const [perfil, setPerfil] = useState([]);
+
+  useEffect(() => {
+    async function getData() {
+      const response = await axios.get('/alunos');
+      setPerfil(response.data);
+    }
+
+    getData();
+  }, []);
+
 
   <div className=" grid-cols-1 grid md:grid-cols-2 lg:grid-cols-3 gap-6 ">
 
     <div className="bg-white flex flex-col p-5 rounded-lg">
       <div className="flex justify-between">
-        <h1 className="text-3xl font-bold">Perfil</h1>
+        <h1 className="text-3xl font-bold">Perfil 2</h1>
         <FaEdit className="cursor-pointer" />
       </div>
 
       <div className="mt-7">
         <FaUserCircle size={90} />
       </div>
-      <span className="text-xl font-bold mt-2">Pastor Esmael</span>
+      {/* <span className="text-xl font-bold mt-2">{perfil.nome}</span> */}
 
       <div className="flex flex-col my-5">
         <div className="flex gap-2">
@@ -35,7 +49,7 @@ const adminPage = () => (
 
         <div className="flex flex-col my-4">
           <p className="text-gray-500">Endereço email</p>
-          <p>mardoqueudrums@gmail.com</p>
+          <p>{perfil.email}</p>
         </div>
 
         <div className="flex flex-col my-4">
@@ -109,6 +123,6 @@ const adminPage = () => (
     </div>
   </div>
 
-);
+};
 
 export default adminPage;

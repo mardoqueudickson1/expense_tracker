@@ -1,11 +1,22 @@
-import React from 'react';
+import React, {useState, useEffect } from 'react';
 import { FaUserCircle, FaEdit } from 'react-icons/fa';
 import { BsFillBriefcaseFill, BsGeoAltFill, BsFillTelephoneFill } from 'react-icons/bs';
 import Modal from '../components/ModalEdit';
+import axios from '../services/axios'
+import { data } from 'autoprefixer';
 
-const adminPage = () => (
+function adminPage() {
 
-  <div className="">
+ async function getData() {
+  const response = await axios.get('/empresa/filha/funcionario');
+  const data = response.data;
+  console.log(data)
+  return data;
+}
+getData()
+
+  return( 
+    <div className="">
     <div className=" bg- bg-black flex justify-between py-5 px-10 lg:px-14
     md:flex md:justify-between item-center"
     >
@@ -16,7 +27,7 @@ const adminPage = () => (
 
       <div className="bg-white flex flex-col p-5 rounded-lg">
         <div className="flex justify-between">
-          <h1 className="text-3xl font-bold text-azulScuro">Perfil</h1>
+          <h1 className="text-3xl font-bold text-azulScuro">Perfil 4</h1>
           <Modal>
 
             {' '}
@@ -79,7 +90,7 @@ const adminPage = () => (
         <div className="mt-7">
           <FaUserCircle size={90} className="text-azulScuro" />
         </div>
-        <span className="text-xl font-bold mt-2">Pastor Esmael</span>
+        <span className="text-xl font-bold mt-2">{data.nome}</span>
 
         <div className="flex flex-col my-5">
           <div className="flex gap-2">
@@ -176,7 +187,8 @@ const adminPage = () => (
       </div>
     </div>
   </div>
+  )
 
-);
+};
 
 export default adminPage;
