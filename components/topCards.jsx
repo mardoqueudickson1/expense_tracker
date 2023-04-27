@@ -1,13 +1,31 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
-import React, { useState } from 'react';
-import {
-  BsArrowUpCircle, BsArrowDownCircle,
-  BsBank,
-} from 'react-icons/bs';
+import React, { useState, useEffect} from 'react';
+import { BsArrowUpCircle, BsArrowDownCircle, BsBank} from 'react-icons/bs';
+import axios from '../services/axios'
 
 import Modal from './modal';
 
 function TopCards() {
+
+
+  const [balaco, setBalaco] = useState([])
+  const [ativos, setAtivos] = useState([])
+  const [passivos, setPassivos] = useState([])
+
+  
+
+  useEffect(() => {
+    async function getData() {
+      const response = await axios.get('/empresa/filha/balanco');
+      setBalaco(response.data)
+      
+      
+    }
+
+    getData();
+  }, []);
+
+
   const [IsclickedEntrada, setIsclickedEntrada] = useState(false);
   const [IsclickedSaida, setIsclickedSaida] = useState(false);
 
@@ -54,7 +72,7 @@ function TopCards() {
         <div className="flex flex-col w-full pb-4 gap-7">
           <p className="text-white">Balanço</p>
           <div className="flex justify-between">
-            <p className="text-4xl text-white font-bold">KZ 5.700,00</p>
+            <p className="text-4xl text-white font-bold">KZ {balaco.balanco}</p>
 
           </div>
 

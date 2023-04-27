@@ -9,8 +9,17 @@ import { FaSignOutAlt } from 'react-icons/fa';
 import { MdDashboard } from 'react-icons/md';
 import UserProfile from './userProfile';
 import { SidebarData } from '@/data/data';
-
+import { useDispatch } from 'react-redux';
+import * as actions from '../store/modules/auth/actions'
 const sidebar = ({ children }) => {
+
+  const dispatch = useDispatch()
+  //Desloga o usuário
+  const handleLogout = (e) => {
+    e.preventDefault();
+    dispatch(actions.loginFailure());
+    
+  };
   const [toggle, setToggle] = useState(false);
 
   return (
@@ -54,7 +63,7 @@ const sidebar = ({ children }) => {
         ))}
 
         <div className="text-white p-4 mt-[10rem] cursor-pointer ">
-          <Link href="login">
+          <Link href="/" onClick={handleLogout}>
             <FaSignOutAlt size={25} />
           </Link>
 

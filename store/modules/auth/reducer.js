@@ -10,6 +10,7 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
+
     case types.LOGIN_SUCCESS: {
       const newState = { ...state };
       newState.isLoggedIn = true;
@@ -33,8 +34,7 @@ export default function (state = initialState, action) {
 
     case types.REGISTER_UPDATED_SUCCESS: {
       const newState = { ...state };
-      newState.user.nome = action.payload.nome;
-      newState.user.email = action.payload.email;
+      newState.user = action.payload;
       newState.isLoading = false;
       return newState;
     }

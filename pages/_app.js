@@ -1,14 +1,45 @@
-/* eslint-disable react/jsx-props-no-spreading */
-/* eslint-disable react/prop-types */
-/* eslint-disable react/react-in-jsx-scope */
 import '@/styles/globals.css';
+import { useRouter } from 'next/router';
+import { PersistGate } from 'redux-persist/integration/react';
+import LoginPage from './login';
 import Sidebar from '../components/sidebar';
+import { Provider } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
+import store, { persistor } from '../store';
 
-export default function App({ Component, pageProps }) {
+
+const noSidebarRoutes = ['/login'];
+
+function App({ Component, pageProps }) {
+  const router = useRouter()
+  const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
+
+  const isLoginPage = router.pathname === '/login';
+  const showSidebar = isAuthenticated && !noSidebarRoutes.includes(router.pathname);
+
+  if (isLoginPage) {
+    return <LoginPage />
+  } else {
+    return (
+      <div>
+        {showSidebar ? (
+          <Sidebar>
+            <Component {...pageProps} />
+          </Sidebar>
+        ) : (
+          <LoginPage />
+        )}
+      </div>
+    );
+  }
+}
+
+export default function MyApp(props) {
   return (
-
-    <Sidebar>
-      <Component {...pageProps} />
-    </Sidebar>
+    <Provider store={store}>
+      <PersistGate persistor={persistor}>
+        <App {...props} />
+      </PersistGate>
+    </Provider>
   );
 }

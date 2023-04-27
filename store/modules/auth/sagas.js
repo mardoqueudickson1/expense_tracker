@@ -7,17 +7,17 @@ import axios from '../../../services/axios';
 
 function* loginRequest({ payload }) {
   try {
-    const response = yield call(axios.post, '/tokens', payload);
+    console.log('Você fez login');
+
+    const response = yield call(axios.post, '/empresa/filha/token', payload);
     yield put(actions.loginSuccess({ ...response.data }));
 
-    toast.success('Você fez login');
-
     axios.defaults.headers.Authorization = `Bearer ${response.data.token}`;
+    console.log(payload);
 
-    payload.history.push(payload.prevPath);
+
   } catch (e) {
-    console.log(payload.location);
-    toast.error('Usuário ou senha inválidos.');
+    console.log(e);
 
     yield put(actions.loginFailure());
   }

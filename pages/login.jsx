@@ -2,31 +2,42 @@
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import * as actions from '../store/modules/auth/actions';
 
-function Login() {
-  const [IsclickedSaida, setIsclickedSaida] = useState(false);
 
-  // eslint-disable-next-line no-unused-vars
-  const handleCheckboxChange = () => {
-    setIsclickedSaida(!IsclickedSaida);
-    console.log(IsclickedSaida);
+export default function Login (props)  {
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
+  const dispatch = useDispatch()
+  const entity =  "funcionario"
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    console.log(email)
+    console.log(password)
+
+    dispatch(actions.loginRequest({ email, password, entity }));
+
   };
+
+
   return (
     <div className="flex justify-center align-center mt-[4rem]">
 
       <div className="bg-white w-[25rem] p-5 rounded-[5px]">
         <h1 className="text-center font-bold">Login</h1>
         <div className="mt-[2rem]">
-          <form action="">
-            <input
-              type="text"
+          <form action="" onSubmit={handleSubmit}>
+            <input onChange={(e) => setEmail(e.target.value)} value={email} 
+              type="text" name="email"
               className="border w-full h-[2.8rem] p-5 text-sm
             rounded-[5px] bg-gray-100"
               placeholder="Email"
             />
 
-            <input
-              type="password"
+            <input  onChange={(e) => setPassword(e.target.value)} value={password} 
+              type="password" name="password"
               className="border w-full h-[2.8rem] p-5 text-sm
             rounded-[5px] bg-gray-100 mt-3"
               placeholder="Senha"
@@ -46,4 +57,3 @@ function Login() {
   );
 }
 
-export default Login;
