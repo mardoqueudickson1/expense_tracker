@@ -1,7 +1,8 @@
 /* eslint-disable react/no-array-index-key */
 import React, { useState, useEffect } from 'react';
 import { BsArrowUpCircle } from 'react-icons/bs';
-import axios  from '../services/axios'
+import axios from '../services/axios'
+import { format, parseISO } from 'date-fns';
 import { data } from '../data/data';
 import Loading from './Loading';
 
@@ -15,7 +16,7 @@ function Transações() {
       const response = await axios.get('/empresa/filha/transacoes');
       setTransacoes(response.data);
       setLoading(false)
-      
+
     }
 
     getData();
@@ -25,44 +26,81 @@ function Transações() {
     <>
 
 
-    <div className="w-full col-span-1 relative lg:h-[62vh] h-[50vh] m-auto md:col-span-2 p-4 border rounded-lg bg-white overflow-scroll">
+      <div className="w-full col-span-1 relative lg:h-[62vh] h-[50vh] m-auto md:col-span-2 p-4 border rounded-lg bg-white overflow-scroll">
 
-      <div className="flex justify-between gap-7 px-4">
-        <h1>Transações</h1>
-        <h1>Valor</h1>
-      </div>
-      <ul>
-        {transacoes.map((item, id) => (
-          <li
-            key={id}
-            className="bg-gray-50 hover:bg-gray-100 rounded-lg my-3 p-2 flex items-center cursor-pointer"
-          >
-            <div className="">
-              <BsArrowUpCircle size={25} className={item.tipo === 'despesa' ? 'text-red-600 rotate-180' : 'text-green-500'} />
-            </div>
-            <div className="pl-4">
-              <p className="text-gray-800 font-bold">{`${item.descricao}`}</p>
-              <p className="text-gray-500 text-sm">{item.created_at}</p>
-            </div>
 
-            <p className="lg:flex text-lg text-green-500 md:hidden absolute right-6 ">
+        <table className="min-w-full ">
+          <thead className="">
+            <tr>
+
+              <th
+                scope="col"
+                className="px-6 py-3 text-xs font-bold text-left   uppercase "
+              >
+                Data
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-3 text-xs font-bold text-center   uppercase "
+              >
+                Descrição
+              </th>
+
+              <th
+                scope="col"
+                className="px-6 py-3 text-xs font-bold text-right  uppercase "
+              >
+                Valor
+              </th>
+
+
+
+
+            </tr>
+          </thead>
+
+          {/* Corpo da tabela */}
+          <tbody className="">
+
+
+          {transacoes.map((item, index) => (
+
+             <tr>
+
+              <td className="px-6 py-4 text-sm font-medium text-gray-800 whitespace-nowrap">
+                {item.data_formatada}
+              </td>
+              <td className="px-6 py-4  text-center text-sm text-gray-800 whitespace-nowrap">
+                {item.descricao}
+              </td>
+              <td className="px-6 py-4 text-sm text-gray-800 whitespace-nowrap text-end ">
+              <p className="lg:flex text-sm text-green-500 md:hidden absolute right-6 ">
               {item.tipo === 'despesa' ? (
                 <span className="text-red-600">
                   -
-                  {item.valor}
+                  {item.valor} Kz
                 </span>
               ) : (
                 <span>
                   +
-                  {item.valor}
+                  {item.valor} Kz
 
                 </span>
               )}
             </p>
-          </li>
-        ))}
-      </ul>
-    </div>
+              </td>
+
+            </tr>
+          ))}
+           
+
+            
+
+          </tbody>
+        </table>
+
+      </div>
+
     </>
   );
 }

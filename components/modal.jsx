@@ -4,9 +4,16 @@ import React, { useState } from 'react';
 import { AiFillPlusCircle } from 'react-icons/ai';
 import { FaWindowClose } from 'react-icons/fa';
 
-export default function Modal({ children }) {
+export default function Modal({ children, toggle }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+    console.log(toggle)
+
+    
+  if(toggle){
+    setIsModalOpen(false)
+  }
+  
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 

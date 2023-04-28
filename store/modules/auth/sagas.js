@@ -4,6 +4,7 @@ import * as actions from './actions';
 import * as types from '../types';
 import axios from '../../../services/axios';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/router';
 
 function* loginRequest({ payload }) {
   try {
@@ -31,6 +32,8 @@ function persistRehydrate({ payload }) {
   axios.defaults.headers.Authorization = `Bearer ${token}`;
 }
 
+
+//REGISTER REQUEST
 // eslint-disable-next-line consistent-return
 function* registerRequest({ payload }) {
   const { id, nome, email, password, history } = payload;
@@ -74,8 +77,33 @@ function* registerRequest({ payload }) {
   }
 }
 
+
+//TRANSACOES REQUEST
+function* transacoesRequest({ payload }) {
+  
+  const { descricao, valor, tipo, conta_id, empresa_filha_id } = payload;
+
+  try { 
+
+      yield call(axios.post, '/empresa/filha/transacoes', {
+        descricao, valor, tipo, conta_id, empresa_filha_id
+      });
+    
+      toast.success('Transação cadastrada com sucesso!');
+
+      yield put(actions.registerTransacoesSuccess({ descricao, valor, tipo, conta_id, empresa_filha_id }));
+    
+  } catch (e) {
+      console.log(e)
+      toast.error('Erro ao cadastrar');
+
+    yield put(actions.registerTransacoesFailure());
+  }
+}
+
 export default all([
   takeLatest(types.LOGIN_REQUEST, loginRequest),
   takeLatest(types.PERSIST_REHYDRATE, persistRehydrate),
   takeLatest(types.REGISTER_REQUEST, registerRequest),
+  takeLatest(types.REGISTER_TRANSACTION_REQUEST, transacoesRequest)
 ]);

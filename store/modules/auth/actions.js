@@ -1,5 +1,7 @@
 import * as types from '../types';
 
+
+//USER REQUESTS
 export function loginRequest(payload) {
   return {
     type: types.LOGIN_REQUEST,
@@ -45,6 +47,37 @@ export function registerCreatedSuccess(payload) {
 export function registerFailure(payload) {
   return {
     type: types.REGISTER_FAILURE,
+    payload,
+  };
+}
+
+
+//TRANSACOES REQUESTS
+
+export function registerTransacoesRequest(payload) {
+  return {
+    type: types.REGISTER_TRANSACTION_REQUEST,
+    payload,
+  };
+}
+
+export function registerTransacoesFailure(payload) {
+  return {
+    type: types.REGISTER_TRANSACTION_FAILURE,
+    payload,
+  };
+}
+
+export function registerTransacoesSuccess(payload) {
+  return {
+    type: types.REGISTER_TRANSACTION_SUCCESS,
+    payload,
+  };
+}
+
+export function registerTransacoesUpdatedSuccess(payload) {
+  return {
+    type: types.REGISTER_TRANSACTION_UPDATED_SUCCESS,
     payload,
   };
 }
