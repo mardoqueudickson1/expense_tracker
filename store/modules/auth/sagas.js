@@ -1,16 +1,17 @@
 import { call, put, all, takeLatest } from 'redux-saga/effects';
-import { toast } from 'react-toastify';
 import { get } from 'lodash';
 import * as actions from './actions';
 import * as types from '../types';
 import axios from '../../../services/axios';
+import toast from 'react-hot-toast';
 
 function* loginRequest({ payload }) {
   try {
-    console.log('Você fez login');
+    
 
     const response = yield call(axios.post, '/empresa/filha/token', payload);
     yield put(actions.loginSuccess({ ...response.data }));
+    toast.success('Logado com sucesso!');
 
     axios.defaults.headers.Authorization = `Bearer ${response.data.token}`;
     console.log(payload);
@@ -18,6 +19,7 @@ function* loginRequest({ payload }) {
 
   } catch (e) {
     console.log(e);
+    toast.error('Email ou senha  inválida!');
 
     yield put(actions.loginFailure());
   }

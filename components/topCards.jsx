@@ -9,21 +9,30 @@ function TopCards() {
 
 
   const [balaco, setBalaco] = useState([])
-  const [ativos, setAtivos] = useState([])
-  const [passivos, setPassivos] = useState([])
-
+  const [entrada, setEntrada] = useState()
+  const [saidas, setSaidas] = useState()
+  
+  
   
 
   useEffect(() => {
     async function getData() {
       const response = await axios.get('/empresa/filha/balanco');
       setBalaco(response.data)
-      
+
+      const passivo = await axios.get('/empresa/filha/passivos');
+      setSaidas(passivo.data.passivo)
+
+      const ativo = await axios.get('/empresa/filha/ativos');
+      setEntrada(ativo.data.ativo)
+    
       
     }
 
     getData();
   }, []);
+  
+  
 
 
   const [IsclickedEntrada, setIsclickedEntrada] = useState(false);
@@ -46,12 +55,14 @@ function TopCards() {
   };
 
   return (
-    <div className="grid lg:grid-cols-3 gap-4 p-4 -mt-[3.5rem] lg:mx-[7rem]">
 
+    
+    <div className="grid lg:grid-cols-3 gap-4 p-4 -mt-[3.5rem] lg:mx-[7rem]">
+      
       <div className="  bg-white flex justify-between w-full  p-4 rounded-lg">
         <div className="flex flex-col w-full pb-4 gap-7">
-          <p className="text-gray-400">Entradas</p>
-          <p className="text-3xl font-bold">KZ 5.700,00</p>
+          <p className="text-gray-400">Ativos</p>
+          <p className="text-3xl font-bold">KZ {entrada}</p>
         </div>
         <p className=" flex justify-center items-center p-2 rounded-lg -mt-[4rem]">
           <BsArrowUpCircle size={30} className="text-green-400" />
@@ -60,8 +71,8 @@ function TopCards() {
 
       <div className="  bg-white flex justify-between w-full  p-4 rounded-lg">
         <div className="flex flex-col w-full pb-4 gap-7">
-          <p className="text-gray-400">Saídas</p>
-          <p className="text-3xl  font-bold">KZ 300,000</p>
+          <p className="text-gray-400">Passivos</p>
+          <p className="text-3xl  font-bold">Kz {saidas}</p>
         </div>
         <p className=" flex justify-center items-center p-2 rounded-lg -mt-[4rem]">
           <BsArrowDownCircle size={30} className=" text-red-600" />
@@ -72,7 +83,7 @@ function TopCards() {
         <div className="flex flex-col w-full pb-4 gap-7">
           <p className="text-white">Balanço</p>
           <div className="flex justify-between">
-            <p className="text-4xl text-white font-bold">KZ {balaco.balanco}</p>
+            <p className="text-4xl text-white font-bold">Kz {balaco.balanco}</p>
 
           </div>
 

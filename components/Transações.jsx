@@ -3,14 +3,18 @@ import React, { useState, useEffect } from 'react';
 import { BsArrowUpCircle } from 'react-icons/bs';
 import axios  from '../services/axios'
 import { data } from '../data/data';
+import Loading from './Loading';
 
 function Transações() {
   const [transacoes, setTransacoes] = useState([])
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     async function getData() {
+      setLoading(true)
       const response = await axios.get('/empresa/filha/transacoes');
       setTransacoes(response.data);
+      setLoading(false)
       
     }
 
@@ -18,6 +22,9 @@ function Transações() {
   }, []);
 
   return (
+    <>
+
+
     <div className="w-full col-span-1 relative lg:h-[62vh] h-[50vh] m-auto md:col-span-2 p-4 border rounded-lg bg-white overflow-scroll">
 
       <div className="flex justify-between gap-7 px-4">
@@ -56,7 +63,14 @@ function Transações() {
         ))}
       </ul>
     </div>
+    </>
   );
 }
 
 export default Transações;
+
+
+
+
+
+

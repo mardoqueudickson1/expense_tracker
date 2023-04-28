@@ -2,20 +2,24 @@ import React, { useState, useDispatch, useEffect } from 'react';
 import { FaUserCircle, FaEdit } from 'react-icons/fa';
 import { BsFillBriefcaseFill, BsGeoAltFill, BsFillTelephoneFill } from 'react-icons/bs';
 import Modal from '../components/ModalEdit';
-import axios from '../services/axios'
-import { data } from 'autoprefixer';
 import { useSelector } from 'react-redux';
+import axios from '../services/axios'
 
 function adminPage() {
   const dados = useSelector(state => state.auth.user);
- 
+  const [user, setUser] = useState([])
+  console.log(user)
 
+  useEffect(() => {
+    async function getData() {
+      const response = await axios.get(`/empresa/filha/funcionario/${dados.id}`);
+      setUser(response.data);
+      
+      
+    }
 
-
-
-
-
- 
+    getData();
+  }, []);
 
 
   return (
@@ -98,7 +102,7 @@ function adminPage() {
           <div className="flex flex-col my-5">
             <div className="flex gap-2">
               <BsFillBriefcaseFill />
-              <p className="text-gray-500">{dados.role_id}</p>
+              <p className="text-gray-500">{user.nome_role}</p>
             </div>
 
             <div className="flex gap-2">
@@ -177,12 +181,12 @@ function adminPage() {
               </div>
               <div className="flex flex-col mt-7">
                 <p className=" text-gray-500">função</p>
-                <span>Programador web</span>
+                <span>{user.nome_role}</span>
               </div>
 
               <div className="flex flex-col mt-7">
                 <p className=" text-gray-500">Departamento</p>
-                <span>Multimídia</span>
+                <span>{user.nome_departamento}</span>
               </div>
             </div>
 
