@@ -1,25 +1,20 @@
-import { useEffect, useState } from 'react';
+import React from 'react';
+import PropTypes from 'prop-types';
 
-const LoadingOverlay = () => {
-  const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    // Set isLoading para true aqui, antes de fazer a requisição
-    setIsLoading(true);
-
-    // Depois que a requisição for concluída, set isLoading para false
-    setIsLoading(false);
-  }, []);
-
+export default function Loading({ isLoading }) {
+  if (!isLoading) return <></>;
   return (
-    <>
-      {isLoading && (
-        <><div className="fixed inset-0 bg-gray-800 opacity-50 z-50"></div><div className="fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-50">
-                  <svg className="animate-spin h-12 w-12 text-white" viewBox="0 0 24 24"></svg>
-              </div></>
-      )}
-    </>
+    <div className="absolute w-full h-full top-0 left-0 z-50 flex items-center justify-center">
+      <div className="absolute w-full h-full z-10 bg-black opacity-75"></div>
+      <span className="z-20 text-white text-3xl">Carregando...</span>
+    </div>
   );
+}
+
+Loading.defaultProps = {
+  isLoading: false,
 };
 
-export default LoadingOverlay;
+Loading.propTypes = {
+  isLoading: PropTypes.bool,
+};

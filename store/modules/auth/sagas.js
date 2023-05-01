@@ -4,7 +4,7 @@ import * as actions from './actions';
 import * as types from '../types';
 import axios from '../../../services/axios';
 import toast from 'react-hot-toast';
-import { useRouter } from 'next/router';
+
 
 function* loginRequest({ payload }) {
   try {
@@ -64,7 +64,7 @@ function* registerRequest({ payload }) {
     if (status === 401) {
       toast.error('Você precisa fazer login novamente.');
       yield put(actions.loginFailure());
-      return history.push('/login');
+      
     }
 
     if (errors.length > 0) {
@@ -80,18 +80,14 @@ function* registerRequest({ payload }) {
 
 //TRANSACOES REQUEST
 function* transacoesRequest({ payload }) {
-  
-  const { descricao, valor, tipo, conta_id, empresa_filha_id } = payload;
 
   try { 
 
-      yield call(axios.post, '/empresa/filha/transacoes', {
-        descricao, valor, tipo, conta_id, empresa_filha_id
-      });
+      yield call(axios.post, '/empresa/filha/transacoes', payload);
     
       toast.success('Transação cadastrada com sucesso!');
 
-      yield put(actions.registerTransacoesSuccess({ descricao, valor, tipo, conta_id, empresa_filha_id }));
+      yield put(actions.registerTransacoesSuccess(payload));
     
   } catch (e) {
       console.log(e)

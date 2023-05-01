@@ -8,14 +8,14 @@ import Loading from './Loading';
 
 function Transações() {
   const [transacoes, setTransacoes] = useState([])
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     async function getData() {
-      setLoading(true)
+      setIsLoading(true)
       const response = await axios.get('/empresa/filha/transacoes');
       setTransacoes(response.data);
-      setLoading(false)
+      setIsLoading(false)
 
     }
 
@@ -25,12 +25,12 @@ function Transações() {
   return (
     <>
 
-
+      <Loading isLoading={isLoading} />
       <div className="w-full col-span-1 relative lg:h-[62vh] h-[50vh] m-auto md:col-span-2 p-4 border rounded-lg bg-white overflow-scroll">
 
 
         <table className="min-w-full ">
-          <thead className="">
+          <thead className="bg-azulScuro text-white">
             <tr>
 
               <th

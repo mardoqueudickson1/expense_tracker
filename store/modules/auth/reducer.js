@@ -3,6 +3,7 @@ import axios from '../../../services/axios';
 
 const initialState = {
   isLoggedIn: false,
+  isLoadingButom: false,
   token: false,
   user: {},
   isLoading: false,
@@ -19,6 +20,7 @@ export default function (state = initialState, action) {
       newState.token = action.payload.token;
       newState.user = action.payload.user;
       newState.isLoading = false;
+      newState.isLoadingButom = false;
       return newState;
     }
 
@@ -31,6 +33,7 @@ export default function (state = initialState, action) {
     case types.LOGIN_REQUEST: {
       const newState = { ...state };
       newState.isLoading = true;
+      newState.isLoadingButom = true;
       return newState;
     }
 

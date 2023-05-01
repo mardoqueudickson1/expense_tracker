@@ -4,16 +4,21 @@ import { BsFillBriefcaseFill, BsGeoAltFill, BsFillTelephoneFill } from 'react-ic
 import Modal from '../components/ModalEdit';
 import { useSelector } from 'react-redux';
 import axios from '../services/axios'
+import Loading from '@/components/Loading';
 
 function adminPage() {
+  const [isLoading, setIsLoading] = useState()
   const dados = useSelector(state => state.auth.user);
   const [user, setUser] = useState([])
   console.log(user)
 
   useEffect(() => {
     async function getData() {
+      setIsLoading(true)
       const response = await axios.get(`/empresa/filha/funcionario/${dados.id}`);
       setUser(response.data);
+      setIsLoading(false)
+
       
       
     }
@@ -23,7 +28,10 @@ function adminPage() {
 
 
   return (
+ 
     <div className="">
+    <Loading isLoading={isLoading} />
+
       <div className=" bg- bg-black flex justify-between py-5 px-10 lg:px-14
     md:flex md:justify-between item-center"
       >

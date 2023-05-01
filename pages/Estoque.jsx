@@ -4,7 +4,7 @@
 /* eslint-disable import/extensions */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 /* eslint-disable jsx-a11y/anchor-is-valid */
-import React, { useState, useMemo, useEffect } from 'react';
+import React, { useState} from 'react';
 import ReactPaginate from 'react-paginate';
 import { MdProductionQuantityLimits } from 'react-icons/md';
 import { BiCategory, BiMoneyWithdraw } from 'react-icons/bi';
@@ -20,11 +20,16 @@ import { data } from '../data/data';
 
 function Estoque() {
   const [dados, setDatas] = useState(data);
+  const [toggle, setToggle] =  useState()
 
   // Pesquisa em tempo real
   const [search, setsearch] = useState('');
 
   const filteredData = data.filter((item) => item.name.last.toLowerCase().includes(search.toLowerCase()));
+
+  const clicado = () =>{
+    setToggle(true)
+  }
 
   // Paginação
   const [currentPage, setCurrentPage] = useState(0);
@@ -143,7 +148,7 @@ function Estoque() {
                         <input
                           type="text"
                           className="border w-full h-[2.8rem] p-5 text-sm
-r                         ounded-[5px] bg-gray-100"
+                            rounded-[5px] bg-gray-100"
                           placeholder="Descrição"
                         />
 
@@ -309,8 +314,9 @@ r                         ounded-[5px] bg-gray-100"
 
                           </ModalEdit>
 
-                          <ModalDel>
+                          <ModalDel toggle={toggle}>
                             <h1 className="p-5 text-center text-base font-bold">Tem certeza que quer apagar?</h1>
+                            <button className="bg-red-600 p-3 w-[10rem] font-bold rounded-[5px] text-white">Apagar</button>
 
                           </ModalDel>
 

@@ -55,7 +55,7 @@ const BarChart = () => {
 
   return (
     <>
-      <div className='w-full cursor-pointer relative lg:h-[62vh] h-[40vh] m-auto p-1 border rounded-lg bg-white'>
+      <div className='w-full cursor-pointer relative lg:h-[62vh] h-[40vh]  m-auto p-1 border rounded-lg bg-white'>
         <Bar data={chartData} options={chartOptions} />
       </div>
     </>

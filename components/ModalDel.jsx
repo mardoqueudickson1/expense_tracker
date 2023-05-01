@@ -3,11 +3,14 @@
 import React, { useState } from 'react';
 import { MdOutlineDeleteForever } from 'react-icons/md';
 
-export default function Modal({ children }) {
+export default function Modal({ children, toggle }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  if (toggle){
+    setIsModalOpen(false)
+  }
 
   return (
     <>
@@ -29,7 +32,7 @@ export default function Modal({ children }) {
               <div className="bg-gray-50 text-azulScuro px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
 
                 <div className="flex justify-center gap-5 text-center p-10">
-                  <button className="bg-red-600 p-3 w-[10rem] font-bold rounded-[5px] text-white">Apagar</button>
+                  
                   <button onClick={closeModal} className="bg-blue-600 p-3 w-[10rem] font-bold rounded-[5px] text-white">Cancelar</button>
 
                 </div>
