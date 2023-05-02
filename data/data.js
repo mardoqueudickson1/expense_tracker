@@ -1,7 +1,4 @@
-import {
-
-  FaUserAlt,
-  FaCog,
+import { FaUserAlt, FaUsers, FaCog,
 } from 'react-icons/fa';
 import { MdInsights } from 'react-icons/md';
 import { BsFillClipboardCheckFill } from 'react-icons/bs';
@@ -11,18 +8,17 @@ import { BsFillClipboardCheckFill } from 'react-icons/bs';
 export const SidebarData = [
 
   {
+    icon: FaUsers,
+    heading: 'funcionarios',
+  },
+
+
+  {
     icon: BsFillClipboardCheckFill,
     heading: 'Estoque',
   },
-  {
-    icon: FaUserAlt,
-    heading: 'Perfil',
-  },
-  {
-    icon: MdInsights,
-    heading: 'Visao',
-  },
 
+ 
   {
     icon: FaCog,
     heading: 'Config',

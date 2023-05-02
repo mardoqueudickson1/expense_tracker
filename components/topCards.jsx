@@ -6,7 +6,7 @@ import { useDispatch } from 'react-redux';
 import * as actions from '../store/modules/auth/actions'
 import axios from '../services/axios'
 
-import Modal from './modal';
+import { FiDownload } from 'react-icons/fi'
 import { toast } from 'react-hot-toast';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
@@ -81,12 +81,16 @@ function TopCards() {
       <div className="  bg-white flex justify-between w-full  p-4 rounded-lg">
         <div className="flex flex-col w-full pb-4 gap-7">
           <p className="text-gray-400">Conta passivos</p>
-          <p className="text-3xl  font-bold">Kz {balanco.passivos}</p>
+          <p className="text-3xl font-bold">Kz {balanco.passivos}</p>
         </div>
         <p className=" flex justify-center items-center p-2 rounded-lg -mt-[4rem]">
-          <BsArrowDownCircle size={30} className=" text-red-600" />
+          <BsArrowDownCircle size={30} className="text-red-600" />
         </p>
       </div>
+
+      
+
+     
 
       <div className="  bg-green-400 flex justify-between w-full  p-4 rounded-lg">
         <div className="flex flex-col w-full pb-4 gap-7">
@@ -102,8 +106,7 @@ function TopCards() {
           <Link href="cadastrar/transacao">   
           <AiFillPlusCircle  size={25} className="text-white right-5 cursor-pointer" />
           </Link>
-       
-       
+
         </div>
 
       </div>

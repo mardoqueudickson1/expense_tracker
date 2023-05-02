@@ -23,8 +23,8 @@ export default function userProfile({ toggle }) {
       </Link>
 
       <div className={`${!toggle ? 'opacity-0 ' : ''}`}>
-        <h3 className="text-xl text-white">{dados.nome} {dados.sobrenome}</h3>
-        <span className="text-[0.85rem] opacity-60  text-white">{dados.email}</span>
+        <h3 className="text-sm text-white">{dados.nome} {dados.sobrenome}</h3>
+        <span className="text-[0.85rem] opacity-60  text-white">Gestor | Finanças</span>
       </div>
     </div>
   );
