@@ -1,6 +1,5 @@
 /* eslint-disable react/no-array-index-key */
-import React, { useState, useEffect } from 'react';
-import { BsArrowUpCircle } from 'react-icons/bs';
+import React from 'react';
 
 
 

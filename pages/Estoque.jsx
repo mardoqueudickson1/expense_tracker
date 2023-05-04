@@ -33,7 +33,7 @@ function Estoque() {
 
   // Paginação
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 8;
+  const itemsPerPage = 5;
   const totalItems = filteredData.length;
   const offset = currentPage * itemsPerPage;
   const currentPageData = filteredData.slice(offset, offset + itemsPerPage);
@@ -181,46 +181,46 @@ function Estoque() {
           </div>
 
           {/* Cabeçalho da tebela */}
-          <div className="p-1.5 w-full inline-block align-middle ">
-            <div className="overflow-hidden border rounded-lg overflow-x-auto">
+          <div className=" w-full inline-block align-middle ">
+            <div className="overflow-hidden border  overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
-                <thead className="bg-azulScuro">
+                <thead className="bg-gray-50">
                   <tr>
 
                     <th
                       scope="col"
-                      className="px-6 py-3 text-xs font-bold text-left text-white uppercase "
+                      className="px-6 py-3 text-xs font-bold text-left  font-bord  text-gray-500 uppercase "
                     >
                       Id
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-xs font-bold text-left text-white uppercase "
+                      className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
                     >
                       Nome
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-xs font-bold text-left text-white uppercase "
+                      className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
                     >
                       Categoria
                     </th>
 
                     <th
                       scope="col"
-                      className="px-6 py-3 text-xs font-bold text-left text-white uppercase "
+                      className="px-6 py-3 text-xs font-bold text-left text-gray-500 uppercase "
                     >
                       Valor
                     </th>
                     <th
                       scope="col"
-                      className="px-6 py-3 text-xs font-bold text-right text-white uppercase "
+                      className="px-6 py-3 text-xs font-bold text-right text-gray-500 uppercase "
                     >
                       Quantidade
                     </th>
                     <th
                       scope="col"
-                      className="pr-[5rem] py-3 text-xs flex justify-end font-bold text-right text-white uppercase "
+                      className="pr-[5rem] py-3 text-xs flex justify-end font-bold text-right text-gray-500 uppercase "
                     >
                       Data
                     </th>
@@ -229,7 +229,7 @@ function Estoque() {
                 </thead>
 
                 {/* Corpo da tabela */}
-                <tbody className="">
+                <tbody className="text-sm bg-white divide-y divide-gray-200">
                   {currentPageData.map((order, index) => (
                     <tr
                       key={index}

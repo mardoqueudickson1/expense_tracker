@@ -7,6 +7,7 @@ import Transações from '../components/Transações';
 import Navbar from '@/components/Navbar';
 import Footer from '../components/Footer';
 import axios from '../services/axios'
+import Loading from '@/components/Loading';
 
 export default function Home() {
 
@@ -36,6 +37,7 @@ export default function Home() {
 
       <main className="bg-gray-200 min-h-screen w-full">
 
+      
         <Navbar transacoes={transacoes} />
         <TopCards />
 

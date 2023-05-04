@@ -7,6 +7,7 @@ import { useSelector } from 'react-redux';
 export default function userProfile({ toggle }) {
 
   const dados = useSelector(state => state.auth.user);
+  console.log(dados)
 
   return (
     <div className={` p-1 my-2 mx-1  flex gap-5 items-center ${!toggle ? ' duration-300 bg-none delay-200 pr-10'

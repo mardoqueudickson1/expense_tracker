@@ -1,22 +1,43 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { BsPersonFillAdd } from 'react-icons/bs'
+import axios from '../services/axios'
+import Loading from "@/components/Loading";
+import { useSelector } from "react-redux";
 
 export default function Table() {
+
+    const [funcionarios, setFuncionarios] = useState([])
+    const [isLoading, setIsLoading] =  useState(false)
+
+
+    useEffect(() => {
+      async function getData() {
+        setIsLoading(true)
+        const response = await axios.get('/empresa/filha/funcionario');
+        setIsLoading(false)
+        setFuncionarios(response.data);
+      }
+  
+      getData();
+    }, []);
+
+
     return (
       <>
+      <Loading isLoading={isLoading}/>
         <div className="flex flex-col">
             <div className="overflow-x-auto">
                 <div className="flex justify-between py-3 pl-2">
                     <div className="relative max-w-xs">
                         <label htmlFor="hs-table-search" className="sr-only">
-                            Search
+                            Pesquisar...
                         </label>
                         <input
                             type="text"
                             name="hs-table-search"
                             id="hs-table-search"
                             className="block w-full p-3 pl-10 text-sm border-gray-200 rounded-md focus:border-blue-500 focus:ring-blue-500 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400"
-                            placeholder="Search..."
+                            placeholder="Pesquisar..."
                         />
                         <div className="absolute inset-y-0 left-0 flex items-center pl-4 pointer-events-none">
                             <svg
@@ -55,37 +76,40 @@ export default function Table() {
                 <table className="min-w-full bg-white rounded whitespace-nowrap w-full">
                     <thead className="border-b bg-gray-50">
                         <tr className="">
-                            <th className="px-3 py-3 text-xs font-normal text-left text-gray-500 uppercase align-middle">
+                            <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
                                 Nome completedo
                             </th>
-                            <th className="px-3 py-3 text-xs font-normal text-left text-gray-500 uppercase align-middle">Nº funcionário</th>
-                            <th className="px-3 py-3 text-xs font-normal text-left text-gray-500 uppercase align-middle">Data de nascimento</th>
-                            <th className="px-3 py-3 text-xs font-normal text-left text-gray-500 uppercase align-middle">Telefone</th>
-                            <th className="px-3 py-3 text-xs font-normal text-left text-gray-500 uppercase align-middle">Status</th>
-                            <th className="px-3 py-3 text-xs font-normal text-right text-gray-500 uppercase align-middle">Salário</th>
-                            <th className="px-3 py-3 text-xs font-normal text-left text-gray-500 uppercase align-middle"></th>
+                            <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">Nº funcionário</th>
+                            <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">Data de nascimento</th>
+                            <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">Telefone</th>
+                            <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">Status</th>
+                            <th className="px-3 py-3 text-xs font-bord text-right text-gray-500 uppercase align-middle">Salário</th>
+                            <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle"></th>
                         </tr>
                     </thead>
+
                     <tbody className="text-sm bg-white divide-y divide-gray-200">
-                        <tr>
+                        {funcionarios.map((item, index) =>(
+
+                            <tr>
                             <td className=" px-3 py-4 ">
                             <div className="flex items-center w-max">
-                                    <img width="50" height="50" className="w-10 h-10 rounded-full" src="https://images.unsplash.com/photo-1506085452766-c330853bea50?ixlib=rb-0.3.5&amp;q=80&amp;fm=jpg&amp;crop=faces&amp;fit=crop&amp;h=200&amp;w=200&amp;s=3e378252a934e660f231666b51bd269a" alt="avatar" />
+                                    <img width="50" height="50" className="w-10 h-10 rounded-full" src={item.fotoUrl} alt="avatar" />
                                     <div className="ml-4">
-                                        <div>Mardooqueu Dickson</div>
-                                        <div className="text-sm text-gray-400">chase@anothercompany.com</div>
+                                        <div>{item.nome} {item.sobrenome}</div>
+                                        <div className="text-sm text-gray-400">{item.email}</div>
                                     </div>
                                 </div>
                             </td>
-                            <td className="px-3 py-4 text-gray-600 ">#102-325-2565</td>
-                            <td className="px-3 py-4 text-gray-500 ">May 07, 2021</td>
+                            <td className="px-3 py-4 text-gray-600 ">#{item.n_funcionario}</td>
+                            <td className="px-3 py-4 text-gray-500 ">{item.data_de_nascimento}</td>
                             <td className="px-3 py-4 text-gray-600 ">
-                                +244 928241548
+                                +244 {item.telefone}
                             </td>
                             <td className="px-3 py-4 text-green-600">
-                                Ativo
+                                ativo
                             </td>
-                            <td className="px-3 py-4 text-right text-gray-500 ">125.000,00Kz</td>
+                            <td className="px-3 py-4 text-right text-gray-500 ">{item.salario},00Kz</td>
                             <td className="w-20 px-3 py-2 text-center text-gray-500 ">
                                 <div className="flex place-content-center">
                                     <a href="#!">
@@ -96,6 +120,9 @@ export default function Table() {
                                 </div>
                             </td>
                         </tr>
+                        ))}
+                        
+                        
                     </tbody>
                 </table>
             </div>
