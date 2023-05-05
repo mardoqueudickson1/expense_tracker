@@ -32,12 +32,7 @@ function adminPage() {
     <div className="">
     <Loading isLoading={isLoading} />
 
-      <div className=" bg- bg-black flex justify-between py-5 px-10 lg:px-14
-    md:flex md:justify-between item-center"
-      >
-        <div className="text-white text-3xl relative top-1 ">Dados Pessoais</div>
-
-      </div>
+      
       <div className="grid-cols-1 grid md:grid-cols-2 lg:grid-cols-3 gap-6 m-5">
 
         <div className="bg-white flex flex-col p-5 rounded-lg">

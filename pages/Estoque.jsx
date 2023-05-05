@@ -339,13 +339,13 @@ function Estoque() {
                 pageRangeDisplayed={5}
                 onPageChange={handlePageClick}
                 containerClassName="flex bg-white border rounded-lg overflow-hidden"
-                pageClassName="cursor-pointer mx-1 px-3 py-2 border bg-white"
+                pageClassName="cursor-pointer mx-1 px-3 py-2 border "
                 pageLinkClassName="block"
                 previousClassName="cursor-pointer mx-1 px-3 py-2 border bg-white"
                 previousLinkClassName="block"
-                nextClassName="cursor-pointer mx-1 px-3 py-2 border bg-white"
+                nextClassName="cursor-pointer mx-1 px-3 py-2 border bg-AzulScuro"
                 nextLinkClassName="block"
-                activeClassName="bg-gray-400 text-white"
+                activeClassName="bg-azulScuro text-white "
               />
             </div>
           </div>

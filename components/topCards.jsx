@@ -71,7 +71,7 @@ function TopCards() {
       <div className="  bg-white flex justify-between w-full  p-4 rounded-lg">
         <div className="flex flex-col w-full pb-4 gap-7">
           <p className="text-gray-400">Conta ativos</p>
-          <p className="text-3xl font-bold">Kz {balanco.ativos}</p>
+          <p className="text-3xl font-bold">Kz {balanco.ativos},00</p>
         </div>
         <p className=" flex justify-center items-center p-2 rounded-lg -mt-[4rem]">
           <BsArrowUpCircle size={30} className="text-green-400" />
@@ -81,7 +81,7 @@ function TopCards() {
       <div className="  bg-white flex justify-between w-full  p-4 rounded-lg">
         <div className="flex flex-col w-full pb-4 gap-7">
           <p className="text-gray-400">Conta passivos</p>
-          <p className="text-3xl font-bold">Kz {balanco.passivos}</p>
+          <p className="text-3xl font-bold">Kz {balanco.passivos},00</p>
         </div>
         <p className=" flex justify-center items-center p-2 rounded-lg -mt-[4rem]">
           <BsArrowDownCircle size={30} className="text-red-600" />
@@ -96,16 +96,14 @@ function TopCards() {
         <div className="flex flex-col w-full pb-4 gap-7">
           <p className="text-white">Balanço geral</p>
           <div className="flex justify-between">
-            <p className="text-4xl text-white font-bold">Kz {balanco.balanco_geral}</p>
+            <p className="text-4xl text-white font-bold">Kz {balanco.balanco_geral},00</p>
 
           </div>
 
         </div>
         <div className=" flex flex-col gap-[3rem] items-center p-2 rounded-lg -mt-[0rem]">
           <BsBank size={30} className="text-white" />
-          <Link href="cadastrar/transacao">   
-          <AiFillPlusCircle  size={25} className="text-white right-5 cursor-pointer" />
-          </Link>
+          
 
         </div>
 
