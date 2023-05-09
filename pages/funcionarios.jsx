@@ -143,7 +143,7 @@ export default function Table() {
         <div className="  bg-white flex justify-between w-full  p-4 rounded-lg">
           <div className="flex flex-col w-full pb-4 gap-7">
             <p className="text-azulScuro">Departamentos</p>
-            <p className="text-3xl font-bold">5.700</p>
+            <p className="text-3xl font-bold">45</p>
           </div>
           <p className=" flex justify-center items-center p-2 rounded-lg -mt-[4rem]">
             <MdProductionQuantityLimits size={30} className="text-gree" />
@@ -153,7 +153,7 @@ export default function Table() {
         <div className="  bg-white flex justify-between w-full  p-4 rounded-lg">
           <div className="flex flex-col w-full pb-4 gap-7">
             <p className="text-azulScuro ">Funcionários ativos</p>
-            <p className="text-3xl  font-bold">300,000</p>
+            <p className="text-3xl  font-bold">85</p>
           </div>
           <p className=" flex justify-center items-center p-2 rounded-lg -mt-[4rem]">
             <BiCategory size={30} className=" text-azulScuro" />
@@ -163,7 +163,7 @@ export default function Table() {
         <div className="  bg-azulScuro flex justify-between w-full  p-4 rounded-lg">
           <div className="flex flex-col w-full pb-4 gap-7">
             <p className="text-white">Total funcionários</p>
-            <p className="text-3xl text-white font-bold">KZ 5.700,00</p>
+            <p className="text-3xl text-white font-bold">150</p>
           </div>
           <p className=" flex justify-center items-center p-2 rounded-lg -mt-[4rem]">
             <BiMoneyWithdraw size={30} className="text-white" />

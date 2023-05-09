@@ -98,6 +98,15 @@ export default function (state = initialState, action) {
       return newState;
     }
 
+
+    //FOTOS
+
+    case types.REGISTER_FOTO_REQUEST: {
+      const newState = { ...state };
+      newState.isLoading = true;
+      return newState;
+    }
+
     default: {
       return state;
     }

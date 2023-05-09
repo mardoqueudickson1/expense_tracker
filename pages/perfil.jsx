@@ -1,4 +1,5 @@
-import React, { useState, useDispatch, useEffect } from 'react';
+import React, { useState,  useEffect } from 'react';
+import Link from 'next/link';
 import { FaUserCircle, FaEdit } from 'react-icons/fa';
 import { BsFillBriefcaseFill, BsGeoAltFill, BsFillTelephoneFill } from 'react-icons/bs';
 import Modal from '../components/ModalEdit';
@@ -6,7 +7,7 @@ import { useSelector } from 'react-redux';
 import axios from '../services/axios'
 import Loading from '@/components/Loading';
 
-function adminPage() {
+function Perfil() {
   const [isLoading, setIsLoading] = useState()
   const dados = useSelector(state => state.auth.user);
   const [user, setUser] = useState([])
@@ -37,7 +38,7 @@ function adminPage() {
 
         <div className="bg-white flex flex-col p-5 rounded-lg">
           <div className="flex justify-between">
-            <h1 className="text-3xl font-bold text-azulScuro">Perfil 4</h1>
+            <h1 className="text-3xl font-bold text-azulScuro">Perfil </h1>
             <Modal>
 
               {' '}
@@ -97,9 +98,15 @@ function adminPage() {
 
           </div>
 
-          <div className="mt-7">
-            <FaUserCircle size={90} className="text-azulScuro" />
+          <Link href="/fotos">
+          <div className="mt-7 cursor-pointer">
+          {user.fotoUrl ? <img className='rounded-full boredr-7 border-gray-900 h-[10rem] w-[10rem]' src={user.fotoUrl} alt={dados.nome} /> : <FaUserCircle size={90} className="text-azulScuro rounded-full h-[10rem] w-[10rem]" />}
+            
           </div>
+          </Link>
+          
+
+
           <span className="text-xl font-bold mt-2">{dados.nome} {dados.sobrenome}</span>
 
           <div className="flex flex-col my-5">
@@ -201,4 +208,4 @@ function adminPage() {
 
 };
 
-export default adminPage;
+export default Perfil;

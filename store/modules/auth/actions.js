@@ -81,3 +81,35 @@ export function registerTransacoesUpdatedSuccess(payload) {
     payload,
   };
 }
+
+
+//FOTOS REQUEST
+
+export function registerFotoRequest(payload){
+  return {
+    type: types.REGISTER_FOTO_REQUEST,
+    payload,
+  }
+}
+
+export function registerFotoFailure(payload){
+  return {
+    type: types.REGISTER_FOTO_REQUEST,
+    payload,
+  }
+}
+
+
+export function registerFotoSuccess(payload){
+  return {
+    type: types.REGISTER_FOTO_REQUEST,
+    payload,
+  }
+}
+
+export function registerFotoUpdateSucess(payload){
+  return {
+    type: types.REGISTER_FOTO_REQUEST,
+    payload,
+  }
+}
