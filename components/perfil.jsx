@@ -1,11 +1,13 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { FaUserCircle, FaEdit } from 'react-icons/fa';
-import { BsFillBriefcaseFill, BsGeoAltFill, BsFillTelephoneFill } from 'react-icons/bs';
+import {
+  BsFillBriefcaseFill,
+  BsGeoAltFill,
+  BsFillTelephoneFill,
+} from 'react-icons/bs';
 import axios from '../../services/axios';
 
-
-function adminPage () {
-
+function adminPage() {
   const [perfil, setPerfil] = useState([]);
 
   useEffect(() => {
@@ -17,9 +19,7 @@ function adminPage () {
     getData();
   }, []);
 
-
   <div className=" grid-cols-1 grid md:grid-cols-2 lg:grid-cols-3 gap-6 ">
-
     <div className="bg-white flex flex-col p-5 rounded-lg">
       <div className="flex justify-between">
         <h1 className="text-3xl font-bold">Perfil 2</h1>
@@ -65,7 +65,6 @@ function adminPage () {
             Luanda, Angola
           </p>
         </div>
-
       </div>
     </div>
 
@@ -75,16 +74,16 @@ function adminPage () {
         <h1 className="font-bold text-xl">Informações gerais</h1>
         <h2 className=" text-xl mt-5">Sobre mim</h2>
         <p className="text-gray-500 mt-3">
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos assumenda
-          facilis alias officia illum esse. Possimus est ex laudantium cumque similique
-          repudiandae mollitia nesciunt totam esse. Veritatis ducimus in sed!
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos
+          assumenda facilis alias officia illum esse. Possimus est ex laudantium
+          cumque similique repudiandae mollitia nesciunt totam esse. Veritatis
+          ducimus in sed!
           <br />
           <br />
-          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos assumenda
-          facilis alias officia illum esse. Possimus est
-          ipsum dolor sit, amet consectetur adipisicing elit.
-          Dignissimos assumenda
-          facilis alias officia illum esse. Possimus estlaudantium cumque similique
+          Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dignissimos
+          assumenda facilis alias officia illum esse. Possimus est ipsum dolor
+          sit, amet consectetur adipisicing elit. Dignissimos assumenda facilis
+          alias officia illum esse. Possimus estlaudantium cumque similique
           repudiandae mollitia nesciunt totam esse. Veritatis ducimus in sed!
         </p>
 
@@ -118,11 +117,9 @@ function adminPage () {
             <span>Multimídia</span>
           </div>
         </div>
-
       </div>
     </div>
-  </div>
-
-};
+  </div>;
+}
 
 export default adminPage;

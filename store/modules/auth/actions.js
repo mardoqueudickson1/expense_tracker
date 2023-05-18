@@ -1,6 +1,5 @@
 import * as types from '../types';
 
-
 //USER REQUESTS
 export function loginRequest(payload) {
   return {
@@ -51,7 +50,6 @@ export function registerFailure(payload) {
   };
 }
 
-
 //TRANSACOES REQUESTS
 
 export function registerTransacoesRequest(payload) {
@@ -82,34 +80,32 @@ export function registerTransacoesUpdatedSuccess(payload) {
   };
 }
 
-
 //FOTOS REQUEST
 
-export function registerFotoRequest(payload){
+export function registerFotoRequest(payload) {
   return {
     type: types.REGISTER_FOTO_REQUEST,
     payload,
-  }
+  };
 }
 
-export function registerFotoFailure(payload){
+export function registerFotoFailure(payload) {
   return {
     type: types.REGISTER_FOTO_REQUEST,
     payload,
-  }
+  };
 }
 
-
-export function registerFotoSuccess(payload){
+export function registerFotoSuccess(payload) {
   return {
     type: types.REGISTER_FOTO_REQUEST,
     payload,
-  }
+  };
 }
 
-export function registerFotoUpdateSucess(payload){
+export function registerFotoUpdateSucess(payload) {
   return {
     type: types.REGISTER_FOTO_REQUEST,
     payload,
-  }
+  };
 }

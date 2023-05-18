@@ -1,29 +1,23 @@
-import { FaUserAlt, FaUsers, FaCog,
-} from 'react-icons/fa';
-import { MdInsights } from 'react-icons/md';
+import { FaUsers, FaCog } from 'react-icons/fa';
 import { BsFillClipboardCheckFill } from 'react-icons/bs';
 
 // Sidebar Data
 
 export const SidebarData = [
-
   {
     icon: FaUsers,
     heading: 'funcionarios',
   },
-
 
   {
     icon: BsFillClipboardCheckFill,
     heading: 'Estoque',
   },
 
- 
   {
     icon: FaCog,
     heading: 'Config',
   },
-
 ];
 
 export const data = [
@@ -38,7 +32,6 @@ export const data = [
     data: '10/3/2023',
     valor: '98.245,44',
     pagamento: 'Materias',
-
   },
   {
     id: 2,
@@ -51,7 +44,6 @@ export const data = [
     data: '10/3/2023',
     valor: '48.5574,00',
     pagamento: 'Materiais de estoque',
-
   },
   {
     id: 3,
@@ -76,7 +68,6 @@ export const data = [
     data: '19/04/2022',
     valor: '87700,00',
     pagamento: 'conta ativos',
-
   },
   {
     id: 5,
@@ -89,7 +80,6 @@ export const data = [
     data: '10/3/2023',
     valor: '50700',
     pagamento: 'Pagamento de divida',
-
   },
 
   {
@@ -103,7 +93,6 @@ export const data = [
     data: '10/3/2023',
     valor: '50700',
     pagamento: 'Pagamento de divida',
-
   },
 
   {
@@ -117,7 +106,6 @@ export const data = [
     data: '10/3/2023',
     valor: '50700',
     pagamento: 'Pagamento de divida',
-
   },
 
   {
@@ -131,7 +119,6 @@ export const data = [
     data: '10/3/2023',
     valor: '50700',
     pagamento: 'Pagamento de divida',
-
   },
 
   {
@@ -145,7 +132,6 @@ export const data = [
     data: '10/3/2023',
     valor: '50700',
     pagamento: 'Pagamento de divida',
-
   },
 
   {
@@ -159,7 +145,6 @@ export const data = [
     data: '10/3/2023',
     valor: '50700',
     pagamento: 'Pagamento de divida',
-
   },
 
   {
@@ -173,7 +158,6 @@ export const data = [
     data: '10/3/2023',
     valor: '50700',
     pagamento: 'Pagamento de divida',
-
   },
 
   {
@@ -187,7 +171,6 @@ export const data = [
     data: '10/3/2023',
     valor: '50700',
     pagamento: 'Pagamento de divida',
-
   },
 
   {
@@ -201,7 +184,6 @@ export const data = [
     data: '10/3/2023',
     valor: '50700',
     pagamento: 'Pagamento de divida',
-
   },
 
   {
@@ -215,7 +197,6 @@ export const data = [
     data: '10/3/2023',
     valor: '50700',
     pagamento: 'Pagamento de divida',
-
   },
 
   {
@@ -229,7 +210,6 @@ export const data = [
     data: '10/3/2023',
     valor: '50700',
     pagamento: 'Pagamento de divida',
-
   },
 
   {
@@ -243,7 +223,6 @@ export const data = [
     data: '10/3/2023',
     valor: '50700',
     pagamento: 'Pagamento de divida',
-
   },
 
   {
@@ -257,7 +236,6 @@ export const data = [
     data: '10/3/2023',
     valor: '50700',
     pagamento: 'Pagamento de divida',
-
   },
 
   {
@@ -271,7 +249,6 @@ export const data = [
     data: '10/3/2023',
     valor: '50700',
     pagamento: 'Pagamento de divida',
-
   },
 
   {
@@ -285,7 +262,6 @@ export const data = [
     data: '10/3/2023',
     valor: '50700',
     pagamento: 'Pagamento de divida',
-
   },
 
   {
@@ -299,7 +275,6 @@ export const data = [
     data: '10/3/2023',
     valor: '50700',
     pagamento: 'Pagamento de divida',
-
   },
   {
     id: 21,
@@ -312,7 +287,5 @@ export const data = [
     data: '10/3/2023',
     valor: '50700',
     pagamento: 'Pagamento de divida',
-
   },
-
 ];

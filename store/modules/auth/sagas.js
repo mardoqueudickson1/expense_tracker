@@ -5,19 +5,14 @@ import * as types from '../types';
 import axios from '../../../services/axios';
 import toast from 'react-hot-toast';
 
-
 function* loginRequest({ payload }) {
   try {
-    
-
     const response = yield call(axios.post, '/empresa/filha/token', payload);
     yield put(actions.loginSuccess({ ...response.data }));
     toast.success('Logado com sucesso!');
 
     axios.defaults.headers.Authorization = `Bearer ${response.data.token}`;
     console.log(payload);
-
-
   } catch (e) {
     console.log(e);
     toast.error('Email ou senha  inválida!');
@@ -32,41 +27,32 @@ function persistRehydrate({ payload }) {
   axios.defaults.headers.Authorization = `Bearer ${token}`;
 }
 
-
 //REGISTER REQUEST
-// eslint-disable-next-line consistent-return
 function* registerRequest({ payload }) {
-
   try {
     yield call(axios.post, '/empresa/filha/funcionario', payload);
-    
+
     toast.success('Funcionário cadastrado com sucesso!');
 
     yield put(actions.registerTransacoesSuccess(payload));
-    
   } catch (e) {
-   
-    console.log(e)
+    console.log(e);
     toast.success('Houve um erro!');
     yield put(actions.registerFailure());
   }
 }
 
-
 //TRANSACOES REQUEST
 function* transacoesRequest({ payload }) {
+  try {
+    yield call(axios.post, '/empresa/filha/transacoes', payload);
 
-  try { 
+    toast.success('Transação cadastrada com sucesso!');
 
-      yield call(axios.post, '/empresa/filha/transacoes', payload);
-    
-      toast.success('Transação cadastrada com sucesso!');
-
-      yield put(actions.registerTransacoesSuccess(payload));
-    
+    yield put(actions.registerTransacoesSuccess(payload));
   } catch (e) {
-      console.log(e)
-      toast.error('Erro ao cadastrar');
+    console.log(e);
+    toast.error('Erro ao cadastrar');
 
     yield put(actions.registerTransacoesFailure());
   }
@@ -76,5 +62,5 @@ export default all([
   takeLatest(types.LOGIN_REQUEST, loginRequest),
   takeLatest(types.PERSIST_REHYDRATE, persistRehydrate),
   takeLatest(types.REGISTER_REQUEST, registerRequest),
-  takeLatest(types.REGISTER_TRANSACTION_REQUEST, transacoesRequest)
+  takeLatest(types.REGISTER_TRANSACTION_REQUEST, transacoesRequest),
 ]);

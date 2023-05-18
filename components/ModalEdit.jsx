@@ -1,5 +1,3 @@
-/* eslint-disable react/react-in-jsx-scope */
-/* eslint-disable react/prop-types */
 import React, { useState } from 'react';
 import { FaWindowClose, FaEdit } from 'react-icons/fa';
 
@@ -11,8 +9,13 @@ export default function Modal({ children }) {
 
   return (
     <>
-
-      <div><FaEdit onClick={openModal} size={15} className=" right-5 cursor-pointer" /></div>
+      <div>
+        <FaEdit
+          onClick={openModal}
+          size={15}
+          className=" right-5 cursor-pointer"
+        />
+      </div>
 
       {isModalOpen && (
         <div className="fixed z-50 inset-0 overflow-y-auto">
@@ -20,14 +23,16 @@ export default function Modal({ children }) {
             <div className="fixed inset-0 transition-opacity">
               <div className="absolute inset-0 bg-gray-500 opacity-75" />
             </div>
-
             <span className="hidden sm:inline-block sm:align-middle sm:h-screen" />
             &#8203;
             <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
               {children}
 
               <div className="bg-gray-50 text-azulScuro px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                <FaWindowClose onClick={closeModal} className="cursor-pointer" />
+                <FaWindowClose
+                  onClick={closeModal}
+                  className="cursor-pointer"
+                />
               </div>
             </div>
           </div>

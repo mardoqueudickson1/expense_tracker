@@ -1,10 +1,11 @@
+import React from 'react';
 import { useState } from 'react';
 import { generateMonthlyTransactionsPDF } from '../utils/TransactionsPDF';
-import axios  from '../services/axios'
+import axios from '../services/axios';
 
 export default function MonthlyTransactions() {
   const [transactions, setTransactions] = useState([]);
-  console.log(transactions)
+  console.log(transactions);
 
   // Função que carrega as transações da API
   async function fetchTransactions() {
@@ -30,9 +31,20 @@ export default function MonthlyTransactions() {
 
   return (
     <div className="max-w-lg mx-auto py-8">
-  <h1 className="text-2xl font-bold mb-4">Transações Mensais</h1>
-  <button className="bg-blue-500 text-white px-4 py-2 rounded mr-2" onClick={fetchTransactions}>Carregar Transações</button>
-  <button className="bg-blue-500 text-white px-4 py-2 rounded" onClick={downloadPDF} disabled={!transactions.length}>Baixar PDF</button>
-</div>
+      <h1 className="text-2xl font-bold mb-4">Transações Mensais</h1>
+      <button
+        className="bg-blue-500 text-white px-4 py-2 rounded mr-2"
+        onClick={fetchTransactions}
+      >
+        Carregar Transações
+      </button>
+      <button
+        className="bg-blue-500 text-white px-4 py-2 rounded"
+        onClick={downloadPDF}
+        disabled={!transactions.length}
+      >
+        Baixar PDF
+      </button>
+    </div>
   );
 }

@@ -9,7 +9,10 @@ import rootSaga from './modules/rootSaga';
 
 const sagaMiddleware = createSagaMiddleware();
 
-const store = createStore(persistedReducers(rootReducer), applyMiddleware(sagaMiddleware));
+const store = createStore(
+  persistedReducers(rootReducer),
+  applyMiddleware(sagaMiddleware)
+);
 
 sagaMiddleware.run(rootSaga);
 

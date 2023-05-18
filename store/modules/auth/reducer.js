@@ -11,8 +11,6 @@ const initialState = {
 
 export default function (state = initialState, action) {
   switch (action.type) {
-
-
     //LOGIN
     case types.LOGIN_SUCCESS: {
       const newState = { ...state };
@@ -37,8 +35,6 @@ export default function (state = initialState, action) {
       return newState;
     }
 
-
-    
     //UPDATE
     case types.REGISTER_UPDATED_SUCCESS: {
       const newState = { ...state };
@@ -65,8 +61,6 @@ export default function (state = initialState, action) {
       return newState;
     }
 
-
-
     //TRANSACOES
     case types.REGISTER_TRANSACTION_REQUEST: {
       const newState = { ...state };
@@ -92,15 +86,7 @@ export default function (state = initialState, action) {
       return newState;
     }
 
-    case types.REGISTER_TRANSACTION_UPDATED_SUCCESS: {
-      const newState = { ...state };
-      newState.isLoading = false;
-      return newState;
-    }
-
-
     //FOTOS
-
     case types.REGISTER_FOTO_REQUEST: {
       const newState = { ...state };
       newState.isLoading = true;

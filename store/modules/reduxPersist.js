@@ -8,9 +8,8 @@ export default (reducers) => {
       storage,
       whitelist: ['auth'],
     },
-    reducers,
+    reducers
   );
 
   return persistedReducers;
 };
-
