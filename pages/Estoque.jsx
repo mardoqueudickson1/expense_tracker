@@ -197,7 +197,8 @@ export default function Table() {
                 </td>
                 <td className="w-20 px-3 py-2 text-center text-gray-500 ">
                   <div className="flex place-content-center">
-                    <a href="#!">
+                    <Link href={`stock/${item.id}`}>
+                      {' '}
                       <svg
                         className="w-6 h-6"
                         fill="none"
@@ -211,7 +212,7 @@ export default function Table() {
                           d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
                         ></path>
                       </svg>
-                    </a>
+                    </Link>
                   </div>
                 </td>
               </tr>
