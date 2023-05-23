@@ -14,7 +14,7 @@ export default function Home() {
 
   useEffect(() => {
     async function getData() {
-      setIsLoading(true);
+      setIsLoading(false);
       const response = await axios.get('/empresa/filha/transacoes');
       setTransacoes(response.data);
       setIsLoading(false);
