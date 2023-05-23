@@ -1,15 +1,10 @@
 import React from 'react';
-import Loading from './Loading';
-import { useSelector } from 'react-redux';
 
 function Transações(props) {
-  const isLoading = useSelector((state) => state.auth.isLoading);
-
   const { transacoes } = props;
 
   return (
     <>
-      <Loading isLoading={isLoading} />
       <div className="w-full col-span-1 relative lg:h-[62vh] h-[50vh] m-auto md:col-span-2 p-4 border rounded-lg bg-white overflow-scroll">
         <table className="border-collapse w-full overflow-scroll overflow-x-auto">
           <thead>

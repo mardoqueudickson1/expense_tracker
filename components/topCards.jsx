@@ -6,7 +6,6 @@ import { toast } from 'react-hot-toast';
 import { useDispatch, useSelector } from 'react-redux';
 
 import axios from '../services/axios';
-import Loading from './Loading';
 import * as actions from '../store/modules/auth/actions';
 
 function TopCards() {
@@ -60,8 +59,6 @@ function TopCards() {
 
   return (
     <>
-      <Loading isLoading={isLoading} />
-
       <div className="grid lg:grid-cols-3 gap-4 p-4 -mt-[3.5rem] lg:mx-[7rem]">
         <div className="  bg-white flex justify-between w-full  p-4 rounded-lg">
           <div className="flex flex-col w-full pb-4 gap-7">
