@@ -28,7 +28,7 @@ function Navbar(props) {
      md:flex  item-center"
     >
       <div className="text-white text-3xl relative -top-5 font-bold">
-        Potter House
+        Finanças
       </div>
 
       <div className="flex justify-between -mt-[1rem]">

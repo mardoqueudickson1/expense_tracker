@@ -1,10 +1,31 @@
-import { useRouter } from 'next/router';
 import React, { useEffect, useState } from 'react';
+import { FaWindowClose, FaEdit } from 'react-icons/fa';
+
+import { useRouter } from 'next/router';
+import Loading from '@/components/Loading';
 import axios from '../../services/axios';
 
 const StockDetails = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
+
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({});
+  const [data2, setData2] = useState({});
+
+  const handleChange = (event) => {
+    setData2({ valor: event.target.value });
+    setData2({ categoria: event.target.value });
+    setData2({ descricao: event.target.value });
+    setData2({ nome: event.target.value });
+  };
 
   const router = useRouter();
   const { id } = router.query;
@@ -16,6 +37,7 @@ const StockDetails = () => {
         const response = await axios.get(`/empresa/filha/estoque/${id}`);
         const produto = response.data[0];
         setData(produto);
+        setData2(produto);
       } catch (error) {
         console.error(error);
       } finally {
@@ -26,43 +48,142 @@ const StockDetails = () => {
     getData();
   }, [id]);
 
-  if (isLoading) {
-    return <p>Carregando...</p>;
-  }
-
   return (
     <div className="p-4">
-      <div>
-        <h2 className="text-2xl font-bold mb-4">Detalhes do produto</h2>
+      {isModalOpen && (
+        <div className="fixed z-50 inset-0 overflow-y-auto">
+          <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div className="fixed inset-0 transition-opacity">
+              <div className="absolute inset-0 bg-gray-500 opacity-75" />
+            </div>
+            <span className="hidden sm:inline-block sm:align-middle sm:h-screen" />
+            &#8203;
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+              <div className="flex justify-center align-center mt-[4rem]">
+                <div className="bg-white w-[25rem] p-5 rounded-[5px]">
+                  <h1 className="text-center font-bold">Atualizar produto</h1>
+                  <div className="mt-[2rem]">
+                    <form action="">
+                      <label htmlFor="">Nome</label>
+                      <input
+                        onChange={handleChange}
+                        type="text"
+                        value={data2.nome}
+                        className="border w-full h-[2.8rem] p-5 text-sm rounded-[5px] bg-gray-100"
+                        placeholder="Nome"
+                      />
 
-        <div className="grid grid-cols-2 m-[5rem]">
-          <div className="">
-            <p>
-              <strong>ID:</strong> {data.id}
-            </p>
-            <p>
-              <strong>Nome:</strong> {data.nome}
-            </p>
-            <p>
-              <strong>Descrição:</strong> {data.descricao}
-            </p>
-            <p>
-              <strong>Quantidade:</strong> {data.quantidade}
-            </p>
+                      <label htmlFor="">Quantidade</label>
 
-            <p>
-              <strong>Categoria:</strong> {data.categoria}
-            </p>
+                      <input
+                        value={data2.quantidade}
+                        type="number"
+                        className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
+                       rounded-[5px] bg-gray-100 mt-3"
+                        placeholder="Quantidade"
+                      />
 
-            <p>
-              <strong>Valor:</strong> {data.valor}
-            </p>
+                      <label htmlFor="">Valor</label>
 
-            <p>
-              <strong>Data:</strong> {data.updated_at}
-            </p>
+                      <input
+                        value={data2.valor}
+                        type="number"
+                        className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
+                       rounded-[5px] bg-gray-100 mt-3"
+                        placeholder="Valor"
+                      />
+
+                      <input
+                        type="text"
+                        className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
+                       rounded-[5px] bg-gray-100 mt-3"
+                        placeholder="Detalhe"
+                      />
+
+                      <button
+                        className="bg-azulScuro w-full
+                  h-[2.8rem] text-white mt-3 rounded-[5px]"
+                      >
+                        Atualizar
+                      </button>
+                    </form>
+                  </div>
+                </div>
+              </div>
+              <div className="bg-gray-50 text-azulScuro px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <FaWindowClose
+                  onClick={closeModal}
+                  className="cursor-pointer"
+                />
+              </div>
+            </div>
           </div>
-          <div>2</div>
+        </div>
+      )}
+      {/* FIM DOS MODAL */}
+      <Loading isLoading={isLoading} />
+      <div>
+        <h2 className="text-2xl font-bold mb-4 text-center">
+          Detalhes do produto
+        </h2>
+        <div className="grid grid-cols-2 mx-[7rem]">
+          <div className="flex justify-center items-center">
+            <img
+              src="/undraw_file_synchronization_re_m5jd.svg"
+              alt="Meu SVG"
+              className=""
+            />
+          </div>
+
+          <div className="">
+            <p className="font-bold text-xl my-[2rem]">{data.nome}</p>
+            <div className="flex gap-2">
+              <p className="font-bold">ID: </p>{' '}
+              <p className="text-gray-500">{data.id}</p>
+            </div>
+
+            <div className="flex gap-2">
+              <p className="font-bold">Quantidade: </p>{' '}
+              <p className="text-gray-500">{data.quantidade}</p>
+            </div>
+
+            <div className="flex gap-2">
+              <p className="font-bold">Valor: </p>{' '}
+              <p className="text-gray-600">{data.valor}Kz</p>
+            </div>
+
+            <div className="flex gap-2">
+              <p className="font-bold">Categoria: </p>{' '}
+              <p className="text-gray-600">{data.categoria}</p>
+            </div>
+            <div className="flex gap-2">
+              <p className="font-bold">Data de registro: </p>{' '}
+              <p className="text-gray-600">{data.updated_at}</p>
+            </div>
+            <h1 className="font-bold text-xl my-[2rem]">Detalhe</h1>
+            <p className="-my-[2rem] text-gray-600">
+              Lorem ipsum dolor sit amet consectetur adipisicing elit. Nam,
+              debitis! Illo molestiae nihil, eligendi, fuga accusantium eius,
+              aspernatur dolorum velit iusto quas inventore laudantium
+              architecto veniam qui soluta quae vitae!
+            </p>
+
+            <div className="flex my-[5rem]">
+              <button
+                className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 mr-4 rounded"
+                onClick={openModal}
+              >
+                Editar
+              </button>
+
+              <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 mr-4 rounded">
+                Despachar
+              </button>
+              <button className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded">
+                Deletar
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

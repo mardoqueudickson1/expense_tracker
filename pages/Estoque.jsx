@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { BsPersonFillAdd, BsFillClipboardCheckFill } from 'react-icons/bs';
 import { MdProductionQuantityLimits } from 'react-icons/md';
 import { BiCategory, BiMoneyWithdraw } from 'react-icons/bi';
+import { AiOutlineHistory } from 'react-icons/ai';
 import { FiDownload } from 'react-icons/fi';
 import axios from '../services/axios';
 import Loading from '@/components/Loading';
@@ -90,6 +91,17 @@ export default function Table() {
 
             <div className="flex items-center space-x-2 gap-5 ">
               <div className="relative gap-5 ">
+                <button
+                  onClick={downloadPDF}
+                  className="relative  z-0 inline-flex text-sm rounded-md shadow-sm focus:ring-accent-500 focus:border-accent-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1"
+                >
+                  <span className="relative ml-5 inline-flex items-center px-3 py-3 space-x-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md sm:py-2">
+                    <div className="hidden sm:block">
+                      <AiOutlineHistory size={20} />
+                    </div>
+                  </span>
+                </button>
+
                 <Link href="/cadastrar/funcionario">
                   <button className="relative z-0 inline-flex text-sm rounded-md shadow-sm focus:ring-accent-500 focus:border-accent-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1">
                     <span className="relative inline-flex items-center px-3 py-3 space-x-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md sm:py-2">
@@ -188,13 +200,19 @@ export default function Table() {
             {currentPageData.map((item, index) => (
               <tr key={index}>
                 <td className="px-3 py-4 text-gray-600 ">{item.id}</td>
-                <td className="px-3 py-4 text-gray-600 ">{item.nome}</td>
+                <Link href={`stock/${item.id}`}>
+                  <td className="px-3 py-4 cursor-pointer text-gray-600 hover:text-slate-900 ">
+                    {item.nome}
+                  </td>
+                </Link>
+
                 <td className="px-3 py-4 text-gray-500 ">{item.categoria}</td>
                 <td className="px-3 py-4 text-gray-600 "> {item.valor} </td>
                 <td className="px-3 py-4 text-gray-600">{item.quantidade}</td>
                 <td className="px-3 py-4 text-right text-gray-500 ">
                   {item.updated_at}
                 </td>
+
                 <td className="w-20 px-3 py-2 text-center text-gray-500 ">
                   <div className="flex place-content-center">
                     <Link href={`stock/${item.id}`}>

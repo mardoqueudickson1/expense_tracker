@@ -6,17 +6,17 @@ import { BsFillClipboardCheckFill } from 'react-icons/bs';
 export const SidebarData = [
   {
     icon: FaUsers,
-    heading: 'funcionarios',
+    heading: '/funcionarios',
   },
 
   {
     icon: BsFillClipboardCheckFill,
-    heading: 'Estoque',
+    heading: '/Estoque',
   },
 
   {
     icon: FaCog,
-    heading: 'Config',
+    heading: '/Config',
   },
 ];
 

@@ -16,7 +16,7 @@ export default function userProfile({ toggle }) {
       <Link href="perfil">
         <div className="min-w-[3.5rem] h-[3.5rem] border-solid  cursor-pointer">
           <img
-            src={dados.fotoUrl}
+            src="/potter3.png"
             alt="Minha imagem"
             className="w-full h-full rounded-full object-cover"
           />
@@ -24,9 +24,7 @@ export default function userProfile({ toggle }) {
       </Link>
 
       <div className={`${!toggle ? 'opacity-0 ' : ''}`}>
-        <h3 className="text-sm text-white">
-          {dados.nome} {dados.sobrenome}
-        </h3>
+        <h3 className="text-xl text-white text-bold">Potter House</h3>
         <span className="text-[0.85rem] opacity-60  text-white">
           {dados.nomeRole}{' '}
         </span>

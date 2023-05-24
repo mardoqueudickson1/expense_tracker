@@ -58,7 +58,9 @@ const sidebar = ({ children }) => {
             } `}
             >
               <item.icon size={25} />
-              <span className={`${toggle && 'hidden'}`}>{item.heading}</span>
+              <span className={`${toggle && 'hidden'}`}>
+                {item.heading.slice(1, 20)}
+              </span>
             </div>
           </Link>
         ))}
