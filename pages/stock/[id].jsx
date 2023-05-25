@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { FaWindowClose, FaEdit } from 'react-icons/fa';
+import { FaWindowClose } from 'react-icons/fa';
 
 import { useRouter } from 'next/router';
 import Loading from '@/components/Loading';
@@ -12,19 +12,29 @@ const StockDetails = () => {
     setIsModalOpen(true);
   };
 
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({});
   const [data2, setData2] = useState({});
 
-  const handleChange = (event) => {
-    setData2({ valor: event.target.value });
-    setData2({ categoria: event.target.value });
-    setData2({ descricao: event.target.value });
+  const closeModal = () => {
+    setIsModalOpen(false);
+    setData2(data);
+  };
+
+  const handleNameChange = (event) => {
     setData2({ nome: event.target.value });
+  };
+
+  const handleValorChange = (event) => {
+    setData2({ valor: event.target.value });
+  };
+
+  const handleDescricaoChange = (event) => {
+    setData2({ descricao: event.target.value });
+  };
+
+  const handlequantidadeChange = (event) => {
+    setData2({ quantidade: event.target.value });
   };
 
   const router = useRouter();
@@ -50,6 +60,7 @@ const StockDetails = () => {
 
   return (
     <div className="p-4">
+      {/* MODAL */}
       {isModalOpen && (
         <div className="fixed z-50 inset-0 overflow-y-auto">
           <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
@@ -66,37 +77,46 @@ const StockDetails = () => {
                     <form action="">
                       <label htmlFor="">Nome</label>
                       <input
-                        onChange={handleChange}
+                        onChange={handleNameChange}
                         type="text"
                         value={data2.nome}
                         className="border w-full h-[2.8rem] p-5 text-sm rounded-[5px] bg-gray-100"
                         placeholder="Nome"
                       />
 
-                      <label htmlFor="">Quantidade</label>
+                      <label className="mt-5" htmlFor="">
+                        Valor
+                      </label>
+                      <input
+                        value={data2.valor}
+                        onChange={handleValorChange}
+                        type="number"
+                        className="border  w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600 
+                       rounded-[5px] bg-gray-100 "
+                        placeholder="Quantidade"
+                      />
+                      <label className=" " htmlFor="">
+                        Quantidade
+                      </label>
 
                       <input
+                        onChange={handlequantidadeChange}
                         value={data2.quantidade}
                         type="number"
                         className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
-                       rounded-[5px] bg-gray-100 mt-3"
-                        placeholder="Quantidade"
-                      />
-
-                      <label htmlFor="">Valor</label>
-
-                      <input
-                        value={data2.valor}
-                        type="number"
-                        className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
-                       rounded-[5px] bg-gray-100 mt-3"
+                       rounded-[5px] bg-gray-100 "
                         placeholder="Valor"
                       />
 
+                      <label className=" " htmlFor="">
+                        Descrição
+                      </label>
                       <input
+                        onChange={handleDescricaoChange}
                         type="text"
+                        value={data2.descricao}
                         className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
-                       rounded-[5px] bg-gray-100 mt-3"
+                       rounded-[5px] bg-gray-100 "
                         placeholder="Detalhe"
                       />
 

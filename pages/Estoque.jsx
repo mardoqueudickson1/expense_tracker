@@ -1,16 +1,200 @@
 import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
+import { toast } from 'react-hot-toast';
 import Link from 'next/link';
-import { BsPersonFillAdd, BsFillClipboardCheckFill } from 'react-icons/bs';
+
+import { BsFillClipboardCheckFill } from 'react-icons/bs';
 import { MdProductionQuantityLimits } from 'react-icons/md';
 import { BiCategory, BiMoneyWithdraw } from 'react-icons/bi';
-import { AiOutlineHistory } from 'react-icons/ai';
+import { AiOutlineHistory, AiOutlineFileAdd } from 'react-icons/ai';
+import { FaWindowClose } from 'react-icons/fa';
 import { FiDownload } from 'react-icons/fi';
+
 import axios from '../services/axios';
 import Loading from '@/components/Loading';
 import { generateMonthlyFuncionariosPDF } from '../utils/FuncionariosPDF';
+import { useSelector } from 'react-redux';
+
+// Formulário de muit-Step
+
+function Step1({
+  nome,
+  setNome,
+  categoria,
+  setCategoria,
+  valor,
+  setValor,
+  quantidade,
+  setQuantidade,
+  descricao,
+  setDescricao,
+  handleGo,
+}) {
+  return (
+    <>
+      <div className="flex justify-center align-center mt-[1rem]">
+        <div className="flex justify-center align-center mt-[4rem]">
+          <div className="bg-white w-[25rem] p-5 rounded-[5px]">
+            <h1 className="text-center font-bold">
+              Cadastrar produto no estoque - 1º passo{' '}
+            </h1>
+            <div className="mt-[2rem]">
+              <form>
+                <input
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
+                  type="text"
+                  className="border w-full h-[2.8rem] p-5 text-sm
+                                    rounded-[5px] bg-gray-100"
+                  placeholder="nome"
+                />
+
+                <input
+                  value={categoria}
+                  onChange={(e) => setCategoria(e.target.value)}
+                  type="text"
+                  className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
+                                    rounded-[5px] bg-gray-100 mt-3"
+                  placeholder="Categoria"
+                />
+
+                <input
+                  value={valor}
+                  onChange={(e) => setValor(e.target.value)}
+                  type="number"
+                  className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
+                                    rounded-[5px] bg-gray-100 mt-3"
+                  placeholder="Valor"
+                />
+
+                <input
+                  value={quantidade}
+                  onChange={(e) => setQuantidade(e.target.value)}
+                  type="number"
+                  className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
+                                    rounded-[5px] bg-gray-100 mt-3"
+                  placeholder="Quantidade"
+                />
+
+                <label htmlFor="descricao">Descrição</label>
+                <textarea
+                  value={descricao}
+                  onChange={(e) => setDescricao(e.target.value)}
+                  className="border w-full p-5 text-sm focus:ring-blue-600 rounded-[5px] bg-gray-100 mt-3"
+                ></textarea>
+
+                <button
+                  className="bg-gray-500 w-full h-[2.8rem] text-white mt-3 rounded-[5px]"
+                  onClick={handleGo}
+                >
+                  Continuar
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function Step2({ nome, categoria, valor, quantidade, descricao, handleBack }) {
+  const isLoading = useSelector((state) => state.auth.isLoadingButom);
+
+  return (
+    <div className="flex justify-center align-center mt-[4rem]">
+      <div className="flex justify-center align-center mt-[4rem]">
+        <div className="bg-white w-[25rem] p-5 rounded-[5px]">
+          <h1 className="text-center font-bold">Confirme os dados</h1>
+          <div className="mt-[2rem]">
+            <p>
+              <strong>Nome:</strong> {nome}
+            </p>
+            <p>
+              <strong>Categoria:</strong> {categoria}
+            </p>
+            <p>
+              <strong>Valor:</strong> {valor}
+            </p>
+
+            <p>
+              <strong>Quantidade:</strong> {quantidade}
+            </p>
+
+            <p>
+              <strong>Descricao:</strong> {descricao}
+            </p>
+
+            <button
+              className="bg-gray-500 text-white w-full h-[2.8rem] rounded-[5px] mt-3"
+              onClick={handleBack}
+            >
+              Voltar
+            </button>
+            <button
+              className={`bg-azulScuro w-full lg:focus:focus:ring-blue-600 h-[2.8rem] ${
+                isLoading ? 'opacity-70 cursor-not-allowed' : ''
+              } text-white mt-3 rounded-[5px `}
+              disabled={isLoading}
+            >
+              {isLoading ? (
+                <div className="flex items-center justify-center">
+                  <svg
+                    className="animate-spin h-5 w-5 mr-3 text-white"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-50"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    />
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 018 4.337v-.006l.008-.007A8 8 0 0117.663 10H12v2h6.196A7.965 7.965 0 0112 19.663v-2.002zm-4-2.002A7.965 7.965 0 014 12H1.021A10.04 10.04 0 0012 22.979V20H5.291v-2.002z"
+                    />
+                  </svg>
+                  Processando...
+                </div>
+              ) : (
+                'Cadastrar'
+              )}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function Table() {
+  // ESTADOS DO FORMULÀRIO
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [step, setStep] = useState(1);
+  const [nome, setNome] = useState('');
+  const [categoria, setCategoria] = useState('');
+  const [valor, setValor] = useState('');
+  const [quantidade, setQuantidade] = useState('');
+  const [descricao, setDescricao] = useState('');
+
+  const handleGo = (e) => {
+    e.preventDefault();
+
+    // if (!nome) {
+    //   toast.error('Por favor, preencha a descrição.');
+    //   return;
+    // }
+
+    setStep(2);
+  };
+
+  const openModal = () => {
+    setIsModalOpen(true);
+  };
+
   const [funcionarios, setFuncionarios] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
@@ -28,6 +212,11 @@ export default function Table() {
   const offset = currentPage * itemsPerPage;
   const currentPageData = filteredData.slice(offset, offset + itemsPerPage);
 
+  //FUNCOES
+
+  const closeModal = () => {
+    setIsModalOpen(false);
+  };
   const handlePageClick = (e) => {
     setCurrentPage(e.selected);
   };
@@ -57,8 +246,70 @@ export default function Table() {
     document.body.removeChild(link);
     URL.revokeObjectURL(url);
   }
+
+  const renderForm = (step) => {
+    switch (step) {
+      case 1:
+        return (
+          <div className="">
+            <Step1
+              nome={nome}
+              setNome={setNome}
+              categoria={categoria}
+              setCategoria={setCategoria}
+              valor={valor}
+              setValor={setValor}
+              quantidade={quantidade}
+              setQuantidade={setQuantidade}
+              descricao={descricao}
+              setDescricao={setDescricao}
+              handleGo={handleGo}
+            />
+          </div>
+        );
+
+      case 2:
+        return (
+          <div>
+            <Step2
+              nome={nome}
+              categoria={categoria}
+              valor={valor}
+              quantidade={quantidade}
+              handleBack={() => setStep(1)}
+            />
+          </div>
+        );
+      default:
+        return null;
+    }
+  };
+
   return (
     <>
+      {/* MODAL */}
+      {isModalOpen && (
+        <div className="fixed z-50 inset-0 overflow-y-auto">
+          <div className="flex items-center justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+            <div className="fixed inset-0 transition-opacity">
+              <div className="absolute inset-0 bg-gray-500 opacity-75" />
+            </div>
+            <span className="hidden sm:inline-block sm:align-middle sm:h-screen" />
+            &#8203;
+            <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+              <div>{renderForm(step)}</div>
+              <div className="bg-gray-50 text-azulScuro px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <FaWindowClose
+                  onClick={closeModal}
+                  className="cursor-pointer"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {/* FIM DOS MODAL */}
+
       <Loading isLoading={isLoading} />
       <div className="flex flex-col ">
         <div className="overflow-x-auto">
@@ -91,27 +342,26 @@ export default function Table() {
 
             <div className="flex items-center space-x-2 gap-5 ">
               <div className="relative gap-5 ">
-                <button
-                  onClick={downloadPDF}
-                  className="relative  z-0 inline-flex text-sm rounded-md shadow-sm focus:ring-accent-500 focus:border-accent-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1"
-                >
-                  <span className="relative ml-5 inline-flex items-center px-3 py-3 space-x-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md sm:py-2">
-                    <div className="hidden sm:block">
-                      <AiOutlineHistory size={20} />
-                    </div>
-                  </span>
-                </button>
-
                 <Link href="/cadastrar/funcionario">
                   <button className="relative z-0 inline-flex text-sm rounded-md shadow-sm focus:ring-accent-500 focus:border-accent-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1">
                     <span className="relative inline-flex items-center px-3 py-3 space-x-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md sm:py-2">
                       <div className="hidden sm:block">
-                        <BsPersonFillAdd size={20} />
+                        <AiOutlineHistory size={20} />
                       </div>
                     </span>
                   </button>
                 </Link>
 
+                <button
+                  onClick={openModal}
+                  className="relative ml-3 z-0 inline-flex text-sm rounded-md shadow-sm focus:ring-accent-500 focus:border-accent-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1"
+                >
+                  <span className="relative inline-flex items-center px-3 py-3 space-x-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md sm:py-2">
+                    <div className="hidden sm:block">
+                      <AiOutlineFileAdd size={20} />
+                    </div>
+                  </span>
+                </button>
                 <button
                   onClick={downloadPDF}
                   className="relative ml-3 z-0 inline-flex text-sm rounded-md shadow-sm focus:ring-accent-500 focus:border-accent-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1"
