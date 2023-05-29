@@ -10,7 +10,7 @@ import axios from '../services/axios';
 import Loading from '@/components/Loading';
 import { generateMonthlyFuncionariosPDF } from '../utils/FuncionariosPDF';
 
-export default function Table() {
+export default function Funcionarios() {
   const [funcionarios, setFuncionarios] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 

@@ -148,11 +148,7 @@ const StockDetails = () => {
         </h2>
         <div className="grid grid-cols-2 mx-[7rem]">
           <div className="flex justify-center items-center">
-            <img
-              src="/undraw_file_synchronization_re_m5jd.svg"
-              alt="Meu SVG"
-              className=""
-            />
+            <img src="/pngwing.com.png" alt="Meu SVG" className="" />
           </div>
 
           <div className="">
@@ -175,6 +171,21 @@ const StockDetails = () => {
             <div className="flex gap-2">
               <p className="font-bold">Categoria: </p>{' '}
               <p className="text-gray-600">{data.categoria}</p>
+            </div>
+
+            <div className="flex gap-2">
+              <p className="font-bold">fornecedor: </p>{' '}
+              <p className="text-gray-600">{data.nome_fornecedor}</p>
+            </div>
+
+            <div className="flex gap-2">
+              <p className="font-bold">Telefone fornecedor: </p>{' '}
+              <p className="text-gray-600">{data.telefone}</p>
+            </div>
+
+            <div className="flex gap-2">
+              <p className="font-bold">Endereço fornecedor: </p>{' '}
+              <p className="text-gray-600">{data.endereco}</p>
             </div>
             <div className="flex gap-2">
               <p className="font-bold">Data de registro: </p>{' '}

@@ -1,30 +1,36 @@
 import jsPDF from 'jspdf';
 import 'jspdf-autotable';
 
-export const generateMonthlyTransactionsPDF = async (transactions) => {
+export const generateMonthlyEstoquePDF = async (estoque) => {
   // Cria um novo documento PDF
   const doc = new jsPDF();
 
   // Define a posição inicial do cursor
-  let cursorX = 10;
   let cursorY = 20;
 
   // Adiciona o cabeçalho do PDF
   doc.setFontSize(24);
   doc.setTextColor('#2B2D42');
-  doc.text('The Potter House - Transações', 50, cursorY);
+  doc.text('The Potter House - Estoque', 50, cursorY);
 
   cursorY += 20;
 
   // Define as configurações da tabela
-  const tableHeaders = ['Data', 'Tipo', 'Descrição', 'Valor'];
-  const tableData = transactions.map((transaction) => [
-    transaction.data_formatada,
-    transaction.tipo,
-    transaction.descricao,
-    `Kz ${transaction.valor}`,
+  const tableHeaders = [
+    'Nome',
+    'Categoria',
+    'Valor',
+    'Quantidade',
+    'Data de registro',
+  ];
+  const tableData = estoque.map((dados) => [
+    dados.nome,
+    dados.categoria,
+    `Kz ${dados.valor}`,
+    dados.quantidade,
+    dados.updated_at,
   ]);
-  const tableWidths = [50, 40, 40, 40];
+  const tableWidths = [40, 40, 40, 40, 40, 40, 40];
 
   // Adiciona a tabela ao PDF
   doc.autoTable({
@@ -34,7 +40,7 @@ export const generateMonthlyTransactionsPDF = async (transactions) => {
     columns: tableWidths,
     headStyles: { fillColor: ['#2B2D42'] },
     bodyStyles: { textColor: [51, 51, 51] },
-    styles: { fontSize: 12 },
+    styles: { fontSize: 9 },
   });
 
   // Salva o documento PDF e retorna seus dados

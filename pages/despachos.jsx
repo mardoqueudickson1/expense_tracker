@@ -2,20 +2,27 @@ import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { toast } from 'react-hot-toast';
 import Link from 'next/link';
-import { BsFillClipboardCheckFill } from 'react-icons/bs';
-import { MdProductionQuantityLimits } from 'react-icons/md';
-import { BiCategory, BiMoneyWithdraw } from 'react-icons/bi';
-import { AiOutlineHistory, AiOutlineFileAdd } from 'react-icons/ai';
 import { FaWindowClose } from 'react-icons/fa';
 import { FiDownload } from 'react-icons/fi';
-
 import axios from '../services/axios';
 import Loading from '@/components/Loading';
 import { generateMonthlyEstoquePDF } from '../utils/EstoquePDF';
 import { useSelector } from 'react-redux';
 
 // Formulário de muit-Step
-function Step1({ produto, handleInputChange, handleGo }) {
+function Step1({
+  nome,
+  setNome,
+  categoria,
+  setCategoria,
+  valor,
+  setValor,
+  quantidade,
+  setQuantidade,
+  descricao,
+  setDescricao,
+  handleGo,
+}) {
   return (
     <>
       <div className="flex justify-center align-center mt-[1rem]">
@@ -29,9 +36,8 @@ function Step1({ produto, handleInputChange, handleGo }) {
                 <label htmlFor="nome">Nome</label>
 
                 <input
-                  value={produto.nome}
-                  name="nome"
-                  onChange={handleInputChange}
+                  value={nome}
+                  onChange={(e) => setNome(e.target.value)}
                   type="text"
                   className="border w-full h-[2.8rem] p-5 text-sm
                                     rounded-[5px] bg-gray-100"
@@ -40,9 +46,8 @@ function Step1({ produto, handleInputChange, handleGo }) {
                 <label htmlFor="categoria">Categoria</label>
 
                 <input
-                  value={produto.categoria}
-                  name="categoria"
-                  onChange={handleInputChange}
+                  value={categoria}
+                  onChange={(e) => setCategoria(e.target.value)}
                   type="text"
                   className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
                                     rounded-[5px] bg-gray-100 "
@@ -51,9 +56,8 @@ function Step1({ produto, handleInputChange, handleGo }) {
                 <label htmlFor="valor">Valor</label>
 
                 <input
-                  value={produto.valor}
-                  name="valor"
-                  onChange={handleInputChange}
+                  value={valor}
+                  onChange={(e) => setValor(e.target.value)}
                   type="number"
                   className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
                                     rounded-[5px] bg-gray-100"
@@ -61,9 +65,8 @@ function Step1({ produto, handleInputChange, handleGo }) {
                 />
                 <label htmlFor="quantidade">Quantidade</label>
                 <input
-                  value={produto.quantidade}
-                  name="quantidade"
-                  onChange={handleInputChange}
+                  value={quantidade}
+                  onChange={(e) => setQuantidade(e.target.value)}
                   type="number"
                   className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
                                     rounded-[5px] bg-gray-100"
@@ -72,9 +75,8 @@ function Step1({ produto, handleInputChange, handleGo }) {
 
                 <label htmlFor="descricao">Descrição</label>
                 <textarea
-                  value={produto.descricao}
-                  name="descricao"
-                  onChange={handleInputChange}
+                  value={descricao}
+                  onChange={(e) => setDescricao(e.target.value)}
                   className="border w-full px-5 text-sm focus:ring-blue-600 rounded-[5px] bg-gray-100 "
                   placeholder="Detalhes do produto"
                 ></textarea>
@@ -94,66 +96,15 @@ function Step1({ produto, handleInputChange, handleGo }) {
   );
 }
 
-function Step2({ produto, handleInputChange, handleGo2 }) {
-  return (
-    <>
-      <div className="flex justify-center align-center mt-[1rem]">
-        <div className="flex justify-center align-center mt-[4rem]">
-          <div className="bg-white w-[25rem] p-5 rounded-[5px]">
-            <h1 className="text-center font-bold">
-              Dados do fornecedor - 2º passo{' '}
-            </h1>
-            <div className="mt-[2rem]">
-              <form>
-                <label htmlFor="nome">Nome</label>
-
-                <input
-                  value={produto.fornecedor ? produto.fornecedor.nome : ''}
-                  name="fornecedor.nome"
-                  onChange={handleInputChange}
-                  type="text"
-                  className="border w-full h-[2.8rem] p-5 text-sm
-                                    rounded-[5px] bg-gray-100"
-                  placeholder="nome"
-                />
-                <label htmlFor="telefone">Telefone</label>
-
-                <input
-                  name="fornecedor.telefone"
-                  value={produto.fornecedor ? produto.fornecedor.telefone : ''}
-                  onChange={handleInputChange}
-                  type="text"
-                  className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
-                                    rounded-[5px] bg-gray-100 "
-                  placeholder="Telefone"
-                />
-                <label htmlFor="endereco">Endereço</label>
-                <input
-                  value={produto.fornecedor ? produto.fornecedor.endereco : ''}
-                  name="fornecedor.endereco"
-                  onChange={handleInputChange}
-                  type="text"
-                  className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
-                                    rounded-[5px] bg-gray-100 "
-                  placeholder="Endereço"
-                />
-
-                <button
-                  className="bg-gray-500 w-full h-[2.8rem] text-white mt-3 rounded-[5px]"
-                  onClick={handleGo2}
-                >
-                  Continuar
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
-
-function Step3({ produto, handleBack, handleSubmit }) {
+function Step2({
+  nome,
+  categoria,
+  valor,
+  quantidade,
+  descricao,
+  handleBack,
+  handleSubmit,
+}) {
   const isLoading = useSelector((state) => state.auth.isLoadingButom);
 
   return (
@@ -163,29 +114,21 @@ function Step3({ produto, handleBack, handleSubmit }) {
           <h1 className="text-center font-bold">Confirme os dados</h1>
           <div className="mt-[2rem]">
             <p>
-              <strong>Nome:</strong> {produto.nome}
+              <strong>Nome:</strong> {nome}
             </p>
             <p>
-              <strong>Categoria:</strong> {produto.categoria}
+              <strong>Categoria:</strong> {categoria}
             </p>
             <p>
-              <strong>Valor:</strong> {produto.valor}
-            </p>
-
-            <p>
-              <strong>Quantidade:</strong> {produto.quantidade}
+              <strong>Valor:</strong> {valor}
             </p>
 
             <p>
-              <strong>Nome fornecedor:</strong> {produto.fornecedor.nome}
+              <strong>Quantidade:</strong> {quantidade}
             </p>
 
             <p>
-              <strong>Telefone fornecdor:</strong> {produto.fornecedor.telefone}
-            </p>
-
-            <p>
-              <strong>endereço fornecdor:</strong> {produto.fornecedor.enderco}
+              <strong>Descricao:</strong> {descricao}
             </p>
 
             <button
@@ -236,69 +179,29 @@ function Step3({ produto, handleBack, handleSubmit }) {
 
 export default function Table() {
   // ESTADOS DO FORMULÀRIO
-  const [totalProdutoCadatrados, setTotalProdutosCadastrados] = useState('');
+
   const [totalValorPro, setTotalValorPro] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [step, setStep] = useState(1);
-
-  const [produto, setProduto] = useState({
-    nome: '',
-    valor: '',
-    quantidade: '',
-    descricao: '',
-    fornecedor: { nome: '', telefone: '', endereco: '' },
-  });
-
+  const [nome, setNome] = useState('');
+  const [categoria, setCategoria] = useState('');
+  const [valor, setValor] = useState('');
+  const [quantidade, setQuantidade] = useState('');
+  const [descricao, setDescricao] = useState('');
   const [refreshData, setRefreshData] = useState(false);
   const [estoque, setEstoque] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    const [fieldName, subFieldName] = name.split('.');
-
-    if (subFieldName) {
-      setProduto((prevState) => ({
-        ...prevState,
-        [fieldName]: {
-          ...prevState[fieldName],
-          [subFieldName]: value,
-        },
-      }));
-    } else {
-      setProduto((prevState) => ({
-        ...prevState,
-        [name]: value,
-      }));
-    }
-  };
-
+  console.log(totalValorPro.valor);
   const handleGo = (e) => {
     e.preventDefault();
 
-    if (
-      !produto.nome ||
-      !produto.categoria ||
-      !produto.valor ||
-      !produto.quantidade ||
-      !produto.descricao
-    ) {
+    if (!nome || !categoria || !valor || !quantidade || !descricao) {
       toast.error('Por favor, preencha todos os campos.');
       return;
     }
 
     setStep(2);
-  };
-
-  const handleGo2 = (e) => {
-    e.preventDefault();
-
-    if (!produto.fornecedor) {
-      toast.error('Por favor, preencha todos os campos.');
-      return;
-    }
-
-    setStep(3);
   };
 
   const openModal = () => {
@@ -314,7 +217,7 @@ export default function Table() {
 
   // Paginação
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 5;
+  const itemsPerPage = 8;
   const totalItems = filteredData.length;
   const offset = currentPage * itemsPerPage;
   const currentPageData = filteredData.slice(offset, offset + itemsPerPage);
@@ -323,7 +226,11 @@ export default function Table() {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setProduto({});
+    setNome('');
+    setCategoria('');
+    setValor('');
+    setQuantidade('');
+    setDescricao('');
     setStep(1);
   };
   const handlePageClick = (e) => {
@@ -354,16 +261,15 @@ export default function Table() {
   const sendData = async () => {
     try {
       //converte os dados
-      const Valor = parseFloat(produto.valor);
-      const Quantidade = parseFloat(produto.quantidade);
+      const Valor = parseFloat(valor);
+      const Quantidade = parseFloat(quantidade);
 
       await axios.post('/empresa/filha/estoque', {
-        nome: produto.nome,
-        categoria: produto.categoria,
+        nome: nome,
+        categoria: categoria,
         valor: Valor,
         quantidade: Quantidade,
-        descricao: produto.descricao,
-        fornecedor: produto.fornecedor,
+        descricao: descricao,
       });
     } catch (error) {
       console.error(error);
@@ -380,6 +286,11 @@ export default function Table() {
     setIsLoading(false);
     setIsModalOpen(false);
     setIsModalOpen(false);
+    setNome('');
+    setCategoria('');
+    setValor('');
+    setQuantidade('');
+    setDescricao('');
     setStep(1);
     toast.success('Produto cadastrado com sucesso.');
   };
@@ -412,8 +323,16 @@ export default function Table() {
         return (
           <div className="">
             <Step1
-              produto={produto}
-              handleInputChange={handleInputChange}
+              nome={nome}
+              setNome={setNome}
+              categoria={categoria}
+              setCategoria={setCategoria}
+              valor={valor}
+              setValor={setValor}
+              quantidade={quantidade}
+              setQuantidade={setQuantidade}
+              descricao={descricao}
+              setDescricao={setDescricao}
               handleGo={handleGo}
             />
           </div>
@@ -421,20 +340,13 @@ export default function Table() {
 
       case 2:
         return (
-          <div className="">
-            <Step2
-              produto={produto}
-              handleInputChange={handleInputChange}
-              handleGo2={handleGo2}
-            />
-          </div>
-        );
-
-      case 3:
-        return (
           <div>
-            <Step3
-              produto={produto}
+            <Step2
+              nome={nome}
+              categoria={categoria}
+              valor={valor}
+              quantidade={quantidade}
+              descricao={descricao}
               handleSubmit={handleSubmit}
               handleBack={() => setStep(1)}
             />
@@ -471,12 +383,16 @@ export default function Table() {
       {/* FIM DOS MODAL */}
 
       <Loading isLoading={isLoading} />
+
+      <div className=" text-center font-bold text-3xl text-gray-900 my-3">
+        <h1>Histórico de despachos</h1>
+      </div>
       <div className="flex flex-col ">
         <div className="overflow-x-auto">
           <div className="flex justify-between py-3 lg:mx-[1rem]">
             <div className="relative max-w-xs">
               <label htmlFor="hs-table-search" className="sr-only">
-                Pesquisar...
+                Pesquisar despacho...
               </label>
               <input
                 onChange={(e) => setsearch(e.target.value)}
@@ -502,26 +418,6 @@ export default function Table() {
 
             <div className="flex items-center space-x-2 gap-5 ">
               <div className="relative gap-5 ">
-                <Link href="/despachos">
-                  <button className="relative z-0 inline-flex text-sm rounded-md shadow-sm focus:ring-accent-500 focus:border-accent-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1">
-                    <span className="relative inline-flex items-center px-3 py-3 space-x-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md sm:py-2">
-                      <div className="hidden sm:block">
-                        <AiOutlineHistory size={20} />
-                      </div>
-                    </span>
-                  </button>
-                </Link>
-
-                <button
-                  onClick={openModal}
-                  className="relative ml-3 z-0 inline-flex text-sm rounded-md shadow-sm focus:ring-accent-500 focus:border-accent-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1"
-                >
-                  <span className="relative inline-flex items-center px-3 py-3 space-x-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md sm:py-2">
-                    <div className="hidden sm:block">
-                      <AiOutlineFileAdd size={20} />
-                    </div>
-                  </span>
-                </button>
                 <button
                   onClick={downloadPDF}
                   className="relative ml-3 z-0 inline-flex text-sm rounded-md shadow-sm focus:ring-accent-500 focus:border-accent-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1"
@@ -538,62 +434,18 @@ export default function Table() {
         </div>
       </div>
 
-      <div className="grid lg:grid-cols-4 gap-4   lg:mx-[1rem]">
-        <div className="  bg-white flex justify-between w-full  p-4 rounded-lg">
-          <div className="flex flex-col w-full pb-4 gap-7">
-            <p className="text-azulScuro">Total produto cadastrados</p>
-            <p className="text-3xl font-bold">{totalProdutoCadatrados.total}</p>
-          </div>
-          <p className=" flex justify-center items-center p-2 rounded-lg -mt-[4rem]">
-            <BsFillClipboardCheckFill size={30} className="text-azulScuro" />
-          </p>
-        </div>
-
-        <div className="  bg-white flex justify-between w-full  p-4 rounded-lg">
-          <div className="flex flex-col w-full pb-4 gap-7">
-            <p className="text-azulScuro">Total produtos em estoque</p>
-            <p className="text-3xl font-bold">45</p>
-          </div>
-          <p className=" flex justify-center items-center p-2 rounded-lg -mt-[4rem]">
-            <MdProductionQuantityLimits size={30} className="text-gree" />
-          </p>
-        </div>
-
-        <div className="  bg-white flex justify-between w-full  p-4 rounded-lg">
-          <div className="flex flex-col w-full pb-4 gap-7">
-            <p className="text-azulScuro ">Produtos despachados</p>
-            <p className="text-3xl  font-bold">85</p>
-          </div>
-          <p className=" flex justify-center items-center p-2 rounded-lg -mt-[4rem]">
-            <BiCategory size={30} className=" text-azulScuro" />
-          </p>
-        </div>
-
-        <div className="  bg-azulScuro flex justify-between w-full  p-4 rounded-lg">
-          <div className="flex flex-col w-full pb-4 gap-7">
-            <p className="text-white">Total investimento</p>
-            <p className="text-3xl text-white font-bold">
-              {totalValorPro.valor}
-            </p>
-          </div>
-          <p className=" flex justify-center items-center p-2 rounded-lg -mt-[4rem]">
-            <BiMoneyWithdraw size={30} className="text-white" />
-          </p>
-        </div>
-      </div>
-
       <div className="min-w-full my-10 overflow-x-auto border rounded-md shadow-sm dark:border-gray-700 mt-[2rem]">
         <table className="min-w-full bg-white rounded whitespace-nowrap w-full">
           <thead className="border-b bg-gray-50">
             <tr className="">
               <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
-                ID
-              </th>
-              <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
                 Nome
               </th>
               <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
-                Categoria
+                Nome do cliente
+              </th>
+              <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
+                Produto
               </th>
               <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
                 Valor
@@ -622,7 +474,7 @@ export default function Table() {
                 <td className="px-3 py-4 text-gray-600 "> {item.valor} </td>
                 <td className="px-3 py-4 text-gray-600">{item.quantidade}</td>
                 <td className="px-3 py-4 text-right text-gray-500 ">
-                  {item.data_formatada}
+                  {item.updated_at}
                 </td>
 
                 <td className="w-20 px-3 py-2 text-center text-gray-500 ">
