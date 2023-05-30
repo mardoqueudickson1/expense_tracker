@@ -1,4 +1,4 @@
-import { FaUsers, FaCog } from 'react-icons/fa';
+import { FaUsers, FaCog, FaHistory } from 'react-icons/fa';
 import { BsFillClipboardCheckFill } from 'react-icons/bs';
 
 // Sidebar Data
@@ -12,6 +12,11 @@ export const SidebarData = [
   {
     icon: BsFillClipboardCheckFill,
     heading: '/Estoque',
+  },
+
+  {
+    icon: FaHistory,
+    heading: '/despachos',
   },
 
   {

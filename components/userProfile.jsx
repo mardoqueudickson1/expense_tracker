@@ -13,7 +13,7 @@ export default function userProfile({ toggle }) {
           : 'bg-testeAzul rounded-2xl  '
       }`}
     >
-      <Link href="perfil">
+      <Link href="/invoice">
         <div className="min-w-[3.5rem] h-[3.5rem] border-solid  cursor-pointer">
           <img
             src="/potter3.png"

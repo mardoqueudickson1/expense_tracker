@@ -7,7 +7,6 @@ import { FiDownload } from 'react-icons/fi';
 import axios from '../services/axios';
 import Loading from '@/components/Loading';
 import { generateMonthlyEstoquePDF } from '../utils/EstoquePDF';
-import { useSelector } from 'react-redux';
 
 // Formulário de muit-Step
 function Step1({
@@ -105,7 +104,7 @@ function Step2({
   handleBack,
   handleSubmit,
 }) {
-  const isLoading = useSelector((state) => state.auth.isLoadingButom);
+  const [isLoading, setIsLoading] = useState(false);
 
   return (
     <div className="flex justify-center align-center mt-[4rem]">
@@ -180,7 +179,6 @@ function Step2({
 export default function Table() {
   // ESTADOS DO FORMULÀRIO
 
-  const [totalValorPro, setTotalValorPro] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [step, setStep] = useState(1);
   const [nome, setNome] = useState('');
@@ -189,10 +187,9 @@ export default function Table() {
   const [quantidade, setQuantidade] = useState('');
   const [descricao, setDescricao] = useState('');
   const [refreshData, setRefreshData] = useState(false);
-  const [estoque, setEstoque] = useState([]);
+  const [despachos, setDespachos] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
 
-  console.log(totalValorPro.valor);
   const handleGo = (e) => {
     e.preventDefault();
 
@@ -211,8 +208,8 @@ export default function Table() {
   // Pesquisa em tempo real
   const [search, setsearch] = useState('');
 
-  const filteredData = estoque.filter((item) =>
-    item.nome.toLowerCase().includes(search.toLowerCase())
+  const filteredData = despachos.filter((item) =>
+    item.responsavel_despacho.toLowerCase().includes(search.toLowerCase())
   );
 
   // Paginação
@@ -244,16 +241,13 @@ export default function Table() {
   const fetchData = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get('/empresa/filha/estoque');
-      const response2 = await axios.get('/empresa/filha/totalprodcadstradaos');
-      const response3 = await axios.get('/empresa/filha/totalvalor');
-
+      const response = await axios.get('/empresa/filha/despacho');
       setIsLoading(false);
-      setTotalValorPro(response3.data);
-      setTotalProdutosCadastrados(response2.data);
-      setEstoque(response.data);
+      setDespachos(response.data);
     } catch (error) {
       console.error(error);
+      setIsLoading(false);
+
       // Lida com erros durante a requisição
     }
   };
@@ -304,7 +298,7 @@ export default function Table() {
 
   // Função que gera o PDF e faz o download
   async function downloadPDF() {
-    const pdfBytes = await generateMonthlyEstoquePDF(estoque);
+    const pdfBytes = await generateMonthlyEstoquePDF(despachos);
 
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
@@ -439,19 +433,19 @@ export default function Table() {
           <thead className="border-b bg-gray-50">
             <tr className="">
               <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
-                Nome
+                Responsável da saída
               </th>
               <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
-                Nome do cliente
+                Nome do receptor
               </th>
               <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
                 Produto
               </th>
               <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
-                Valor
+                Quantidade
               </th>
               <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
-                Quantidade
+                Valor total
               </th>
               <th className="px-3 py-3 text-xs font-bord text-right text-gray-500 uppercase align-middle">
                 Data de registro
@@ -463,23 +457,27 @@ export default function Table() {
           <tbody className="text-sm bg-white divide-y divide-gray-200">
             {currentPageData.map((item, index) => (
               <tr key={index}>
-                <td className="px-3 py-4 text-gray-600 ">{item.id}</td>
+                <td className="px-3 py-4 text-gray-600 ">
+                  {item.responsavel_despacho}
+                </td>
                 <Link href={`stock/${item.id}`}>
                   <td className="px-3 py-4 cursor-pointer text-gray-600 hover:text-slate-900 ">
-                    {item.nome}
+                    {item.pessoa_receber}
                   </td>
                 </Link>
 
-                <td className="px-3 py-4 text-gray-500 ">{item.categoria}</td>
-                <td className="px-3 py-4 text-gray-600 "> {item.valor} </td>
-                <td className="px-3 py-4 text-gray-600">{item.quantidade}</td>
+                <td className="px-3 py-4 text-gray-500 ">
+                  {item.nome_estoque}
+                </td>
+                <td className="px-3 py-4 text-gray-600 ">{item.quantidade}</td>
+                <td className="px-3 py-4 text-gray-600">{item.valor_total}</td>
                 <td className="px-3 py-4 text-right text-gray-500 ">
-                  {item.updated_at}
+                  {item.data_saida}
                 </td>
 
                 <td className="w-20 px-3 py-2 text-center text-gray-500 ">
                   <div className="flex place-content-center">
-                    <Link href={`stock/${item.id}`}>
+                    <Link href={`stock/saidas/${item.id}`}>
                       {' '}
                       <svg
                         className="w-6 h-6"
