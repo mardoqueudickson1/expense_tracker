@@ -2,26 +2,54 @@ import React, { useEffect, useState } from 'react';
 import ReactPaginate from 'react-paginate';
 import { toast } from 'react-hot-toast';
 import Link from 'next/link';
+import { AiOutlineFileAdd } from 'react-icons/ai';
+
 import { FaWindowClose } from 'react-icons/fa';
 import { FiDownload } from 'react-icons/fi';
-import axios from '../services/axios';
-import Loading from '@/components/Loading';
-import { generateMonthlyEstoquePDF } from '../utils/EstoquePDF';
+
+import axios from '../../services/axios';
+import Loading from '../../components/Loading';
+import { generateMonthlyEstoquePDF } from '../../utils/EstoquePDF';
+import { useSelector } from 'react-redux';
 
 // Formulário de muit-Step
-function Step1({
-  nome,
-  setNome,
-  categoria,
-  setCategoria,
-  valor,
-  setValor,
-  quantidade,
-  setQuantidade,
-  descricao,
-  setDescricao,
-  handleGo,
-}) {
+
+function Step4({ selectedProducts, total, handleGo }) {
+  return (
+    <div className="flex justify-center align-center mt-[4rem]">
+      {/* Resto do código... */}
+      <div className="mt-[2rem]">
+        <div>
+          <h2> {total} Produtos selecionados:</h2>
+          {selectedProducts.map((productId) => {
+            return (
+              <div className="grid grid-cols-3 gap-4 mt-1" key={productId.id}>
+                <p className="font-bold">
+                  <span className="text-gray-600">Nome:</span> {productId.nome}
+                </p>
+                <p className="text-gray-600">
+                  <span className="font-bold">Valor:</span> {productId.valor}
+                </p>
+                <p className="text-gray-600">
+                  <span className="font-bold">Quantidade:</span>{' '}
+                  {productId.quantity}
+                </p>
+                {/* Renderize outros atributos do produto selecionado */}
+              </div>
+            );
+          })}
+        </div>
+        <button
+          className="bg-gray-500 w-full h-[2.8rem] text-white mt-3 rounded-[5px]"
+          onClick={handleGo}
+        >
+          Continuar
+        </button>
+      </div>
+    </div>
+  );
+}
+function Step1({ produto, handleInputChange, handleGo }) {
   return (
     <>
       <div className="flex justify-center align-center mt-[1rem]">
@@ -35,8 +63,9 @@ function Step1({
                 <label htmlFor="nome">Nome</label>
 
                 <input
-                  value={nome}
-                  onChange={(e) => setNome(e.target.value)}
+                  value={produto.nome}
+                  name="nome"
+                  onChange={handleInputChange}
                   type="text"
                   className="border w-full h-[2.8rem] p-5 text-sm
                                     rounded-[5px] bg-gray-100"
@@ -45,8 +74,9 @@ function Step1({
                 <label htmlFor="categoria">Categoria</label>
 
                 <input
-                  value={categoria}
-                  onChange={(e) => setCategoria(e.target.value)}
+                  value={produto.categoria}
+                  name="categoria"
+                  onChange={handleInputChange}
                   type="text"
                   className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
                                     rounded-[5px] bg-gray-100 "
@@ -55,8 +85,9 @@ function Step1({
                 <label htmlFor="valor">Valor</label>
 
                 <input
-                  value={valor}
-                  onChange={(e) => setValor(e.target.value)}
+                  value={produto.valor}
+                  name="valor"
+                  onChange={handleInputChange}
                   type="number"
                   className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
                                     rounded-[5px] bg-gray-100"
@@ -64,8 +95,9 @@ function Step1({
                 />
                 <label htmlFor="quantidade">Quantidade</label>
                 <input
-                  value={quantidade}
-                  onChange={(e) => setQuantidade(e.target.value)}
+                  value={produto.quantidade}
+                  name="quantidade"
+                  onChange={handleInputChange}
                   type="number"
                   className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
                                     rounded-[5px] bg-gray-100"
@@ -74,8 +106,9 @@ function Step1({
 
                 <label htmlFor="descricao">Descrição</label>
                 <textarea
-                  value={descricao}
-                  onChange={(e) => setDescricao(e.target.value)}
+                  value={produto.descricao}
+                  name="descricao"
+                  onChange={handleInputChange}
                   className="border w-full px-5 text-sm focus:ring-blue-600 rounded-[5px] bg-gray-100 "
                   placeholder="Detalhes do produto"
                 ></textarea>
@@ -95,20 +128,67 @@ function Step1({
   );
 }
 
-function Step2({
-  nome,
-  categoria,
-  valor,
-  quantidade,
-  descricao,
-  handleBack,
-  handleSubmit,
-}) {
-  const [isLoading, setIsLoading] = useState(false);
+function Step2({ produto, handleInputChange, handleGo2 }) {
+  return (
+    <>
+      <div className="flex justify-center align-center mt-[1rem]">
+        <div className="flex justify-center align-center mt-[4rem]">
+          <div className="bg-white w-[25rem] p-5 rounded-[5px]">
+            <h1 className="text-center font-bold">
+              Dados do fornecedor - 2º passo{' '}
+            </h1>
+            <div className="mt-[2rem]">
+              <form>
+                <label htmlFor="nome">Nome</label>
 
-  if (isLoading) {
-    setIsLoading(true);
-  }
+                <input
+                  value={produto.fornecedor ? produto.fornecedor.nome : ''}
+                  name="fornecedor.nome"
+                  onChange={handleInputChange}
+                  type="text"
+                  className="border w-full h-[2.8rem] p-5 text-sm
+                                    rounded-[5px] bg-gray-100"
+                  placeholder="nome"
+                />
+                <label htmlFor="telefone">Telefone</label>
+
+                <input
+                  name="fornecedor.telefone"
+                  value={produto.fornecedor ? produto.fornecedor.telefone : ''}
+                  onChange={handleInputChange}
+                  type="text"
+                  className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
+                                    rounded-[5px] bg-gray-100 "
+                  placeholder="Telefone"
+                />
+                <label htmlFor="endereco">Endereço</label>
+                <input
+                  value={produto.fornecedor ? produto.fornecedor.endereco : ''}
+                  name="fornecedor.endereco"
+                  onChange={handleInputChange}
+                  type="text"
+                  className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
+                                    rounded-[5px] bg-gray-100 "
+                  placeholder="Endereço"
+                />
+
+                <button
+                  className="bg-gray-500 w-full h-[2.8rem] text-white mt-3 rounded-[5px]"
+                  onClick={handleGo2}
+                >
+                  Continuar
+                </button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </>
+  );
+}
+
+function Step3({ produto, handleBack, handleSubmit }) {
+  const isLoading = useSelector((state) => state.auth.isLoadingButom);
 
   return (
     <div className="flex justify-center align-center mt-[4rem]">
@@ -117,21 +197,29 @@ function Step2({
           <h1 className="text-center font-bold">Confirme os dados</h1>
           <div className="mt-[2rem]">
             <p>
-              <strong>Nome:</strong> {nome}
+              <strong>Nome:</strong> {produto.nome}
             </p>
             <p>
-              <strong>Categoria:</strong> {categoria}
+              <strong>Categoria:</strong> {produto.categoria}
             </p>
             <p>
-              <strong>Valor:</strong> {valor}
-            </p>
-
-            <p>
-              <strong>Quantidade:</strong> {quantidade}
+              <strong>Valor:</strong> {produto.valor}
             </p>
 
             <p>
-              <strong>Descricao:</strong> {descricao}
+              <strong>Quantidade:</strong> {produto.quantidade}
+            </p>
+
+            <p>
+              <strong>Nome fornecedor:</strong> {produto.fornecedor.nome}
+            </p>
+
+            <p>
+              <strong>Telefone fornecdor:</strong> {produto.fornecedor.telefone}
+            </p>
+
+            <p>
+              <strong>endereço fornecdor:</strong> {produto.fornecedor.enderco}
             </p>
 
             <button
@@ -181,23 +269,121 @@ function Step2({
 }
 
 export default function Table() {
-  // ESTADOS DO FORMULÀRIO
+  // ESTADOS
+  const [selectedProducts, setSelectedProducts] = useState([]);
+
+  const [productQuantities, setProductQuantities] = useState({});
+  const [totalQuantity, setTotalQuantity] = useState(0);
+  console.log('TOTAL:', selectedProducts);
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [step, setStep] = useState(1);
-  const [nome, setNome] = useState('');
-  const [categoria, setCategoria] = useState('');
-  const [valor, setValor] = useState('');
-  const [quantidade, setQuantidade] = useState('');
-  const [descricao, setDescricao] = useState('');
+
+  const handleSelectProduct = (product) => {
+    // Verifique se o produto já está selecionado
+    const isSelected = selectedProducts.some(
+      (selectedProduct) => selectedProduct.id === product.id
+    );
+
+    if (isSelected) {
+      // Se o produto já estiver selecionado, remova-o da lista de selecionados
+      setSelectedProducts(
+        selectedProducts.filter(
+          (selectedProduct) => selectedProduct.id !== product.id
+        )
+      );
+    } else {
+      // Caso contrário, adicione o produto à lista de selecionados
+      setSelectedProducts([...selectedProducts, product]);
+    }
+  };
+
+  const updateSelectedProducts = () => {
+    setSelectedProducts((prevProducts) => {
+      const updatedProducts = prevProducts.map((product) => {
+        const quantity = productQuantities[product.id] || 0;
+        return {
+          ...product,
+          quantity: quantity,
+        };
+      });
+      console.log('AAAAAAAAAAAAAAAA');
+      return updatedProducts;
+    });
+  };
+
+  const handleQuantityChange = (productId, quantity) => {
+    setProductQuantities((prevQuantities) => ({
+      ...prevQuantities,
+      [productId]: quantity,
+    }));
+
+    // Calcular a quantidade total
+    const updatedTotalQuantity = Object.values(productQuantities)
+      .map(Number)
+      .reduce((acc, curr) => acc + curr, 0);
+
+    setTotalQuantity(updatedTotalQuantity);
+
+    updateSelectedProducts(); // Chamar aqui, após o setProductQuantities
+  };
+
+  useEffect(() => {
+    // Função executada sempre que o estado productQuantities for alterado
+    updateSelectedProducts();
+
+    // Calcular a quantidade total
+    const updatedTotalQuantity = Object.values(productQuantities)
+      .map(Number)
+      .reduce((acc, curr) => acc + curr, 0);
+
+    console.log('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
+
+    setTotalQuantity(updatedTotalQuantity);
+  }, [productQuantities]);
+
+  const [produto, setProduto] = useState({
+    nome: '',
+    valor: '',
+    quantidade: '',
+    descricao: '',
+    fornecedor: { nome: '', telefone: '', endereco: '' },
+  });
+
   const [refreshData, setRefreshData] = useState(false);
-  const [despachos, setDespachos] = useState([]);
+  const [estoque, setEstoque] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    const [fieldName, subFieldName] = name.split('.');
+
+    if (subFieldName) {
+      setProduto((prevState) => ({
+        ...prevState,
+        [fieldName]: {
+          ...prevState[fieldName],
+          [subFieldName]: value,
+        },
+      }));
+    } else {
+      setProduto((prevState) => ({
+        ...prevState,
+        [name]: value,
+      }));
+    }
+  };
 
   const handleGo = (e) => {
     e.preventDefault();
 
-    if (!nome || !categoria || !valor || !quantidade || !descricao) {
+    if (
+      !produto.nome ||
+      !produto.categoria ||
+      !produto.valor ||
+      !produto.quantidade ||
+      !produto.descricao
+    ) {
       toast.error('Por favor, preencha todos os campos.');
       return;
     }
@@ -205,20 +391,33 @@ export default function Table() {
     setStep(2);
   };
 
-  // const openModal = () => {
-  //   setIsModalOpen(true);
-  // };
+  const handleGo2 = (e) => {
+    e.preventDefault();
+
+    if (!produto.fornecedor) {
+      toast.error('Por favor, preencha todos os campos.');
+      return;
+    }
+
+    setStep(3);
+  };
+
+  const openModal = () => {
+    setStep(4);
+
+    setIsModalOpen(true);
+  };
 
   // Pesquisa em tempo real
   const [search, setsearch] = useState('');
 
-  const filteredData = despachos.filter((item) =>
-    item.responsavel_despacho.toLowerCase().includes(search.toLowerCase())
+  const filteredData = estoque.filter((item) =>
+    item.nome.toLowerCase().includes(search.toLowerCase())
   );
 
   // Paginação
   const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 8;
+  const itemsPerPage = 5;
   const totalItems = filteredData.length;
   const offset = currentPage * itemsPerPage;
   const currentPageData = filteredData.slice(offset, offset + itemsPerPage);
@@ -227,11 +426,9 @@ export default function Table() {
 
   const closeModal = () => {
     setIsModalOpen(false);
-    setNome('');
-    setCategoria('');
-    setValor('');
-    setQuantidade('');
-    setDescricao('');
+    setProduto({});
+    setSelectedProducts([]);
+    setProductQuantities({});
     setStep(1);
   };
   const handlePageClick = (e) => {
@@ -245,13 +442,13 @@ export default function Table() {
   const fetchData = async () => {
     try {
       setIsLoading(true);
-      const response = await axios.get('/empresa/filha/despacho');
-      setIsLoading(false);
-      setDespachos(response.data);
-    } catch (error) {
-      console.error(error);
+      const response = await axios.get('/empresa/filha/estoque');
+
       setIsLoading(false);
 
+      setEstoque(response.data);
+    } catch (error) {
+      console.error(error);
       // Lida com erros durante a requisição
     }
   };
@@ -259,15 +456,16 @@ export default function Table() {
   const sendData = async () => {
     try {
       //converte os dados
-      const Valor = parseFloat(valor);
-      const Quantidade = parseFloat(quantidade);
+      const Valor = parseFloat(produto.valor);
+      const Quantidade = parseFloat(produto.quantidade);
 
       await axios.post('/empresa/filha/estoque', {
-        nome: nome,
-        categoria: categoria,
+        nome: produto.nome,
+        categoria: produto.categoria,
         valor: Valor,
         quantidade: Quantidade,
-        descricao: descricao,
+        descricao: produto.descricao,
+        fornecedor: produto.fornecedor,
       });
     } catch (error) {
       console.error(error);
@@ -284,11 +482,6 @@ export default function Table() {
     setIsLoading(false);
     setIsModalOpen(false);
     setIsModalOpen(false);
-    setNome('');
-    setCategoria('');
-    setValor('');
-    setQuantidade('');
-    setDescricao('');
     setStep(1);
     toast.success('Produto cadastrado com sucesso.');
   };
@@ -302,7 +495,7 @@ export default function Table() {
 
   // Função que gera o PDF e faz o download
   async function downloadPDF() {
-    const pdfBytes = await generateMonthlyEstoquePDF(despachos);
+    const pdfBytes = await generateMonthlyEstoquePDF(estoque);
 
     const blob = new Blob([pdfBytes], { type: 'application/pdf' });
     const url = URL.createObjectURL(blob);
@@ -321,16 +514,8 @@ export default function Table() {
         return (
           <div className="">
             <Step1
-              nome={nome}
-              setNome={setNome}
-              categoria={categoria}
-              setCategoria={setCategoria}
-              valor={valor}
-              setValor={setValor}
-              quantidade={quantidade}
-              setQuantidade={setQuantidade}
-              descricao={descricao}
-              setDescricao={setDescricao}
+              produto={produto}
+              handleInputChange={handleInputChange}
               handleGo={handleGo}
             />
           </div>
@@ -338,15 +523,33 @@ export default function Table() {
 
       case 2:
         return (
-          <div>
+          <div className="">
             <Step2
-              nome={nome}
-              categoria={categoria}
-              valor={valor}
-              quantidade={quantidade}
-              descricao={descricao}
+              produto={produto}
+              handleInputChange={handleInputChange}
+              handleGo2={handleGo2}
+            />
+          </div>
+        );
+
+      case 3:
+        return (
+          <div>
+            <Step3
+              produto={produto}
               handleSubmit={handleSubmit}
               handleBack={() => setStep(1)}
+            />
+          </div>
+        );
+
+      case 4:
+        return (
+          <div>
+            <Step4
+              selectedProducts={selectedProducts}
+              handleGo={() => setStep(1)}
+              total={selectedProducts.length}
             />
           </div>
         );
@@ -381,16 +584,15 @@ export default function Table() {
       {/* FIM DOS MODAL */}
 
       <Loading isLoading={isLoading} />
-
       <div className=" text-center font-bold text-3xl text-gray-900 my-3">
-        <h1>Histórico de despachos</h1>
+        <h1>Despachar produto</h1>
       </div>
       <div className="flex flex-col ">
         <div className="overflow-x-auto">
           <div className="flex justify-between py-3 lg:mx-[1rem]">
             <div className="relative max-w-xs">
               <label htmlFor="hs-table-search" className="sr-only">
-                Pesquisar despacho...
+                Pesquisar...
               </label>
               <input
                 onChange={(e) => setsearch(e.target.value)}
@@ -417,6 +619,16 @@ export default function Table() {
             <div className="flex items-center space-x-2 gap-5 ">
               <div className="relative gap-5 ">
                 <button
+                  onClick={openModal}
+                  className="relative ml-3 z-0 inline-flex text-sm rounded-md shadow-sm focus:ring-accent-500 focus:border-accent-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1"
+                >
+                  <span className="relative inline-flex items-center px-3 py-3 space-x-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md sm:py-2">
+                    <div className="hidden sm:block">
+                      <AiOutlineFileAdd size={20} />
+                    </div>
+                  </span>
+                </button>
+                <button
                   onClick={downloadPDF}
                   className="relative ml-3 z-0 inline-flex text-sm rounded-md shadow-sm focus:ring-accent-500 focus:border-accent-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1"
                 >
@@ -437,26 +649,26 @@ export default function Table() {
           <thead className="border-b bg-gray-50">
             <tr className="">
               <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
-                Nº registro#
+                Selecionar
               </th>
               <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
-                Responsável da saída
+                Nº registro
               </th>
               <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
-                Nome do receptor
+                Nome
+              </th>
+              <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
+                Categoria
+              </th>
+              <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
+                Valor
               </th>
 
-              <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
-                Produto
-              </th>
-              <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
-                Quantidade
-              </th>
-              <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
-                Valor total
+              <th className="px-3 py-3 text-xs font-bord text-gray-500 uppercase align-middle">
+                Disponíveis
               </th>
               <th className="px-3 py-3 text-xs font-bord text-right text-gray-500 uppercase align-middle">
-                Data de registro
+                quantidade
               </th>
               <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle"></th>
             </tr>
@@ -465,45 +677,39 @@ export default function Table() {
           <tbody className="text-sm bg-white divide-y divide-gray-200">
             {currentPageData.map((item, index) => (
               <tr key={index}>
-                <Link href={`stock/saidas/${item.id}`}>
-                  <td className="px-3 py-4 text-gray-500 ">4569871</td>
+                <td className="px-3 py-4 ">
+                  <input
+                    type="checkbox"
+                    checked={selectedProducts.some(
+                      (selectedProduct) => selectedProduct.id === item.id
+                    )}
+                    onChange={() => handleSelectProduct(item)}
+                  />
+                </td>
+                <td className="px-3 py-4 text-gray-600 ">{item.n_transacao}</td>
+                <Link href={`stock/${item.id}`}>
+                  <td className="px-3 py-4 cursor-pointer text-gray-600 hover:text-blue-500 ">
+                    {item.nome}
+                  </td>
                 </Link>
-                <td className="px-3 py-4 text-gray-600 ">
-                  {item.responsavel_despacho}
+
+                <td className="px-3 py-4 text-gray-500 ">{item.categoria}</td>
+                <td className="px-3 py-4 text-gray-600 "> {item.valor} </td>
+                <td className="px-3 py-4 text-center text-gray-600 ">
+                  {item.quantidade}x
                 </td>
 
-                <td className="px-3 py-4 cursor-pointer text-gray-600 hover:text-slate-900 ">
-                  {item.pessoa_receber}
-                </td>
-
-                <td className="px-3 py-4 text-gray-500 ">
-                  {item.nome_estoque}
-                </td>
-                <td className="px-3 py-4 text-gray-600 ">{item.quantidade}</td>
-                <td className="px-3 py-4 text-gray-600">{item.valor_total}</td>
-                <td className="px-3 py-4 text-right text-gray-500 ">
-                  {item.data_saida}
-                </td>
-
-                <td className="w-20 px-3 py-2 text-center text-gray-500 ">
-                  <div className="flex place-content-center">
-                    <Link href={`stock/saidas/${item.id}`}>
-                      {' '}
-                      <svg
-                        className="w-6 h-6"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth="2"
-                          d="M5 12h.01M12 12h.01M19 12h.01M6 12a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0zm7 0a1 1 0 11-2 0 1 1 0 012 0z"
-                        ></path>
-                      </svg>
-                    </Link>
-                  </div>
+                <td className="px-3 py-4 text-right">
+                  {selectedProducts[item.id] && (
+                    <input
+                      type="number"
+                      value={productQuantities[item.id] || ''}
+                      onChange={(e) =>
+                        handleQuantityChange(item.id, e.target.value)
+                      }
+                      className="w-16 px-2 py-1 border border-gray-300 rounded-md"
+                    />
+                  )}
                 </td>
               </tr>
             ))}

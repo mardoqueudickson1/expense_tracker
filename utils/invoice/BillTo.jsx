@@ -41,10 +41,10 @@ const BillTo = ({ invoice }) => (
     </View>
 
     <View style={styles.billToContent}>
-      <Text>{invoice.company}</Text>
-      <Text>{invoice.address}</Text>
-      <Text>{invoice.phone}</Text>
-      <Text>{invoice.email}</Text>
+      <Text>{invoice.empresa}</Text>
+      <Text>{invoice.endereco}</Text>
+      <Text>{invoice.telefone}</Text>
+      <Text>{invoice.email1}</Text>
     </View>
   </View>
 );

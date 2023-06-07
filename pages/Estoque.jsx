@@ -502,7 +502,7 @@ export default function Table() {
 
             <div className="flex items-center space-x-2 gap-5 ">
               <div className="relative gap-5 ">
-                <Link href="/despachos">
+                <Link href="/estoque/despacho">
                   <button className="relative z-0 inline-flex text-sm rounded-md shadow-sm focus:ring-accent-500 focus:border-accent-500 hover:bg-gray-50 focus:z-10 focus:outline-none focus:ring-1">
                     <span className="relative inline-flex items-center px-3 py-3 space-x-2 text-sm font-medium text-gray-600 bg-white border border-gray-300 rounded-md sm:py-2">
                       <div className="hidden sm:block">
@@ -587,7 +587,7 @@ export default function Table() {
           <thead className="border-b bg-gray-50">
             <tr className="">
               <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
-                ID
+                Nº produto
               </th>
               <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
                 Nome
@@ -601,6 +601,10 @@ export default function Table() {
               <th className="px-3 py-3 text-xs font-bord text-left text-gray-500 uppercase align-middle">
                 Quantidade
               </th>
+
+              <th className="px-3 py-3 text-xs font-bord text-right  text-gray-500 uppercase align-middle">
+                Sub-total
+              </th>
               <th className="px-3 py-3 text-xs font-bord text-right text-gray-500 uppercase align-middle">
                 Data de registro
               </th>
@@ -611,9 +615,9 @@ export default function Table() {
           <tbody className="text-sm bg-white divide-y divide-gray-200">
             {currentPageData.map((item, index) => (
               <tr key={index}>
-                <td className="px-3 py-4 text-gray-600 ">{item.id}</td>
+                <td className="px-3 py-4 text-gray-600 ">{item.n_transacao}</td>
                 <Link href={`stock/${item.id}`}>
-                  <td className="px-3 py-4 cursor-pointer text-gray-600 hover:text-slate-900 ">
+                  <td className="px-3 py-4 cursor-pointer text-gray-600 hover:text-blue-500 ">
                     {item.nome}
                   </td>
                 </Link>
@@ -621,6 +625,9 @@ export default function Table() {
                 <td className="px-3 py-4 text-gray-500 ">{item.categoria}</td>
                 <td className="px-3 py-4 text-gray-600 "> {item.valor} </td>
                 <td className="px-3 py-4 text-gray-600">{item.quantidade}</td>
+                <td className="px-3 py-4 text-right text-gray-500 ">
+                  {item.valor_total}
+                </td>
                 <td className="px-3 py-4 text-right text-gray-500 ">
                   {item.data_formatada}
                 </td>

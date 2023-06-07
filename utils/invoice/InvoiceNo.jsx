@@ -11,10 +11,10 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'flex-end',
   },
-  invoiceDate: {
-    fontSize: 12,
-    fontStyle: 'bold',
-  },
+  // invoiceDate: {
+  //   fontSize: 10,
+  //   fontStyle: 'bold',
+  // },
   label: {
     width: 50,
   },
@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
 const InvoiceNo = ({ invoice }) => (
   <Fragment>
     <View style={styles.invoiceNoContainer}>
-      <Text style={styles.label}>Registro</Text>
+      <Text style={styles.label}>Registro:</Text>
       <Text style={styles.invoiceDate}>#{invoice.invoice_no}</Text>
     </View>
 

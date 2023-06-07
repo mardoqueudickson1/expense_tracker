@@ -8,50 +8,6 @@ import { useRouter } from 'next/router';
 import Loading from '@/components/Loading';
 import axios from '../../../services/axios';
 
-const invoiceData = {
-  id: '5df3180a09ea16dc4b95f910',
-  invoice_no: '201906-28',
-  balance: '$2,283.74',
-  company: 'MANTRIX',
-  email: 'susanafuentes@mantrix.com',
-  phone: '+1 (872) 588-3809',
-  address: '922 Campus Road, Drytown, Wisconsin, 1986',
-  trans_date: '2019-09-12',
-  due_date: '2019-10-12',
-  items: [
-    {
-      sno: 1,
-      desc: 'ad sunt culpa occaecat qui',
-      qty: 5,
-      rate: 405.89,
-    },
-    {
-      sno: 2,
-      desc: 'cillum quis sunt qui aute',
-      qty: 5,
-      rate: 373.11,
-    },
-    {
-      sno: 3,
-      desc: 'ea commodo labore culpa irure',
-      qty: 5,
-      rate: 458.61,
-    },
-    {
-      sno: 4,
-      desc: 'nisi consequat et adipisicing dolor',
-      qty: 10,
-      rate: 725.24,
-    },
-    {
-      sno: 5,
-      desc: 'proident cillum anim elit esse',
-      qty: 4,
-      rate: 141.02,
-    },
-  ],
-};
-
 const StockDetailSaidas = () => {
   const router = useRouter();
   const { id } = router.query;
@@ -65,13 +21,42 @@ const StockDetailSaidas = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({});
   const [data2, setData2] = useState({});
+  let listaProdutosArray;
+  if (data.lista_produtos) {
+    listaProdutosArray = Object.entries(data.lista_produtos).map(
+      ([itemKey, item]) => ({
+        [itemKey]: { ...item },
+      })
+    );
+  }
 
-  //   GERADOR DE PDF
-  //     const generatePdf = async () => {
-  //       const blob = await pdf(<InvoiceTemplate invoice={invoiceData} />).toBlob();
-  //       const url = URL.createObjectURL(blob);
-  //       window.open(url);
-  //     };
+  const invoiceData = {
+    empresa: 'The  Potter´s House',
+    endereco: 'Luanda, belas, patriota',
+    telefone: '+224 9251548745',
+    email1: 'potterhouse@gmail.com',
+    invoice_no: data.registro_n,
+    balance: '$2,283.74',
+    company: data.pessoa_receber,
+    email: data.pessoa_receber_email,
+    phone: data.pessoa_receber_telefone,
+    address: data.pessoa_receber_endreco,
+    trans_date: '20-11-2023',
+    items: [],
+  };
+
+  if (data.lista_produtos) {
+    invoiceData.items = Object.entries(data.lista_produtos).map(
+      ([key, value]) => ({
+        sno: value.sno,
+        desc: value.desc,
+        qty: value.qty,
+        rate: value.rate,
+      })
+    );
+  }
+
+  console.log(invoiceData.items);
 
   const generatePdf = async () => {
     const blob = await pdf(<InvoiceTemplate invoice={invoiceData} />).toBlob();
@@ -79,12 +64,6 @@ const StockDetailSaidas = () => {
     const url = URL.createObjectURL(blob);
     window.open(url);
   };
-
-  //   const openPdfInNewWindow = async () => {
-  //     const blob = await generatePdf();
-  //     const url = URL.createObjectURL(blob);
-  //     window.open(url, '_blank');
-  //   };
 
   const closeModal = () => {
     setIsModalOpen(false);
