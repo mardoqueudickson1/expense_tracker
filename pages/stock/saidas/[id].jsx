@@ -21,14 +21,14 @@ const StockDetailSaidas = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({});
   const [data2, setData2] = useState({});
-  let listaProdutosArray;
-  if (data.lista_produtos) {
-    listaProdutosArray = Object.entries(data.lista_produtos).map(
-      ([itemKey, item]) => ({
-        [itemKey]: { ...item },
-      })
-    );
-  }
+  // let listaProdutosArray;
+  // if (data.lista_produtos) {
+  //   listaProdutosArray = Object.entries(data.lista_produtos).map(
+  //     ([itemKey, item]) => ({
+  //       [itemKey]: { ...item },
+  //     })
+  //   );
+  // }
 
   const invoiceData = {
     empresa: 'The  Potter´s House',
@@ -52,6 +52,7 @@ const StockDetailSaidas = () => {
         desc: value.desc,
         qty: value.qty,
         rate: value.rate,
+        W: key,
       })
     );
   }

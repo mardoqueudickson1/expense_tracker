@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import { PDFViewer } from '@react-pdf/renderer';
 import Invoice from '../utils/invoice/invoice';
-import axios from '../services/axios';
-import { useRouter } from 'next/router';
+// import axios from '../services/axios';
+// import { useRouter } from 'next/router';
 
 const StockDetails = () => {
-  const [data, setData] = useState({});
-  const router = useRouter();
-  const { id } = router.query;
+  // const router = useRouter();
+  // const { id } = router.query;
 
   const invoiceData = {
     id: '5df3180a09ea16dc4b95f910',
@@ -53,19 +52,19 @@ const StockDetails = () => {
     ],
   };
 
-  useEffect(() => {
-    async function getData() {
-      try {
-        const response = await axios.get(`/empresa/filha/despacho/${id}`);
-        const produto = response.data;
-        setData(produto);
-      } catch (error) {
-        console.error(error);
-      }
-    }
+  // useEffect(() => {
+  //   async function getData() {
+  //     try {
+  //       const response = await axios.get(`/empresa/filha/despacho/${id}`);
+  //       const produto = response.data;
+  //       setData(produto);
+  //     } catch (error) {
+  //       console.error(error);
+  //     }
+  //   }
 
-    getData();
-  }, [id]);
+  //   getData();
+  // }, [id]);
 
   return (
     <div className="p-4">

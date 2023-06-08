@@ -259,6 +259,7 @@ export default function Table() {
       telefone: '',
       email: '',
       endereco: '',
+      dana: totalQuantity,
     },
     lista_produtos: [],
     data: '',

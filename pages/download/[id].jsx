@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { pdf } from '@react-pdf/renderer';
 import { saveAs } from 'file-saver';
-import { PDFViewer } from '@react-pdf/renderer';
 import Invoice from '../../utils/invoice/invoice';
 import axios from '../../services/axios';
 import { useRouter } from 'next/router';
