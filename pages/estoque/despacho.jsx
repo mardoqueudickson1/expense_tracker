@@ -49,101 +49,25 @@ function Step4({ selectedProducts, total, handleGo }) {
     </div>
   );
 }
-function Step1({ produto, handleInputChange, handleGo }) {
+
+function Step2({ produto, handleInputChange, handleGo2, handleBack }) {
   return (
     <>
       <div className="flex justify-center align-center mt-[1rem]">
         <div className="flex justify-center align-center mt-[4rem]">
           <div className="bg-white w-[25rem] p-5 rounded-[5px]">
             <h1 className="text-center font-bold">
-              Cadastrar produto no estoque - 1º passo{' '}
+              Dados do receptor - 2º passo{' '}
             </h1>
             <div className="mt-[2rem]">
               <form>
                 <label htmlFor="nome">Nome</label>
 
                 <input
-                  value={produto.nome}
-                  name="nome"
-                  onChange={handleInputChange}
-                  type="text"
-                  className="border w-full h-[2.8rem] p-5 text-sm
-                                    rounded-[5px] bg-gray-100"
-                  placeholder="nome"
-                />
-                <label htmlFor="categoria">Categoria</label>
-
-                <input
-                  value={produto.categoria}
-                  name="categoria"
-                  onChange={handleInputChange}
-                  type="text"
-                  className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
-                                    rounded-[5px] bg-gray-100 "
-                  placeholder="Categoria"
-                />
-                <label htmlFor="valor">Valor</label>
-
-                <input
-                  value={produto.valor}
-                  name="valor"
-                  onChange={handleInputChange}
-                  type="number"
-                  className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
-                                    rounded-[5px] bg-gray-100"
-                  placeholder="Valor"
-                />
-                <label htmlFor="quantidade">Quantidade</label>
-                <input
-                  value={produto.quantidade}
-                  name="quantidade"
-                  onChange={handleInputChange}
-                  type="number"
-                  className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
-                                    rounded-[5px] bg-gray-100"
-                  placeholder="Quantidade"
-                />
-
-                <label htmlFor="descricao">Descrição</label>
-                <textarea
-                  value={produto.descricao}
-                  name="descricao"
-                  onChange={handleInputChange}
-                  className="border w-full px-5 text-sm focus:ring-blue-600 rounded-[5px] bg-gray-100 "
-                  placeholder="Detalhes do produto"
-                ></textarea>
-
-                <button
-                  className="bg-gray-500 w-full h-[2.8rem] text-white mt-3 rounded-[5px]"
-                  onClick={handleGo}
-                >
-                  Continuar
-                </button>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-    </>
-  );
-}
-
-function Step2({ produto, handleInputChange, handleGo2 }) {
-  return (
-    <>
-      <div className="flex justify-center align-center mt-[1rem]">
-        <div className="flex justify-center align-center mt-[4rem]">
-          <div className="bg-white w-[25rem] p-5 rounded-[5px]">
-            <h1 className="text-center font-bold">
-              Dados do fornecedor - 2º passo{' '}
-            </h1>
-            <div className="mt-[2rem]">
-              <form>
-                <label htmlFor="nome">Nome</label>
-
-                <input
-                  value={produto.fornecedor ? produto.fornecedor.nome : ''}
-                  name="fornecedor.nome"
+                  value={
+                    produto.pessoa_receber ? produto.pessoa_receber.nome : ''
+                  }
+                  name="pessoa_receber.nome"
                   onChange={handleInputChange}
                   type="text"
                   className="border w-full h-[2.8rem] p-5 text-sm
@@ -151,22 +75,54 @@ function Step2({ produto, handleInputChange, handleGo2 }) {
                   placeholder="nome"
                 />
                 <label htmlFor="telefone">Telefone</label>
-
                 <input
-                  name="fornecedor.telefone"
-                  value={produto.fornecedor ? produto.fornecedor.telefone : ''}
+                  name="pessoa_receber.telefone"
+                  value={
+                    produto.pessoa_receber
+                      ? produto.pessoa_receber.telefone
+                      : ''
+                  }
                   onChange={handleInputChange}
                   type="text"
                   className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
                                     rounded-[5px] bg-gray-100 "
                   placeholder="Telefone"
                 />
-                <label htmlFor="endereco">Endereço</label>
+
+                <label htmlFor="telefone">Email</label>
                 <input
-                  value={produto.fornecedor ? produto.fornecedor.endereco : ''}
-                  name="fornecedor.endereco"
+                  name="pessoa_receber.email"
+                  value={
+                    produto.pessoa_receber ? produto.pessoa_receber.email : ''
+                  }
                   onChange={handleInputChange}
                   type="text"
+                  className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
+                                    rounded-[5px] bg-gray-100 "
+                  placeholder="Email"
+                />
+
+                <label htmlFor="endereco">Endereço</label>
+                <input
+                  value={
+                    produto.pessoa_receber
+                      ? produto.pessoa_receber.endereco
+                      : ''
+                  }
+                  name="pessoa_receber.endereco"
+                  onChange={handleInputChange}
+                  type="text"
+                  className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
+                                    rounded-[5px] bg-gray-100 "
+                  placeholder="Endereço"
+                />
+
+                <label htmlFor="endereco">Data de saída</label>
+                <input
+                  value={produto ? produto.data : ''}
+                  name="data"
+                  onChange={handleInputChange}
+                  type="date"
                   className="border w-full h-[2.8rem] p-5 text-sm focus:ring-blue-600
                                     rounded-[5px] bg-gray-100 "
                   placeholder="Endereço"
@@ -178,6 +134,12 @@ function Step2({ produto, handleInputChange, handleGo2 }) {
                 >
                   Continuar
                 </button>
+                <button
+                  className="bg-gray-800 text-white w-full h-[2.8rem] rounded-[5px] mt-3"
+                  onClick={handleBack}
+                >
+                  Voltar
+                </button>
               </form>
             </div>
           </div>
@@ -187,7 +149,7 @@ function Step2({ produto, handleInputChange, handleGo2 }) {
   );
 }
 
-function Step3({ produto, handleBack, handleSubmit }) {
+function Step3({ produto, handleBack, handleSubmit, selectedProducts, total }) {
   const isLoading = useSelector((state) => state.auth.isLoadingButom);
 
   return (
@@ -196,30 +158,42 @@ function Step3({ produto, handleBack, handleSubmit }) {
         <div className="bg-white w-[25rem] p-5 rounded-[5px]">
           <h1 className="text-center font-bold">Confirme os dados</h1>
           <div className="mt-[2rem]">
+            <h2> {total} Produtos selecionados:</h2>
+            {selectedProducts.map((productId) => {
+              return (
+                <div className="grid grid-cols-3 gap-4 mt-1" key={productId.id}>
+                  <p className="font-bold">
+                    <span className="text-gray-600">Nome:</span>{' '}
+                    {productId.nome}
+                  </p>
+                  <p className="text-gray-600">
+                    <span className="font-bold">Valor:</span> {productId.valor}
+                  </p>
+                  <p className="text-gray-600">
+                    <span className="font-bold">Quantidade:</span>{' '}
+                    {productId.quantity}
+                  </p>
+                  {/* Renderize outros atributos do produto selecionado */}
+                </div>
+              );
+            })}
+
             <p>
-              <strong>Nome:</strong> {produto.nome}
-            </p>
-            <p>
-              <strong>Categoria:</strong> {produto.categoria}
-            </p>
-            <p>
-              <strong>Valor:</strong> {produto.valor}
+              <strong>Nome receptor:</strong> {produto.pessoa_receber.nome}
             </p>
 
             <p>
-              <strong>Quantidade:</strong> {produto.quantidade}
+              <strong>Telefone receptor:</strong>{' '}
+              {produto.pessoa_receber.telefone}
             </p>
 
             <p>
-              <strong>Nome fornecedor:</strong> {produto.fornecedor.nome}
+              <strong>Email receptor:</strong> {produto.pessoa_receber.email}
             </p>
 
             <p>
-              <strong>Telefone fornecdor:</strong> {produto.fornecedor.telefone}
-            </p>
-
-            <p>
-              <strong>endereço fornecdor:</strong> {produto.fornecedor.enderco}
+              <strong>endereço receptor:</strong>{' '}
+              {produto.pessoa_receber.endereco}
             </p>
 
             <button
@@ -270,16 +244,52 @@ function Step3({ produto, handleBack, handleSubmit }) {
 
 export default function Table() {
   // ESTADOS
+  const user = useSelector((state) => state.auth.user);
   const [selectedProducts, setSelectedProducts] = useState([]);
-
+  const [selectedProductId, setSelectedProductId] = useState(null);
   const [productQuantities, setProductQuantities] = useState({});
   const [totalQuantity, setTotalQuantity] = useState(0);
-  console.log('TOTAL:', selectedProducts);
+  const [disableEditing, setDisableEditing] = useState(true);
+  const [refreshData, setRefreshData] = useState(false);
+  const [estoque, setEstoque] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [produto, setProduto] = useState({
+    pessoa_receber: {
+      nome: '',
+      telefone: '',
+      email: '',
+      endereco: '',
+    },
+    lista_produtos: [],
+    data: '',
+  });
+
+  console.log(produto.data);
+  // Pesquisa em tempo real
+  const [search, setsearch] = useState('');
+  const filteredData = estoque.filter((item) =>
+    item.nome.toLowerCase().includes(search.toLowerCase())
+  );
+
+  // Paginação
+  const [currentPage, setCurrentPage] = useState(0);
+  const itemsPerPage = 5;
+  const totalItems = filteredData.length;
+  const offset = currentPage * itemsPerPage;
+  const currentPageData = filteredData.slice(offset, offset + itemsPerPage);
+
+  console.log(produto.data);
+  const toggleEditing = () => {
+    setDisableEditing(!disableEditing);
+  };
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [step, setStep] = useState(1);
 
-  const handleSelectProduct = (product) => {
+  const handleSelectProduct = (product, id) => {
+    toggleEditing();
+    setSelectedProductId(id);
+
     // Verifique se o produto já está selecionado
     const isSelected = selectedProducts.some(
       (selectedProduct) => selectedProduct.id === product.id
@@ -307,7 +317,7 @@ export default function Table() {
           quantity: quantity,
         };
       });
-      console.log('AAAAAAAAAAAAAAAA');
+
       return updatedProducts;
     });
   };
@@ -337,22 +347,8 @@ export default function Table() {
       .map(Number)
       .reduce((acc, curr) => acc + curr, 0);
 
-    console.log('BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB');
-
     setTotalQuantity(updatedTotalQuantity);
   }, [productQuantities]);
-
-  const [produto, setProduto] = useState({
-    nome: '',
-    valor: '',
-    quantidade: '',
-    descricao: '',
-    fornecedor: { nome: '', telefone: '', endereco: '' },
-  });
-
-  const [refreshData, setRefreshData] = useState(false);
-  const [estoque, setEstoque] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -374,27 +370,10 @@ export default function Table() {
     }
   };
 
-  const handleGo = (e) => {
-    e.preventDefault();
-
-    if (
-      !produto.nome ||
-      !produto.categoria ||
-      !produto.valor ||
-      !produto.quantidade ||
-      !produto.descricao
-    ) {
-      toast.error('Por favor, preencha todos os campos.');
-      return;
-    }
-
-    setStep(2);
-  };
-
   const handleGo2 = (e) => {
     e.preventDefault();
 
-    if (!produto.fornecedor) {
+    if (!produto.pessoa_receber) {
       toast.error('Por favor, preencha todos os campos.');
       return;
     }
@@ -407,20 +386,6 @@ export default function Table() {
 
     setIsModalOpen(true);
   };
-
-  // Pesquisa em tempo real
-  const [search, setsearch] = useState('');
-
-  const filteredData = estoque.filter((item) =>
-    item.nome.toLowerCase().includes(search.toLowerCase())
-  );
-
-  // Paginação
-  const [currentPage, setCurrentPage] = useState(0);
-  const itemsPerPage = 5;
-  const totalItems = filteredData.length;
-  const offset = currentPage * itemsPerPage;
-  const currentPageData = filteredData.slice(offset, offset + itemsPerPage);
 
   //FUNCOES
 
@@ -456,16 +421,17 @@ export default function Table() {
   const sendData = async () => {
     try {
       //converte os dados
-      const Valor = parseFloat(produto.valor);
-      const Quantidade = parseFloat(produto.quantidade);
+      const updatedSelectedProducts = selectedProducts.map((product) => ({
+        ...product,
+        quantity: parseInt(product.quantity),
+      }));
 
-      await axios.post('/empresa/filha/estoque', {
-        nome: produto.nome,
-        categoria: produto.categoria,
-        valor: Valor,
-        quantidade: Quantidade,
-        descricao: produto.descricao,
-        fornecedor: produto.fornecedor,
+      await axios.post('/empresa/filha/despacho', {
+        data_saida: produto.data,
+        responsavel_despacho: user.nome,
+        lista_produtos: updatedSelectedProducts,
+        pessoa_receber: produto.pessoa_receber,
+        quantidade: selectedProducts.length,
       });
     } catch (error) {
       console.error(error);
@@ -483,7 +449,7 @@ export default function Table() {
     setIsModalOpen(false);
     setIsModalOpen(false);
     setStep(1);
-    toast.success('Produto cadastrado com sucesso.');
+    toast.success('Produto despachado com sucesso.');
   };
 
   useEffect(() => {
@@ -510,17 +476,6 @@ export default function Table() {
 
   const renderForm = (step) => {
     switch (step) {
-      case 1:
-        return (
-          <div className="">
-            <Step1
-              produto={produto}
-              handleInputChange={handleInputChange}
-              handleGo={handleGo}
-            />
-          </div>
-        );
-
       case 2:
         return (
           <div className="">
@@ -528,6 +483,7 @@ export default function Table() {
               produto={produto}
               handleInputChange={handleInputChange}
               handleGo2={handleGo2}
+              handleBack={() => setStep(4)}
             />
           </div>
         );
@@ -538,7 +494,9 @@ export default function Table() {
             <Step3
               produto={produto}
               handleSubmit={handleSubmit}
-              handleBack={() => setStep(1)}
+              handleBack={() => setStep(2)}
+              selectedProducts={selectedProducts}
+              total={selectedProducts.length}
             />
           </div>
         );
@@ -548,7 +506,7 @@ export default function Table() {
           <div>
             <Step4
               selectedProducts={selectedProducts}
-              handleGo={() => setStep(1)}
+              handleGo={() => setStep(2)}
               total={selectedProducts.length}
             />
           </div>
@@ -683,7 +641,7 @@ export default function Table() {
                     checked={selectedProducts.some(
                       (selectedProduct) => selectedProduct.id === item.id
                     )}
-                    onChange={() => handleSelectProduct(item)}
+                    onChange={() => handleSelectProduct(item, item.id)}
                   />
                 </td>
                 <td className="px-3 py-4 text-gray-600 ">{item.n_transacao}</td>
@@ -700,16 +658,15 @@ export default function Table() {
                 </td>
 
                 <td className="px-3 py-4 text-right">
-                  {selectedProducts[item.id] && (
-                    <input
-                      type="number"
-                      value={productQuantities[item.id] || ''}
-                      onChange={(e) =>
-                        handleQuantityChange(item.id, e.target.value)
-                      }
-                      className="w-16 px-2 py-1 border border-gray-300 rounded-md"
-                    />
-                  )}
+                  <input
+                    type="number"
+                    value={productQuantities[item.id] || ''}
+                    onChange={(e) =>
+                      handleQuantityChange(item.id, e.target.value)
+                    }
+                    className="w-16 px-2 py-1 border border-gray-300 rounded-md"
+                    disabled={selectedProductId !== item.id}
+                  />
                 </td>
               </tr>
             ))}
