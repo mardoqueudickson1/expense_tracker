@@ -265,7 +265,6 @@ export default function Table() {
     data: '',
   });
 
-  console.log(produto.data);
   // Pesquisa em tempo real
   const [search, setsearch] = useState('');
   const filteredData = estoque.filter((item) =>
@@ -279,7 +278,7 @@ export default function Table() {
   const offset = currentPage * itemsPerPage;
   const currentPageData = filteredData.slice(offset, offset + itemsPerPage);
 
-  console.log(produto.data);
+  console.log('LISTAAAAAAAAAAA:', produto.lista_produtos);
   const toggleEditing = () => {
     setDisableEditing(!disableEditing);
   };
@@ -298,7 +297,7 @@ export default function Table() {
 
     if (isSelected) {
       // Se o produto já estiver selecionado, remova-o da lista de selecionados
-      setSelectedProducts(
+      setSelectedProducts( 
         selectedProducts.filter(
           (selectedProduct) => selectedProduct.id !== product.id
         )
@@ -307,6 +306,11 @@ export default function Table() {
       // Caso contrário, adicione o produto à lista de selecionados
       setSelectedProducts([...selectedProducts, product]);
     }
+
+    setProduto((prev) => ({
+      ...prev,
+      lista_produtos: selectedProducts,
+    }));
   };
 
   const updateSelectedProducts = () => {
