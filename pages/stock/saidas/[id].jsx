@@ -3,12 +3,93 @@ import { FaWindowClose } from 'react-icons/fa';
 import { pdf } from '@react-pdf/renderer';
 import FileSaver from 'file-saver';
 import InvoiceTemplate from '../../../utils/invoice/invoice';
+import easyinvoice from 'easyinvoice';
 
 import { useRouter } from 'next/router';
 import Loading from '@/components/Loading';
 import axios from '../../../services/axios';
+import { da } from 'date-fns/locale';
 
 const StockDetailSaidas = () => {
+  const [data, setData] = useState({});
+  console.log('VVVVVVVVVVVVVV', data);
+  var dados = {
+    // Customize enables you to provide your own templates
+    // Please review the documentation for instructions and examples
+    customize: {
+      //  "template": fs.readFileSync('template.html', 'base64') // Must be base64 encoded html
+    },
+    images: {
+      // The logo on top of your invoice
+      logo: 'https://i.imgur.com/vbvMdAe.png',
+      // The invoice background
+      background: 'https://i.imgur.com/8dZ99Mp.png',
+    },
+    // Your own data
+    sender: {
+      company: 'Potter House',
+      address: 'Lar do patriota, benfica',
+      zip: '1234',
+      email: 'test@gmail.com',
+      city: 'Luanda',
+      country: 'Angola',
+    },
+    // Your recipient
+    client: {},
+    information: {},
+
+    products: [],
+    // The message you would like to display on the bottom of your invoice
+    'bottom-notice': 'Obrigado pela sua compra. Volte sempre',
+    // Settings to customize your invoice
+    settings: {
+      currency: 'AOA', // See documentation 'Locales and Currency' for more info. Leave empty for no currency.
+    },
+    // Translate your invoice to your preferred language
+    translate: {
+      invoice: 'FATURA',
+      number: 'Nº de registro', // Defaults to 'Number'
+      date: 'Data', // Default to 'Date'
+      'due-date': 'Data de expiração', // Defaults to 'Due Date'
+      subtotal: 'Sub-total', // Defaults to 'Subtotal'
+      products: 'Produtos', // Defaults to 'Products'
+      quantity: 'Quantidade', // Default to 'Quantity'
+      price: 'Preço', // Defaults to 'Price'
+      // "product-total": "Totaal", // Defaults to 'Total'
+      // "total": "Totaal", // Defaults to 'Total'
+      vat: 'iva', // Defaults to 'vat'
+    },
+  };
+
+  if (data.lista_produtos) {
+    dados.products = Object.entries(data.lista_produtos).map(
+      ([key, value]) => ({
+        quantity: value.quantity,
+        description: value.nome,
+        price: value.valor,
+        'tax-rate': 14,
+      })
+    );
+
+    dados.information = {
+      number: data.registro_n,
+      date: data.data_saida,
+      'due-date': '31-12-2021',
+    };
+    dados.client = {
+      company: data.pessoa_receber,
+      address: data.pessoa_receber_endreco,
+      zip: '4567 CD',
+      city: 'Luanda',
+      country: 'angola',
+    };
+  }
+  //Create your invoice! Easy!
+  const invoice = () => {
+    const result = easyinvoice.createInvoice(dados);
+    easyinvoice.download('potter-house-fatura.pdf', result.pdf);
+  };
+
   const router = useRouter();
   const { id } = router.query;
 
@@ -19,7 +100,6 @@ const StockDetailSaidas = () => {
   };
 
   const [isLoading, setIsLoading] = useState(false);
-  const [data, setData] = useState({});
   const [data2, setData2] = useState({});
   // let listaProdutosArray;
   // if (data.lista_produtos) {
@@ -56,8 +136,6 @@ const StockDetailSaidas = () => {
       })
     );
   }
-
-  console.log(invoiceData.items);
 
   const generatePdf = async () => {
     const blob = await pdf(<InvoiceTemplate invoice={invoiceData} />).toBlob();
@@ -247,7 +325,7 @@ const StockDetailSaidas = () => {
               </button>
 
               <button
-                onClick={generatePdf}
+                onClick={invoice}
                 className="bg-gray-800 hover:bg-azulScuro text-white font-bold py-2 px-4 mr-4 rounded"
               >
                 Baixar comprovante

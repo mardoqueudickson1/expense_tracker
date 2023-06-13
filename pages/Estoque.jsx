@@ -1,18 +1,27 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, Fragment } from 'react';
+import { toBlob } from '@react-pdf/renderer';
 import ReactPaginate from 'react-paginate';
+import { saveAs } from 'file-saver';
+import { PDFRenderer } from '@react-pdf/renderer';
 import { toast } from 'react-hot-toast';
 import Link from 'next/link';
 import { BsFillClipboardCheckFill } from 'react-icons/bs';
 import { MdProductionQuantityLimits } from 'react-icons/md';
 import { BiCategory, BiMoneyWithdraw } from 'react-icons/bi';
+import { BsSortAlphaDown } from 'react-icons/bs';
 import { AiOutlineHistory, AiOutlineFileAdd } from 'react-icons/ai';
+import { Menu, Transition } from '@headlessui/react';
 import { FaWindowClose } from 'react-icons/fa';
 import { FiDownload } from 'react-icons/fi';
 
 import axios from '../services/axios';
 import Loading from '@/components/Loading';
-import { generateMonthlyEstoquePDF } from '../utils/EstoquePDF';
+import { FaturaVendaPDF } from '../utils/EstoquePDF';
 import { useSelector } from 'react-redux';
+
+function classNames(...classes) {
+  return classes.filter(Boolean).join(' ');
+}
 
 // Formulário de muit-Step
 function Step1({ produto, handleInputChange, handleGo }) {
@@ -239,6 +248,7 @@ export default function Table() {
   const [totalProdutoCadatrados, setTotalProdutosCadastrados] = useState('');
   const [totalValorPro, setTotalValorPro] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [sortByAlphabet, setSortByAlphabet] = useState(false);
   const [step, setStep] = useState(1);
 
   const [produto, setProduto] = useState({
@@ -306,11 +316,25 @@ export default function Table() {
   };
 
   // Pesquisa em tempo real
+  const handleFilterByAlphabet = (e) => {
+    e.preventDefault();
+    setSortByAlphabet(true);
+  };
+
+  const handleFilterByAlphabetFalse = (e) => {
+    e.preventDefault();
+    setSortByAlphabet(false);
+  };
+
   const [search, setsearch] = useState('');
 
-  const filteredData = estoque.filter((item) =>
+  let filteredData = estoque.filter((item) =>
     item.nome.toLowerCase().includes(search.toLowerCase())
   );
+
+  if (sortByAlphabet) {
+    filteredData = filteredData.sort((a, b) => a.nome.localeCompare(b.nome));
+  }
 
   // Paginação
   const [currentPage, setCurrentPage] = useState(0);
@@ -392,20 +416,12 @@ export default function Table() {
   }, [refreshData]);
 
   // Função que gera o PDF e faz o download
-  async function downloadPDF() {
-    const pdfBytes = await generateMonthlyEstoquePDF(estoque);
-
-    const blob = new Blob([pdfBytes], { type: 'application/pdf' });
-    const url = URL.createObjectURL(blob);
-    const link = document.createElement('a');
-    link.href = url;
-    link.download = 'potter-house-estoque.pdf';
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
-    URL.revokeObjectURL(url);
+  function downloadPDF() {
+    const renderer = new PDFRenderer(<FaturaVendaPDF />);
+    renderer.toBlob().then((blob) => {
+      saveAs(blob, 'fatura.pdf');
+    });
   }
-
   const renderForm = (step) => {
     switch (step) {
       case 1:
@@ -559,7 +575,7 @@ export default function Table() {
           </p>
         </div>
 
-        <div className="  bg-white flex justify-between w-full  p-4 rounded-lg">
+        <div className="  bg-white flex justify-between w-full  p-4 rounded-lg ">
           <div className="flex flex-col w-full pb-4 gap-7">
             <p className="text-azulScuro ">Produtos despachados</p>
             <p className="text-3xl  font-bold">85</p>
@@ -582,7 +598,64 @@ export default function Table() {
         </div>
       </div>
 
-      <div className="min-w-full my-10 overflow-x-auto border rounded-md shadow-sm dark:border-gray-700 mt-[2rem]">
+      {/* ORDER BY... */}
+      <Menu as="div" className="relative inline-block  mt-[1rem]  lg:mx-[1rem]">
+        <div>
+          <Menu.Button className=" inline-flex w-full justify-center gap-x-1.5 rounded-md bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50">
+            Ordenar por
+            <BsSortAlphaDown
+              className="-mr-1 h-5 w-5 text-gray-400"
+              aria-hidden="true"
+            />
+          </Menu.Button>
+        </div>
+
+        <Transition
+          as={Fragment}
+          enter="transition ease-out duration-100"
+          enterFrom="transform opacity-0 scale-95"
+          enterTo="transform opacity-100 scale-100"
+          leave="transition ease-in duration-75"
+          leaveFrom="transform opacity-100 scale-100"
+          leaveTo="transform opacity-0 scale-95"
+        >
+          <Menu.Items className=" lg:mx-[1rem] absolute z-10 mt-2 w-40 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+            <div className="py-1">
+              <Menu.Item>
+                {({ active }) => (
+                  <a
+                    onClick={handleFilterByAlphabet}
+                    href="#"
+                    className={classNames(
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'block px-4 py-2 text-sm'
+                    )}
+                  >
+                    Ordem alfabética
+                  </a>
+                )}
+              </Menu.Item>
+
+              <Menu.Item>
+                {({ active }) => (
+                  <a
+                    onClick={handleFilterByAlphabetFalse}
+                    href="#"
+                    className={classNames(
+                      active ? 'bg-gray-100 text-gray-900' : 'text-gray-700',
+                      'block px-4 py-2 text-sm'
+                    )}
+                  >
+                    Último cadastro
+                  </a>
+                )}
+              </Menu.Item>
+            </div>
+          </Menu.Items>
+        </Transition>
+      </Menu>
+
+      <div className="min-w-full my-10 overflow-x-auto border rounded-md shadow-sm dark:border-gray-700 mt-[0.5rem]">
         <table className="min-w-full bg-white rounded whitespace-nowrap w-full">
           <thead className="border-b bg-gray-50">
             <tr className="">
