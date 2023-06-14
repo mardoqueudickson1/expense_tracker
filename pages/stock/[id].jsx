@@ -8,7 +8,6 @@ import axios from '../../services/axios';
 const StockDetails = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isModalOpen2, setIsModalOpen2] = useState(false);
-  const [drop, setDrop] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true);

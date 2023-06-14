@@ -8,11 +8,10 @@ import easyinvoice from 'easyinvoice';
 import { useRouter } from 'next/router';
 import Loading from '@/components/Loading';
 import axios from '../../../services/axios';
-import { da } from 'date-fns/locale';
 
 const StockDetailSaidas = () => {
   const [data, setData] = useState({});
-  console.log('VVVVVVVVVVVVVV', data);
+
   var dados = {
     // Customize enables you to provide your own templates
     // Please review the documentation for instructions and examples
@@ -68,6 +67,7 @@ const StockDetailSaidas = () => {
         description: value.nome,
         price: value.valor,
         'tax-rate': 14,
+        res: key,
       })
     );
 

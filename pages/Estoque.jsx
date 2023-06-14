@@ -1,5 +1,4 @@
 import React, { useEffect, useState, Fragment } from 'react';
-import { toBlob } from '@react-pdf/renderer';
 import ReactPaginate from 'react-paginate';
 import { saveAs } from 'file-saver';
 import { PDFRenderer } from '@react-pdf/renderer';

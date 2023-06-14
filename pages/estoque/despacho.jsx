@@ -297,7 +297,7 @@ export default function Table() {
 
     if (isSelected) {
       // Se o produto já estiver selecionado, remova-o da lista de selecionados
-      setSelectedProducts( 
+      setSelectedProducts(
         selectedProducts.filter(
           (selectedProduct) => selectedProduct.id !== product.id
         )
