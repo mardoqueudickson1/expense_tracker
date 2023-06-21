@@ -9,10 +9,13 @@ function* loginRequest({ payload }) {
   try {
     const response = yield call(axios.post, '/empresa/filha/token', payload);
     yield put(actions.loginSuccess({ ...response.data }));
-    toast.success('Logado com sucesso!');
 
+    const { redirect } = response.data;
+    if (redirect) {
+      return yield put(actions.setRedirect({ redirect }));
+    }
+    toast.success('Logado com sucesso!');
     axios.defaults.headers.Authorization = `Bearer ${response.data.token}`;
-    console.log(payload);
   } catch (e) {
     console.log(e);
     toast.error('Email ou senha  inválida!');

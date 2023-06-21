@@ -11,6 +11,7 @@ import axios from '../../../services/axios';
 
 const StockDetailSaidas = () => {
   const [data, setData] = useState({});
+  const [isLoadingButom, setISLoadingButom] = useState(false);
 
   var dados = {
     // Customize enables you to provide your own templates
@@ -84,11 +85,21 @@ const StockDetailSaidas = () => {
       country: 'angola',
     };
   }
-  //Create your invoice! Easy!
-  const invoice = () => {
-    const result = easyinvoice.createInvoice(dados);
-    easyinvoice.download('potter-house-fatura.pdf', result.pdf);
-  };
+
+  let invoice;
+  if (dados) {
+    invoice = async () => {
+      setISLoadingButom(true);
+      const result = await easyinvoice.createInvoice(dados);
+      setISLoadingButom(false);
+
+      if (result && result.pdf) {
+        easyinvoice.download('potter-house-fatura.pdf', result.pdf);
+      } else {
+        console.error('Erro ao gerar o PDF da fatura.');
+      }
+    };
+  }
 
   const router = useRouter();
   const { id } = router.query;
@@ -326,9 +337,36 @@ const StockDetailSaidas = () => {
 
               <button
                 onClick={invoice}
-                className="bg-gray-800 hover:bg-azulScuro text-white font-bold py-2 px-4 mr-4 rounded"
+                className={`bg-gray-800 hover:bg-azulScuro text-white font-bold py-2 px-4 mr-4 rounded ${
+                  isLoadingButom ? 'opacity-70 cursor-not-allowed' : ''
+                }`}
+                disabled={isLoadingButom}
               >
-                Baixar comprovante
+                {isLoadingButom ? (
+                  <div className="flex items-center justify-center">
+                    <svg
+                      className="animate-spin h-5 w-5 mr-3 text-white"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle
+                        className="opacity-50"
+                        cx="12"
+                        cy="12"
+                        r="10"
+                        stroke="currentColor"
+                        strokeWidth="4"
+                      />
+                      <path
+                        className="opacity-75"
+                        fill="currentColor"
+                        d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 018 4.337v-.006l.008-.007A8 8 0 0117.663 10H12v2h6.196A7.965 7.965 0 0112 19.663v-2.002zm-4-2.002A7.965 7.965 0 014 12H1.021A10.04 10.04 0 0012 22.979V20H5.291v-2.002z"
+                      />
+                    </svg>
+                    Gerando fatura...
+                  </div>
+                ) : (
+                  'Gerar Fatura'
+                )}
               </button>
 
               <button

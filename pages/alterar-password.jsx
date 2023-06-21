@@ -1,28 +1,31 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import * as actions from '../store/modules/auth/actions';
 import toast from 'react-hot-toast';
-
+import axios from '../services/axios';
 export default function Login() {
   const isLoading = useSelector((state) => state.auth.isLoadingButom);
-  // const isLoading = true;
-  const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [password2, setPassword2] = React.useState('');
+
+  const token = useSelector((state) => state.auth.token);
+  const email = useSelector((state) => state.auth.user.email);
+
   const dispatch = useDispatch();
   const entity = 'funcionario';
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!email && !password) {
-      toast.error('Todos campos são requeridos');
-      return;
-    }
-
-    if (!email) return toast.error('Campo email é obrigatório');
     if (!password) return toast.error('Campo senha é obrigatório');
+    if (!password2) return toast.error('Campo repetir senha é obrigatório');
+    if (password !== password2)
+      return toast.error('As senhas precisam ser iguais');
 
-    dispatch(actions.loginRequest({ email, password, entity }));
+    await axios.put('/empresa/filha/alterar-password', {
+      email,
+      token,
+      password,
+    });
   };
 
   return (
@@ -30,29 +33,34 @@ export default function Login() {
       <div className="flex justify-center align-center mt-[4rem]">
         <div className="bg-gray-200 w-[25rem] p-5 rounded-[5px]">
           <h1 className="text-center font-bold">Alterar Senha</h1>
-          <div className="mt-[2rem]">
-            <form action="" onSubmit={handleSubmit}>
-              <input
-                onChange={(e) => setEmail(e.target.value)}
-                value={email}
-                type="text"
-                name="email"
-                className="border w-full h-[2.8rem] p-5 text-sm rounded-[5px] bg-gray-100 
-             focus:border-gray-500 focus:ring-gray-500"
-                placeholder="Email"
-              />
 
+          <p className="mt-10 text-gray-500">
+            Por motivos de segurança, precisa alterar a senha
+          </p>
+          <div className="mt-[2rem]">
+            <form action="">
               <input
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
                 type="password"
-                name="password"
+                name="email"
+                className="border w-full h-[2.8rem] p-5 text-sm rounded-[5px] bg-gray-100 
+             focus:border-gray-500 focus:ring-gray-500"
+                placeholder="Nova senha"
+              />
+
+              <input
+                onChange={(e) => setPassword2(e.target.value)}
+                value={password2}
+                type="password"
+                name="password2"
                 className="border w-full h-[2.8rem] p-5 text-sm focus:border-gray-500 focus:ring-gray-500
             rounded-[5px] bg-gray-100 mt-3"
-                placeholder="Senha"
+                placeholder="Repetir senha"
               />
-              <p className="mt-5">Esquecu a senha?</p>
+
               <button
+                onClick={handleSubmit}
                 className={`bg-azulScuro w-full lg:focus:focus:ring-blue-600 h-[2.8rem] ${
                   isLoading ? 'opacity-70 cursor-not-allowed' : ''
                 } text-white mt-5 rounded-[5px `}
@@ -81,7 +89,7 @@ export default function Login() {
                     Processando...
                   </div>
                 ) : (
-                  'Entrar'
+                  'salvar'
                 )}
               </button>
             </form>

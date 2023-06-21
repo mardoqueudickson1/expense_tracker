@@ -1,10 +1,9 @@
 import React from 'react';
 import '@/styles/globals.css';
-import bcrypt from 'bcryptjs';
 import { useRouter } from 'next/router';
 import { PersistGate } from 'redux-persist/integration/react';
 import LoginPage from './login';
-import ChangePasswardPage from './alterar-password';
+import ChangePasswordPage from './alterar-password';
 import Sidebar from '../components/sidebar';
 import { Provider } from 'react-redux';
 import { useSelector } from 'react-redux';
@@ -16,35 +15,37 @@ const noSidebarRoutes = ['/login', '/alterar-password'];
 function App({ Component, pageProps, toast }) {
   const router = useRouter();
   const isAuthenticated = useSelector((state) => state.auth.isLoggedIn);
-  const user = useSelector((state) => state.auth.user);
+  const isRedirect = useSelector((state) => state.auth.redirect);
+  console.log('AQUIIIIIIIIIIII:', isRedirect);
 
-  const default_password = '12345';
-  const isMatch = bcrypt.compareSync(default_password, user.password_hash);
+  const isChangePasswordPage =
+    router.pathname === '/alterar-password' || router.pathname === '/login';
 
-  const isLoginPage = router.pathname === '/login';
-  // const isChangePasswardPage = router.pathname === '/alterar-password';
+  // Verificar se o usuário não está logado
+  if (!isAuthenticated) {
+    return <LoginPage />;
+  }
+
+  // Verificar se a variável de redirecionamento está ativada
+  if (isRedirect) {
+    return <ChangePasswordPage />;
+  }
 
   const showSidebar =
-    isAuthenticated && !noSidebarRoutes.includes(router.pathname);
+    !isChangePasswordPage && noSidebarRoutes.includes(router.pathname);
 
-  if (isLoginPage) {
-    return <LoginPage />;
-  } else if (isMatch) {
-    return <ChangePasswardPage />;
-  } else {
-    return (
-      <div>
-        <Toaster toast={toast} />
-        {showSidebar ? (
-          <Sidebar>
-            <Component {...pageProps} />
-          </Sidebar>
-        ) : (
-          <LoginPage />
-        )}
-      </div>
-    );
-  }
+  return (
+    <div>
+      <Toaster toast={toast} />
+      {!showSidebar ? (
+        <Sidebar>
+          <Component {...pageProps} />
+        </Sidebar>
+      ) : (
+        <Component {...pageProps} />
+      )}
+    </div>
+  );
 }
 
 export default function MyApp(props) {

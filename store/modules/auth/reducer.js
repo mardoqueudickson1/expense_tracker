@@ -2,6 +2,7 @@ import * as types from '../types';
 import axios from '../../../services/axios';
 
 const initialState = {
+  redirect: null,
   isLoggedIn: false,
   isLoadingButom: false,
   token: false,
@@ -19,6 +20,11 @@ export default function (state = initialState, action) {
       newState.user = action.payload.user;
       newState.isLoading = false;
       newState.isLoadingButom = false;
+      return newState;
+    }
+    case types.SET_REDIRECT: {
+      const newState = { ...state };
+      newState.redirect = action.payload;
       return newState;
     }
 

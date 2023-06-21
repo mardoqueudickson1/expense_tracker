@@ -8,6 +8,13 @@ export function loginRequest(payload) {
   };
 }
 
+export const setRedirect = (redirect) => {
+  return {
+    type: types.SET_REDIRECT,
+    payload: redirect,
+  };
+};
+
 export function loginSuccess(payload) {
   return {
     type: types.LOGIN_SUCCESS,
