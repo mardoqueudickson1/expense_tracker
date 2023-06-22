@@ -14,7 +14,6 @@ function* loginRequest({ payload }) {
     if (redirect) {
       return yield put(actions.setRedirect({ redirect }));
     }
-    toast.success('Logado com sucesso!');
     axios.defaults.headers.Authorization = `Bearer ${response.data.token}`;
   } catch (e) {
     console.log(e);

@@ -1,11 +1,9 @@
-import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useSelector } from 'react';
 import toast from 'react-hot-toast';
 import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import axios from '../services/axios';
-import * as actions from '../store/modules/auth/actions';
 
-export default function AlterarPassword() {
+export default function changePassword() {
   const isLoading = useSelector((state) => state.auth.isLoadingButom);
   const [password, setPassword] = React.useState('');
   const [password2, setPassword2] = React.useState('');
@@ -14,9 +12,6 @@ export default function AlterarPassword() {
 
   const token = useSelector((state) => state.auth.token);
   const email = useSelector((state) => state.auth.user.email);
-
-  const dispatch = useDispatch();
-  const entity = 'funcionario';
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -51,22 +46,14 @@ export default function AlterarPassword() {
       );
     }
 
-    await axios.put('/empresa/filha/alterar-password', {
+    const result = await axios.put('/empresa/filha/alterar-password', {
       email,
       token,
       password,
     });
-
-    const logOut = async () => {
-      try {
-        dispatch(actions.loginFailure());
-      } catch (error) {
-        // Trate o erro, se necessário
-      }
-    };
-
-    await logOut();
-    dispatch(actions.loginRequest({ email, password, entity }));
+    if (result.ok) {
+      toast.success('Senha alterada com sucesso');
+    }
   };
 
   return (

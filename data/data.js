@@ -21,7 +21,7 @@ export const SidebarData = [
 
   {
     icon: FaCog,
-    heading: '/Config',
+    heading: '/config',
   },
 ];
 

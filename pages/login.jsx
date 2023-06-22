@@ -1,4 +1,5 @@
 import React from 'react';
+import { AiFillEye, AiFillEyeInvisible } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import * as actions from '../store/modules/auth/actions';
 import toast from 'react-hot-toast';
@@ -8,9 +9,13 @@ export default function Login() {
   // const isLoading = true;
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const [showPassword, setShowPassword] = React.useState(false);
   const dispatch = useDispatch();
   const entity = 'funcionario';
 
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
 
@@ -39,18 +44,25 @@ export default function Login() {
                 name="email"
                 className="border w-full h-[2.8rem] p-5 text-sm rounded-[5px] bg-gray-100 
              focus:border-gray-500 focus:ring-gray-500"
-                placeholder="Email"
+                placeholder="E-mail"
               />
 
-              <input
-                onChange={(e) => setPassword(e.target.value)}
-                value={password}
-                type="password"
-                name="password"
-                className="border w-full h-[2.8rem] p-5 text-sm focus:border-gray-500 focus:ring-gray-500
-            rounded-[5px] bg-gray-100 mt-3"
-                placeholder="Senha"
-              />
+              <div className="relative mt-3">
+                <input
+                  onChange={(e) => setPassword(e.target.value)}
+                  value={password}
+                  type={showPassword ? 'text' : 'password'}
+                  name="password"
+                  className="border w-full h-[2.8rem] p-5 text-sm rounded-[5px] bg-gray-100 focus:border-gray-500 focus:ring-gray-500"
+                  placeholder="Senha"
+                />
+                <span
+                  className="absolute top-1/2 right-4 transform -translate-y-1/2 cursor-pointer"
+                  onClick={handleTogglePassword}
+                >
+                  {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+                </span>
+              </div>
               <p className="mt-5">Esquecu a senha?</p>
               <button
                 className={`bg-azulScuro w-full lg:focus:focus:ring-blue-600 h-[2.8rem] ${
