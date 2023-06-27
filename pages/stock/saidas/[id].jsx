@@ -21,7 +21,7 @@ const StockDetailSaidas = () => {
     },
     images: {
       // The logo on top of your invoice
-      logo: 'https://i.imgur.com/vbvMdAe.png',
+      logo: '',
       // The invoice background
       background: 'https://i.imgur.com/cC3TlG5.png',
     },
