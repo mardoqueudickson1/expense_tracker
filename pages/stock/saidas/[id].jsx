@@ -23,7 +23,7 @@ const StockDetailSaidas = () => {
       // The logo on top of your invoice
       logo: 'https://i.imgur.com/vbvMdAe.png',
       // The invoice background
-      background: 'https://i.imgur.com/8dZ99Mp.png',
+      background: 'https://i.imgur.com/cC3TlG5.png',
     },
     // Your own data
     sender: {
